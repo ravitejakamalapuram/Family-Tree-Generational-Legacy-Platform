@@ -1,6 +1,6 @@
 # Product Design Workstream — UX-001 to UX-004
 
-**Status:** Planned; design approval is a gate before FL-001 implementation.  
+**Status:** UX-001 draft produced; awaiting product review. UX-002–UX-004 remain planned.  
 **Owner:** Product/design workstream.  
 **Source inputs:** PROJECT_CHARTER, PRODUCT_REQUIREMENTS, USE_CASES, UX_SPECIFICATION.
 
