@@ -1,6 +1,6 @@
 # Product Design Workstream — UX-001 to UX-004
 
-**Status:** UX-001–UX-004 draft artifacts produced; clickable P0 prototype v0.1 added; awaiting product/design review.  
+**Status:** UX-001–UX-004 draft artifacts produced; clickable P0 prototype v0.1 and desktop/mobile review snapshots prepared; awaiting product/design review.  
 **Owner:** Product/design workstream.  
 **Source inputs:** PROJECT_CHARTER, PRODUCT_REQUIREMENTS, USE_CASES, UX_SPECIFICATION.
 
@@ -38,10 +38,11 @@ Deliver component/token inventory, screen mapping, interaction/state specificati
 - Artifact: [prototype/index.html](prototype/index.html).
 - Covers dashboard, tree selection/inspector, people search, person profile, add-person form, onboarding, memories and members.
 - Includes responsive navigation, fictional sample identities, privacy/provenance labels and basic client-side interactions.
-- It is a static HTML interaction prototype. It does not call APIs, persist data, authenticate users, enforce authorization, upload media or implement production genealogy layout.
+- Static HTML/CSS/JS only. No API, persistence, authentication, authorization, upload or production genealogy layout.
 - Save-person and onboarding actions explicitly report that no data was saved/created.
-- Review at desktop and mobile widths. Treat tree geometry and sample relationships as illustrative only.
-- Browser/device testing, keyboard-only review, screen-reader review, regional-script testing and visual QA remain outstanding.
+- Browser-based visual review snapshots have been prepared for desktop and mobile. These are review aids for the intended dashboard visual direction, not hosted screenshots or a complete capture of every interactive state.
+- Product owner review is pending. Capture approval/change requests before further visual iteration.
+- Keyboard-only, screen-reader, regional-script, contrast and cross-browser QA remain outstanding.
 
 ## Scope boundary
 This workstream does not implement production React components. FL-008 remains the engineering implementation of the approved design system and responsive application shell. The prototype is a disposable design-validation artifact, not an application foundation or production code. No engineering implementation gate has been passed.
