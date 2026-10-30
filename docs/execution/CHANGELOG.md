@@ -59,3 +59,7 @@
 - First Redocly run found a duplicate YAML mapping in the family creation operation.
 - Merged the CSRF and idempotency parameter references into one valid parameters list and committed the correction.
 - Follow-up validation run #5 is in progress; do not treat OpenAPI as validated until it passes.
+
+## 2026-10-30 — Prototype validation automation
+- Added a GitHub Actions check to extract inline prototype JavaScript and run Node syntax validation on relevant UX prototype changes.
+- First validation run is queued; no pass is claimed yet.
