@@ -78,7 +78,7 @@ Specify:
 - API versioning and compatibility.
 
 Acceptance:
-- OpenAPI 3.1 document parses and bundles in CI (passed in run 41003090188).
+- OpenAPI 3.1 document parses and bundles in CI (latest pass: run 41003237580; 32 paths and 39 operations).
 - Every P0 UI journey maps to API operations, including endpoint-level authorization and error behavior (reconciliation remains in progress).
 - Authorization and error behavior documented per operation.
 
