@@ -1,9 +1,13 @@
 # Project Status
 
-**Last updated:** 2026-10-30 | **Stage:** Product definition and architecture baseline | **Implementation:** Not started | **Milestone:** R1 — Working family tree | **Default branch:** main
+**Last updated:** 2026-10-30  
+**Stage:** Product definition and architecture baseline  
+**Implementation:** Not started  
+**Milestone:** R1 — Working family tree  
+**Default branch:** main
 
 ## State
-Repository was initially empty. Initial commit establishes README; documentation/governance is being added. No application code or tests are claimed. Product vision/use cases, PRD, UX, architecture, data model, API, security/privacy, ADRs, delivery plan and backlog are the durable project baseline. FL-001–FL-104 implementation tasks start Not Started.
+Repository was initially empty. Initial commit establishes README; subsequent commits establish product, UX, architecture, data model, API and security baseline. No application code or tests are claimed yet. Implementation tasks FL-001–FL-104 start Not Started.
 
 ## Next actions
 1. Review documentation baseline.
@@ -15,6 +19,6 @@ Repository was initially empty. Initial commit establishes README; documentation
 7. Implement Person/FamilyPerson and relationship integrity before tree UI.
 
 ## Risks
-Shared identity privacy; complex graph correctness; public publication leakage; contribution/adoption; free-model media/AI cost; historical uncertainty/provenance; preservation/succession.
+Shared identity privacy; complex graph correctness; public publication leakage; contribution/adoption; free-model media/AI costs; historical uncertainty/provenance; preservation/succession.
 
-Every implementation PR updates this file with completed IDs, evidence, checks, blockers, milestone and next actions. Repository state overrides old conversation memory.
+Every implementation PR updates status with completed IDs, evidence, checks, blockers, milestone and next actions. Repository state overrides old conversation memory.
