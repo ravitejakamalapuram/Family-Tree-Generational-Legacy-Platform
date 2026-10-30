@@ -1,0 +1,40 @@
+name: Validate UX Prototype
+
+on:
+  pull_request:
+    paths:
+      - "docs/ux/prototype/**"
+      - ".github/workflows/prototype-validation.yml"
+  push:
+    branches:
+      - main
+      - "workstream/**"
+    paths:
+      - "docs/ux/prototype/**"
+      - ".github/workflows/prototype-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  prototype:
+    name: Check prototype inline JavaScript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Extract inline scripts
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const html = fs.readFileSync('docs/ux/prototype/index.html', 'utf8');
+          const scripts = [...html.matchAll(/<script(?:\\s[^>]*)?>([\\s\\S]*?)<\\/script>/gi)];
+          if (scripts.length === 0) throw new Error('No inline scripts found');
+          fs.writeFileSync('/tmp/prototype-inline.js', scripts.map((match) => match[1]).join('\\n'));
+          NODE
+      - name: Check JavaScript syntax
+        run: node --check /tmp/prototype-inline.js
