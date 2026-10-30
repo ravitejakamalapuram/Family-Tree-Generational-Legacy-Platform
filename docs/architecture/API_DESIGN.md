@@ -29,9 +29,8 @@ POST /families/{fid}/historian/query, /biography, /transcribe, /translate, /sugg
 ## Public
 GET /public/families/{slug}; /tree; /people/{publicId}; /stories. PATCH /families/{fid}/public-settings; POST /publications; DELETE /publications/{publicationId}.
 
-## Response
 Success: {"data":{},"meta":{"requestId":"uuid"}}
 Error: {"error":{"code":"RELATIONSHIP_CONFLICT","message":"Relationship conflicts with existing record","details":{},"requestId":"uuid"}}
 Codes: AUTH_REQUIRED, ACCESS_DENIED, RESOURCE_NOT_FOUND, VALIDATION_ERROR, RELATIONSHIP_CONFLICT, DUPLICATE_PERSON_SUGGESTED, CONTRIBUTION_PENDING, MEDIA_UPLOAD_INVALID, PUBLICATION_RESTRICTED.
 
-Never treat a UUID/family ID as authorization. Public APIs use published projection only.
+Never treat UUID/family ID as authorization. Public APIs use published projection only.
