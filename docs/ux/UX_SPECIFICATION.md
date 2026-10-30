@@ -1,5 +1,7 @@
 # UX Specification — Family Legacy
 
+> Baseline screen inventory and experience direction. This document is not yet a final visual design or implementation handoff. Complete UX-001–UX-004 in [Product Design Plan](PRODUCT_DESIGN_PLAN.md) before frontend implementation.
+
 ## Design direction
 Warm editorial archive, not generic CRUD: warm off-white canvas, white cards, muted teal/forest accent, readable sans-serif, optional serif for stories, portrait-first person cards, clean generation lines. Responsive, keyboard accessible, clear empty states.
 
