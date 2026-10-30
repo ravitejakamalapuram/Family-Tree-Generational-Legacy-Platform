@@ -1,6 +1,6 @@
 # Backend Architecture Workstream — ARCH-001 to ARCH-005
 
-**Status:** ARCH-001 draft produced; awaiting architecture review. ARCH-002–ARCH-005 remain planned.  
+**Status: Draft artifacts and internal review pass completed; pending full validation and explicit architecture decisions.
 **Source inputs:** ARCHITECTURE, DATA_MODEL, API_DESIGN, SECURITY_PRIVACY and accepted ADRs.
 
 ## Objective
