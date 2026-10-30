@@ -28,3 +28,11 @@
 - Recorded approval for warm neutral surfaces, evergreen accents, calm editorial styling, clear family-space context and a family-tree-centered information hierarchy.
 - Updated the UX workstream plan and project status. Token-level contrast/regional-script checks, complete P0 screen validation, accessibility QA and engineering handoff remain open.
 - Backend architecture review and the overall Phase 0 gate remain open. No implementation branch resumed and no PR merged.
+
+
+## 2026-10-30 — UX prototype v0.2
+- Applied the approved visual direction across the UX workstream documentation.
+- Added a semantic people-list alternative to the family tree prototype, including selection synchronization with the visual tree and an explicit unknown-parent placeholder.
+- Added visible keyboard-focus styling to primary prototype controls.
+- Updated P0 screen and engineering handoff notes. Accessibility behavior is implemented as a design prototype but still requires keyboard and screen-reader QA.
+- Phase 0 remains open; backend architecture has not been approved and no production implementation has started.
