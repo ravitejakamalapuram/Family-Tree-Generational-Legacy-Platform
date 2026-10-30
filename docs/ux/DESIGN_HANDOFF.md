@@ -1,7 +1,7 @@
 # Design-to-Engineering Handoff
 
 **Workstream:** UX-004  
-**Status:** Draft v0.1 — clickable prototype v0.1 available; final review and sign-off pending  
+**Status:** Draft v0.2 — visual direction approved; accessibility/list alternative and full review/sign-off pending  
 **Related:** DESIGN_SYSTEM.md, INFORMATION_ARCHITECTURE_AND_JOURNEYS.md, P0_SCREEN_SPECIFICATIONS.md, prototype/index.html
 
 ## 1. Handoff objective
@@ -36,7 +36,7 @@ Inputs/actions: Button variants, TextField/TextArea, Select/Combobox, DatePrecis
 - Forms preserve values on recoverable server/network errors.
 - DatePrecisionField never silently invents day/month precision.
 - VisibilitySelector explains audience and warns before any public transition.
-- PersonTreeNode exposes accessible name and selection state; graph has keyboard/list alternative.
+- PersonTreeNode exposes accessible name and selection state; semantic list alternative is included in prototype v0.2. Keyboard/screen-reader verification remains required.
 - UploadDropzone supports keyboard file selection and reports progress/errors.
 - Dialog/Drawer manages focus, escape behavior and unsaved changes.
 - EmptyState offers one contextual action; toasts announce status without stealing focus.
@@ -74,4 +74,4 @@ Run locally by opening the HTML file in a modern browser. No build/install step 
 - Design screens around bounded API payloads and progressive graph expansion.
 - Use accessible list/profile routes as fallback for complex tree canvas interactions.
 
-UX-004 remains draft until prototype review, QA and sign-off are attached to issue #57.
+UX-004 remains draft until prototype review, QA and sign-off are attached to issue #57. Visual direction approval alone does not constitute engineering handoff approval.
