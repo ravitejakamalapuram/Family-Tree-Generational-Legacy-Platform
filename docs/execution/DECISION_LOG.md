@@ -15,3 +15,8 @@ Approval applies to the visual direction shown in the desktop/mobile dashboard r
 | 2026-10-30 | ARCH-REC-001 | Disable cross-family global identity matching in v1; revisit only with explicit consent/privacy review | Recommended, pending ADR | architecture/ARCHITECTURE_REVIEW.md |
 | 2026-10-30 | ARCH-REC-002 | SQL-first migrations; evaluate ORM against RLS/composite-FK/CTE requirements | Recommended, pending ADR | architecture/ARCHITECTURE_REVIEW.md |
 | 2026-10-30 | ARCH-REC-003 | Use transactionally protected family-scoped parentage mutations | Required invariant; implementation strategy pending | architecture/ARCHITECTURE_REVIEW.md |
+
+| 2026-10-30 | ADR-0005 | Disable cross-family identity linking in v1 | Proposed | architecture/ADR/0005 |
+| 2026-10-30 | ADR-0006 | Prisma client with reviewed SQL-first migrations | Proposed | architecture/ADR/0006 |
+| 2026-10-30 | ADR-0007 | PostgreSQL RLS defense in depth | Proposed | architecture/ADR/0007 |
+| 2026-10-30 | ADR-0008 | PostgreSQL-backed durable jobs initially | Proposed | architecture/ADR/0008 |
