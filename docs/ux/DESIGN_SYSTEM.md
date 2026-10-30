@@ -182,10 +182,10 @@ Target WCAG 2.2 AA:
 
 ## 8. Open decisions for review
 
-1. Approve the warm neutral + evergreen visual direction or request alternatives.
+1. Confirmed 2026-10-30: warm neutral + evergreen visual direction approved; continue validation rather than reopening visual-direction exploration.
 2. Confirm Inter/system sans stack and whether a serif accent is needed.
 3. Decide whether dark theme is explicitly out of initial release.
 4. Confirm whether the design system will use Tailwind tokens only or a small CSS-variable token layer shared with tree styling.
 5. Validate color contrast and regional font fallbacks with actual UI prototypes.
 
-UX-002 remains a draft until the design review checklist and open decisions are resolved.
+UX-002 visual direction is approved; the design system remains a draft until token contrast, regional-script fallback and the remaining design decisions are validated.
