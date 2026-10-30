@@ -27,6 +27,7 @@ Base: /api/v1. REST/JSON, UUIDs, cursor pagination, request IDs and standardized
 ## Relationships and tree
 - POST /families/{familyId}/relationships; PATCH/DELETE /families/{familyId}/relationships/{relationshipId}.
 - GET /families/{familyId}/tree?focusPersonId=&mode=&generations=&cursor=.
+- GET /families/{familyId}/tree/search?q=; /tree/ancestors/{familyPersonId}; /tree/descendants/{familyPersonId}; /tree/branches.
 - GET /families/{familyId}/relationship-path?from=&to=.
 - Return bounded nodes/edges/hasMore/nextCursor/generation metadata. Both endpoints of every relationship must be FamilyPerson records in the same family. Parentage cycle validation must be transactionally protected against concurrent writes.
 
