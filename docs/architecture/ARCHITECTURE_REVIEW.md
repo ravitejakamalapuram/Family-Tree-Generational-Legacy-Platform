@@ -63,4 +63,4 @@ Do not start FL-002 backend implementation until:
 No production code or infrastructure has been created as part of this review.
 
 ## 7. Validation automation
-A GitHub Actions workflow was added at `.github/workflows/openapi-validation.yml`. It bundles the OpenAPI document using a pinned Redocly CLI version on relevant pull-request and branch pushes. The workflow has been committed but no run result is available yet; do not claim the document passed the parser until a successful run is visible.
+A GitHub Actions workflow was added at `.github/workflows/openapi-validation.yml`. It bundles the OpenAPI document using a pinned Redocly CLI version on relevant pull-request and branch pushes. The first run exposed a duplicate parameters mapping under POST /families. That was corrected by combining the CSRF and idempotency references into one list. A follow-up run is in progress; do not claim the document passed the parser until it succeeds.
