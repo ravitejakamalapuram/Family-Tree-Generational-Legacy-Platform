@@ -8,17 +8,17 @@
 - Added status and future-session handoff rules.
 - Documentation only; no application implementation included.
 
-
 ## 2026-10-30 — Design-first execution plan
 - Reordered execution: UX design and backend architecture are mandatory Phase 0 gates before FE/BE/database implementation.
 - Added UX-001–UX-004 and ARCH-001–ARCH-005 GitHub workstreams.
-- Created workstream branches for UX design and backend architecture; parked FL-001/FL-002 implementation branches.
-- Added draft information architecture, design system, P0 screen specifications and design handoff.
-- Added draft backend module boundaries, ERD/schema, OpenAPI contract, security threat model and runtime/operations blueprint.
-- Updated README, AGENTS, delivery plan, backlog, UX/architecture references, tracking and project status.
-- Drafts are pending review; no implementation, tests, OpenAPI validation or design sign-off is claimed.
-
-- Added UX-002 design system, UX-003 P0 screen specifications and UX-004 engineering handoff drafts.
-- Added ARCH-002 ERD/schema, ARCH-003 OpenAPI, ARCH-004 security threat model and ARCH-005 runtime/operations drafts.
+- Created UX and backend architecture workstream branches; parked FL-001/FL-002 implementation branches.
+- Added draft UX artifacts and backend module boundaries, ERD/schema, OpenAPI, security and runtime/operations documents.
 - Opened documentation-only draft review PRs #63 (UX) and #64 (backend architecture); neither is approved or merged.
-- Updated project status, tracking and changelog with draft links and outstanding validation/review gates.
+- Recorded open validation and review gates; no application implementation or sign-off claimed.
+
+## 2026-10-30 — Clickable P0 prototype v0.1
+- Added `docs/ux/prototype/index.html` on `workstream/ux-design`, with responsive navigation and representative dashboard, family tree, people, profile, add-person, onboarding, memories and members screens.
+- Added prototype usage/limitations README and mapped prototype coverage into P0 screen specifications and engineering handoff.
+- Explicitly documented static-only behavior: fictional sample data, no API/auth/persistence/authorization/uploads, and no production genealogy layout engine.
+- Updated UX workstream plan; UX-003/UX-004 remain draft pending visual, responsive, accessibility, regional-script and product review.
+- Updated project status and tracking; PR #63 remains draft. No PR merged and no production application implementation started.
