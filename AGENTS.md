@@ -35,6 +35,9 @@ Web-first responsive application; mixed visibility, private by default; one Pers
 ## Engineering standards
 Modular monolith with explicit boundaries. Keep genealogy logic independent of React/HTTP/ORM/AI providers. Use versioned migrations, input validation, transactions for graph/publication/approval/membership changes, optimistic concurrency, bounded/paginated graph traversal, and tests for domain/security rules. No secrets in source. Avoid premature microservices, Kafka, Kubernetes, Neo4j.
 
+## Mandatory pre-implementation design gate
+Before implementing FL-001, FL-002, FL-003 or FL-008, read `docs/ux/PRODUCT_DESIGN_PLAN.md` and `docs/architecture/BACKEND_ARCHITECTURE_PLAN.md`. UX-001–UX-004 and ARCH-001–ARCH-005 are prerequisite design workstreams. Do not begin application implementation until the P0 UX handoff and backend architecture gates are approved and recorded in `PROJECT_STATUS.md`. Existing FL-001/FL-002 branches are parked until that gate passes. Keep UI design and backend architecture aligned on shared domain vocabulary and user journeys.
+
 ## Workflow
 Identify backlog IDs; inspect code; state assumptions; implement smallest coherent change; add tests/docs; run relevant format/lint/typecheck/tests/build; review privacy, tenant isolation, migration safety, accessibility and regressions; update PROJECT_STATUS/backlog/decision log/changelog; report exact files/checks/outcomes/blockers/next task. Never mark Done without evidence.
 
