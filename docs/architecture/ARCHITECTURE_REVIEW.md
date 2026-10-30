@@ -14,7 +14,7 @@ The review found contract gaps between API_DESIGN.md and OpenAPI, an underspecif
 
 - Added CSRF bootstrap endpoint and required synchronizer-token header to cookie-authenticated state-changing operations, including login, logout, refresh and family/person/relationship writes.
 - Added exact-origin validation, strict credentialed CORS guidance and in-memory CSRF token handling to API_DESIGN.md.
-- Added invitation acceptance, member listing/invitation/role management, person fact/profile/relationship/memory reads and relationship correction operations to OpenAPI.
+- Added invitation acceptance, member listing/invitation/role management, person fact/profile/relationship/memory reads, relationship correction, dashboard, tree search, ancestor/descendant and branch-list operations to OpenAPI.
 - Added idempotency-key contracts for retryable create operations.
 - Unified temporal date assertion shape around start/end date, precision, qualifier, calendar system and original text so a range/unknown/approximate date is representable.
 - Reconciled the API design document with the implemented P0 contract surface and clearly separated later-milestone API domains.
@@ -35,8 +35,8 @@ These are recommendations, not accepted ADRs. Record final choices in ADRs befor
 
 ## 4. Schema questions to close
 
-1. Specify composite same-family foreign keys for every family-owned association, including fact/source, story/person, event/place, branch/membership, media uploader and audit actor references.
-2. Add normalized membership branch-scope rows and explicit constraints for active membership/invitation uniqueness.
+1. Continue verifying composite same-family foreign keys for every family-owned association, including fact/source, story/person, event/place, branch/membership, media uploader and audit actor references.
+2. Normalized membership and invitation branch-scope join tables are now specified; active membership/invitation uniqueness and branch role semantics still need final constraints.
 3. Define deletion semantics for relationships and facts: preserve revision/audit history; prefer ended/rejected/superseded states over destructive deletion.
 4. Define temporal invariants: start <= end, allowed precision/value combinations, calendar conversion policy and all-day event local-date semantics.
 5. Decide whether citext is an accepted PostgreSQL extension or use normalized text columns for portable uniqueness.
