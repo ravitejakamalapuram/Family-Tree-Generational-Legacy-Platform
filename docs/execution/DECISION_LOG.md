@@ -11,3 +11,7 @@
 
 ## UX-DEC-001 scope
 Approval applies to the visual direction shown in the desktop/mobile dashboard review mockups. It does not approve final design tokens, every P0 screen/state, accessibility/regional-script validation, engineering handoff, or backend architecture.
+
+| 2026-10-30 | ARCH-REC-001 | Disable cross-family global identity matching in v1; revisit only with explicit consent/privacy review | Recommended, pending ADR | architecture/ARCHITECTURE_REVIEW.md |
+| 2026-10-30 | ARCH-REC-002 | SQL-first migrations; evaluate ORM against RLS/composite-FK/CTE requirements | Recommended, pending ADR | architecture/ARCHITECTURE_REVIEW.md |
+| 2026-10-30 | ARCH-REC-003 | Use transactionally protected family-scoped parentage mutations | Required invariant; implementation strategy pending | architecture/ARCHITECTURE_REVIEW.md |
