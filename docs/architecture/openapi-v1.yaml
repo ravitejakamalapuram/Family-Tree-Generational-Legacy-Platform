@@ -58,6 +58,8 @@ paths:
   /auth/login:
     post:
       tags: [Auth]
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
       security: []
       summary: Authenticate and create a session
       requestBody:
@@ -181,6 +183,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/CsrfToken'
       summary: Create a private family workspace
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
       requestBody:
         required: true
         content:
