@@ -1,0 +1,529 @@
+openapi: 3.1.0
+info:
+  title: Family Legacy API
+  version: 1.0.0-draft
+  description: Draft P0 API contract. All family operations require server-side membership, role and record-level authorization.
+servers:
+  - url: /api/v1
+tags:
+  - name: Auth
+  - name: Families
+  - name: People
+  - name: Relationships
+  - name: Tree
+security:
+  - SessionCookie: []
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      security: []
+      summary: Register an account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, displayName]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, minLength: 12, writeOnly: true }
+                displayName: { type: string, minLength: 1, maxLength: 120 }
+                preferredLanguage: { type: string, default: en }
+      responses:
+        '202': { description: Verification message queued; do not reveal whether an email already exists }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /auth/login:
+    post:
+      tags: [Auth]
+      security: []
+      summary: Authenticate and create a session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, writeOnly: true }
+      responses:
+        '200':
+          description: Authenticated; secure HttpOnly session cookie set
+          headers:
+            Set-Cookie: { schema: { type: string } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/EnvelopeCurrentUser' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /auth/logout:
+    post:
+      tags: [Auth]
+      responses:
+        '204': { description: Session revoked and cookie cleared }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /auth/me:
+    get:
+      tags: [Auth]
+      responses:
+        '200':
+          description: Current user and memberships visible to the authenticated user
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/EnvelopeCurrentUser' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /families:
+    get:
+      tags: [Families]
+      summary: List families the current user belongs to
+      responses:
+        '200':
+          description: Authorized family memberships only
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items: { $ref: '#/components/schemas/FamilySummary' }
+    post:
+      tags: [Families]
+      summary: Create a private family workspace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, defaultLanguage]
+              properties:
+                name: { type: string, minLength: 1, maxLength: 160 }
+                description: { type: string, maxLength: 2000 }
+                origin: { type: string, maxLength: 300 }
+                defaultLanguage: { type: string, default: en }
+      responses:
+        '201':
+          description: Family created and caller granted owner membership atomically
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      data: { $ref: '#/components/schemas/FamilySummary' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+  /families/{familyId}:
+    parameters:
+      - $ref: '#/components/parameters/FamilyId'
+    get:
+      tags: [Families]
+      summary: Get family workspace
+      responses:
+        '200':
+          description: Family details if membership and permission allow
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      data: { $ref: '#/components/schemas/FamilySummary' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      tags: [Families]
+      summary: Update permitted family settings
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema:
+              type: object
+              properties:
+                name: { type: string, minLength: 1, maxLength: 160 }
+                description: { type: string, maxLength: 2000 }
+                defaultLanguage: { type: string }
+      responses:
+        '200': { description: Updated; returns new ETag }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
+  /families/{familyId}/people:
+    parameters:
+      - $ref: '#/components/parameters/FamilyId'
+    get:
+      tags: [People]
+      summary: List family people
+      parameters:
+        - in: query
+          name: q
+          schema: { type: string, maxLength: 120 }
+        - in: query
+          name: cursor
+          schema: { type: string }
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 100, default: 30 }
+      responses:
+        '200':
+          description: Authorized, paginated FamilyPerson records only
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/EnvelopePageFamilyPeople' }
+    post:
+      tags: [People]
+      summary: Create a person identity and family representation
+      description: Server controls identity creation/linking. Never accept a global Person ID from an untrusted client to attach an identity across families. Duplicate suggestions are advisory and never auto-merge identities.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFamilyPerson'
+      responses:
+        '201':
+          description: FamilyPerson created in the authorized family
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      data: { $ref: '#/components/schemas/FamilyPerson' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /families/{familyId}/people/{familyPersonId}:
+    parameters:
+      - $ref: '#/components/parameters/FamilyId'
+      - $ref: '#/components/parameters/FamilyPersonId'
+    get:
+      tags: [People]
+      summary: Get a family person profile
+      responses:
+        '200':
+          description: Profile fields allowed by role and visibility
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      data: { $ref: '#/components/schemas/FamilyPerson' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      tags: [People]
+      summary: Update permitted family-specific profile fields
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema:
+              type: object
+              properties:
+                displayName: { type: string, minLength: 1, maxLength: 200 }
+                biography: { type: string, maxLength: 20000 }
+                visibility: { type: string, enum: [private, family, restricted] }
+      responses:
+        '200': { description: Updated profile and new ETag }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
+  /families/{familyId}/relationships:
+    parameters:
+      - $ref: '#/components/parameters/FamilyId'
+    post:
+      tags: [Relationships]
+      summary: Create a family-scoped relationship
+      description: Both endpoint IDs must resolve to FamilyPerson records in this family. The server validates permission, relationship rules, cycles and conflicts transactionally. Preserve source/provenance and revision history.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRelationship'
+      responses:
+        '201':
+          description: Relationship created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      data: { $ref: '#/components/schemas/Relationship' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/tree:
+    get:
+      tags: [Tree]
+      summary: Read a bounded family tree projection
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+        - in: query
+          name: focusPersonId
+          schema: { type: string, format: uuid }
+        - in: query
+          name: mode
+          schema: { type: string, enum: [full, ancestors, descendants, direct-lineage, branch, relationship-path], default: full }
+        - in: query
+          name: generations
+          schema: { type: integer, minimum: 1, maximum: 8, default: 3 }
+        - in: query
+          name: cursor
+          schema: { type: string }
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 500, default: 150 }
+      responses:
+        '200':
+          description: Bounded authorized graph slice; profile details loaded separately
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/EnvelopeTreePage' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/tree/relationship-path:
+    get:
+      tags: [Tree]
+      summary: Calculate relationship paths between two family people
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+        - in: query
+          name: fromPersonId
+          required: true
+          schema: { type: string, format: uuid }
+        - in: query
+          name: toPersonId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: One or more explainable paths within authorized family graph
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /health/live:
+    get:
+      tags: [Auth]
+      security: []
+      summary: Liveness probe
+      responses:
+        '200': { description: Process is alive }
+  /health/ready:
+    get:
+      tags: [Auth]
+      security: []
+      summary: Readiness probe
+      responses:
+        '200': { description: Required dependencies ready }
+        '503': { description: Not ready }
+components:
+  securitySchemes:
+    SessionCookie:
+      type: apiKey
+      in: cookie
+      name: __Host-family_session
+  parameters:
+    FamilyId:
+      in: path
+      name: familyId
+      required: true
+      schema: { type: string, format: uuid }
+    FamilyPersonId:
+      in: path
+      name: familyPersonId
+      required: true
+      schema: { type: string, format: uuid }
+    IfMatch:
+      in: header
+      name: If-Match
+      required: true
+      schema: { type: string }
+      description: ETag from the latest representation; stale writes return 412.
+  schemas:
+    Envelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data: {}
+        meta:
+          type: object
+          properties:
+            requestId: { type: string, format: uuid }
+    CurrentUser:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        displayName: { type: string }
+        preferredLanguage: { type: string }
+    EnvelopeCurrentUser:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            data: { $ref: '#/components/schemas/CurrentUser' }
+    FamilySummary:
+      type: object
+      required: [id, name, defaultLanguage, privacyMode]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        slug: { type: string }
+        description: { type: [string, 'null'] }
+        defaultLanguage: { type: string }
+        privacyMode: { type: string, enum: [private, invite_only, public_presence] }
+        role: { type: string }
+        version: { type: integer }
+    FamilyPerson:
+      type: object
+      required: [id, displayName, visibility, version]
+      properties:
+        id: { type: string, format: uuid }
+        displayName: { type: string }
+        biography: { type: [string, 'null'] }
+        visibility: { type: string, enum: [private, family, restricted] }
+        birthDate:
+          type: [object, 'null']
+          properties:
+            value: { type: [string, 'null'], format: date }
+            precision: { type: string, enum: [day, month, year, decade, unknown] }
+            qualifier: { type: string, enum: [exact, about, before, after, between, unknown] }
+            originalText: { type: [string, 'null'] }
+        version: { type: integer }
+    CreateFamilyPerson:
+      type: object
+      required: [displayName]
+      properties:
+        displayName: { type: string, minLength: 1, maxLength: 200 }
+        biography: { type: string, maxLength: 20000 }
+        visibility: { type: string, enum: [private, family, restricted], default: private }
+        birthDate:
+          type: object
+          properties:
+            value: { type: [string, 'null'], format: date }
+            precision: { type: string, enum: [day, month, year, decade, unknown] }
+            qualifier: { type: string, enum: [exact, about, before, after, between, unknown] }
+            originalText: { type: string }
+        sourceIds:
+          type: array
+          items: { type: string, format: uuid }
+    CreateRelationship:
+      type: object
+      required: [fromFamilyPersonId, toFamilyPersonId, relationshipType]
+      properties:
+        fromFamilyPersonId: { type: string, format: uuid }
+        toFamilyPersonId: { type: string, format: uuid }
+        relationshipType:
+          type: string
+          enum: [biological_parent, adoptive_parent, step_parent, guardian, other_parent, spouse, partner]
+        validFrom: { type: [string, 'null'], format: date }
+        validTo: { type: [string, 'null'], format: date }
+        sourceIds:
+          type: array
+          items: { type: string, format: uuid }
+    Relationship:
+      allOf:
+        - $ref: '#/components/schemas/CreateRelationship'
+        - type: object
+          required: [id, status, version]
+          properties:
+            id: { type: string, format: uuid }
+            status: { type: string, enum: [proposed, active, disputed, ended, rejected] }
+            version: { type: integer }
+    EnvelopePageFamilyPeople:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            data:
+              type: array
+              items: { $ref: '#/components/schemas/FamilyPerson' }
+            page:
+              type: object
+              properties:
+                nextCursor: { type: [string, 'null'] }
+                hasMore: { type: boolean }
+    EnvelopeTreePage:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                nodes:
+                  type: array
+                  items:
+                    type: object
+                    required: [id, displayName]
+                    properties:
+                      id: { type: string, format: uuid }
+                      displayName: { type: string }
+                      generation: { type: integer }
+                      hasMoreAncestors: { type: boolean }
+                      hasMoreDescendants: { type: boolean }
+                edges:
+                  type: array
+                  items: { $ref: '#/components/schemas/Relationship' }
+                nextCursor: { type: [string, 'null'] }
+                hasMore: { type: boolean }
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    Forbidden:
+      description: Authenticated but not permitted
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    NotFound:
+      description: Resource unavailable or not found; do not reveal cross-family existence
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    ValidationError:
+      description: Request validation failed
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    Conflict:
+      description: Domain conflict, such as invalid graph edge or stale state
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    PreconditionFailed:
+      description: ETag/version no longer current
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    RateLimited:
+      description: Too many requests
+    ErrorEnvelope:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, requestId]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details: { type: object }
+            requestId: { type: string, format: uuid }
