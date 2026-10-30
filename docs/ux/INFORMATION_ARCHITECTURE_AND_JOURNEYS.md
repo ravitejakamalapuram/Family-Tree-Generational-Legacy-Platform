@@ -217,10 +217,12 @@ Every P0 screen must define:
 - Do not rely on hover for essential actions.
 - Long regional names and native scripts must wrap without truncation that hides identity.
 
-## 7. Product questions to resolve during review
-1. Should the first-person onboarding flow allow a living user to add themselves by default, or let the family choose a root person?
-2. Should tree entry default to a family root, last focused person, or a guided "start with someone" empty state?
-3. Which role can publish a family page, and should publication require a second reviewer?
-4. What exact data is visible to a Viewer versus an unauthenticated published visitor?
+## 7. Product questions and proposed defaults
 
-These questions must be resolved before UX-001 is marked complete.
+See [PRODUCT_DECISIONS.md](PRODUCT_DECISIONS.md) for UX-DEC-002–UX-DEC-006 proposals. Until approved, treat them as working assumptions only.
+1. UX-DEC-002 proposes allowing the creator to add themselves, another person, or defer; never assume the creator is the genealogical root.
+2. UX-DEC-003 proposes last-focused person, then configured focus, then a guided empty state.
+3. UX-DEC-004 proposes Owner/delegated Admin publication, with second review and consent safeguards for living/minor/sensitive content.
+4. UX-DEC-005 proposes member-authorized data for Viewers and allowlisted published projections only for public visitors.
+
+These proposals require product-owner approval before UX-001 is marked complete or publication/access behavior is implemented.
