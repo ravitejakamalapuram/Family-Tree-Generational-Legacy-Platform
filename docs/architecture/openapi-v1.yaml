@@ -14,6 +14,26 @@ tags:
 security:
   - SessionCookie: []
 paths:
+  /auth/csrf:
+    get:
+      tags: [Auth]
+      security: []
+      summary: Issue a session-bound CSRF token
+      description: Return a synchronizer token for the current anonymous or authenticated session. Clients retain it in memory and send it in X-CSRF-Token on every cookie-authenticated state-changing request. Rotate it after login and privilege changes.
+      responses:
+        '200':
+          description: CSRF token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [token]
+                    properties:
+                      token: { type: string }
   /auth/register:
     post:
       tags: [Auth]
@@ -52,7 +72,7 @@ paths:
                 password: { type: string, writeOnly: true }
       responses:
         '200':
-          description: Authenticated; secure HttpOnly session cookie set
+          description: Authenticated; secure HttpOnly session cookie set and CSRF token rotated
           headers:
             Set-Cookie: { schema: { type: string } }
           content:
@@ -60,9 +80,57 @@ paths:
               schema: { $ref: '#/components/schemas/EnvelopeCurrentUser' }
         '401': { $ref: '#/components/responses/Unauthorized' }
         '429': { $ref: '#/components/responses/RateLimited' }
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+      summary: Rotate the current session credential
+      responses:
+        '200': { description: Session refreshed; rotate CSRF token and session cookie }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { description: CSRF validation failed }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /auth/verify-email:
+    post:
+      tags: [Auth]
+      security: []
+      summary: Verify an email address using a single-use token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token]
+              properties:
+                token: { type: string, minLength: 32 }
+      responses:
+        '204': { description: Email verified }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '410': { description: Token expired or already used }
+  /auth/forgot-password:
+    post:
+      tags: [Auth]
+      security: []
+      summary: Request a password recovery message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email: { type: string, format: email }
+      responses:
+        '202': { description: Recovery message queued without account enumeration }
+        '429': { $ref: '#/components/responses/RateLimited' }
   /auth/logout:
     post:
       tags: [Auth]
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
       responses:
         '204': { description: Session revoked and cookie cleared }
         '401': { $ref: '#/components/responses/Unauthorized' }
@@ -76,6 +144,21 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/EnvelopeCurrentUser' }
         '401': { $ref: '#/components/responses/Unauthorized' }
+  /invitations/{token}/accept:
+    post:
+      tags: [Families]
+      security: []
+      summary: Accept a family invitation
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema: { type: string, minLength: 32 }
+      responses:
+        '200': { description: Invitation accepted; membership established after authentication/verification }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '410': { description: Invitation expired, revoked or already used }
   /families:
     get:
       tags: [Families]
@@ -95,6 +178,8 @@ paths:
                         items: { $ref: '#/components/schemas/FamilySummary' }
     post:
       tags: [Families]
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
       summary: Create a private family workspace
       requestBody:
         required: true
@@ -120,6 +205,77 @@ paths:
                     properties:
                       data: { $ref: '#/components/schemas/FamilySummary' }
         '400': { $ref: '#/components/responses/ValidationError' }
+  /families/{familyId}/members:
+    parameters:
+      - $ref: '#/components/parameters/FamilyId'
+    get:
+      tags: [Families]
+      summary: List members visible to the current member
+      responses:
+        '200': { description: Authorized member list }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/invitations:
+    parameters:
+      - $ref: '#/components/parameters/FamilyId'
+    post:
+      tags: [Families]
+      summary: Invite a person to the family
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, role]
+              properties:
+                email: { type: string, format: email }
+                role: { type: string, enum: [admin, branch_manager, contributor, reviewer, viewer] }
+                branchIds:
+                  type: array
+                  items: { type: string, format: uuid }
+      responses:
+        '202': { description: Invitation created and delivery queued }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /families/{familyId}/members/{membershipId}:
+    parameters:
+      - $ref: '#/components/parameters/FamilyId'
+      - in: path
+        name: membershipId
+        required: true
+        schema: { type: string, format: uuid }
+    patch:
+      tags: [Families]
+      summary: Change a member role or status
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema:
+              type: object
+              properties:
+                role: { type: string, enum: [admin, branch_manager, contributor, reviewer, viewer] }
+                status: { type: string, enum: [active, suspended, revoked] }
+      responses:
+        '200': { description: Membership updated }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
+    delete:
+      tags: [Families]
+      summary: Revoke a family membership
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+      responses:
+        '204': { description: Membership revoked }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /families/{familyId}:
     parameters:
       - $ref: '#/components/parameters/FamilyId'
@@ -140,6 +296,8 @@ paths:
         '404': { $ref: '#/components/responses/NotFound' }
     patch:
       tags: [Families]
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
       summary: Update permitted family settings
       parameters:
         - $ref: '#/components/parameters/IfMatch'
@@ -157,6 +315,43 @@ paths:
         '200': { description: Updated; returns new ETag }
         '403': { $ref: '#/components/responses/Forbidden' }
         '412': { $ref: '#/components/responses/PreconditionFailed' }
+  /families/{familyId}/people/{familyPersonId}/facts:
+    parameters:
+      - $ref: '#/components/parameters/FamilyId'
+      - $ref: '#/components/parameters/FamilyPersonId'
+    get:
+      tags: [People]
+      summary: List facts and provenance for a family person
+      responses:
+        '200': { description: Authorized fact assertions and source references }
+        '404': { $ref: '#/components/responses/NotFound' }
+    post:
+      tags: [People]
+      summary: Add a sourced fact assertion
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [factType, assertionStatus]
+              properties:
+                factType: { type: string, minLength: 1, maxLength: 80 }
+                valueText: { type: [string, 'null'], maxLength: 10000 }
+                value: {}
+                assertionStatus: { type: string, enum: [unverified, family_reported, supported, verified, disputed] }
+                sourceIds:
+                  type: array
+                  items: { type: string, format: uuid }
+                date:
+                  $ref: '#/components/schemas/DateAssertion'
+      responses:
+        '201': { description: Fact assertion created without overwriting competing assertions }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /families/{familyId}/people:
     parameters:
       - $ref: '#/components/parameters/FamilyId'
@@ -181,6 +376,9 @@ paths:
               schema: { $ref: '#/components/schemas/EnvelopePageFamilyPeople' }
     post:
       tags: [People]
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+        - $ref: '#/components/parameters/IdempotencyKey'
       summary: Create a person identity and family representation
       description: Server controls identity creation/linking. Never accept a global Person ID from an untrusted client to attach an identity across families. Duplicate suggestions are advisory and never auto-merge identities.
       requestBody:
@@ -223,6 +421,8 @@ paths:
         '404': { $ref: '#/components/responses/NotFound' }
     patch:
       tags: [People]
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
       summary: Update permitted family-specific profile fields
       parameters:
         - $ref: '#/components/parameters/IfMatch'
@@ -240,11 +440,57 @@ paths:
         '200': { description: Updated profile and new ETag }
         '403': { $ref: '#/components/responses/Forbidden' }
         '412': { $ref: '#/components/responses/PreconditionFailed' }
+  /families/{familyId}/relationships/{relationshipId}:
+    parameters:
+      - $ref: '#/components/parameters/FamilyId'
+      - in: path
+        name: relationshipId
+        required: true
+        schema: { type: string, format: uuid }
+    patch:
+      tags: [Relationships]
+      summary: Correct a family-scoped relationship
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema:
+              type: object
+              properties:
+                relationshipType:
+                  type: string
+                  enum: [biological_parent, adoptive_parent, step_parent, guardian, other_parent, spouse, partner]
+                validFrom: { type: [string, 'null'], format: date }
+                validTo: { type: [string, 'null'], format: date }
+                status: { type: string, enum: [proposed, active, disputed, ended, rejected] }
+      responses:
+        '200': { description: Relationship corrected; revision and audit entry retained }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
+    delete:
+      tags: [Relationships]
+      summary: End or remove a relationship according to correction policy
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+        - $ref: '#/components/parameters/IfMatch'
+      responses:
+        '204': { description: Relationship ended/removed with audit history retained }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
   /families/{familyId}/relationships:
     parameters:
       - $ref: '#/components/parameters/FamilyId'
     post:
       tags: [Relationships]
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+        - $ref: '#/components/parameters/IdempotencyKey'
       summary: Create a family-scoped relationship
       description: Both endpoint IDs must resolve to FamilyPerson records in this family. The server validates permission, relationship rules, cycles and conflicts transactionally. Preserve source/provenance and revision history.
       requestBody:
@@ -266,6 +512,36 @@ paths:
                       data: { $ref: '#/components/schemas/Relationship' }
         '400': { $ref: '#/components/responses/ValidationError' }
         '409': { $ref: '#/components/responses/Conflict' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/people/{familyPersonId}/profile:
+    get:
+      tags: [People]
+      summary: Get a profile projection for a family person
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+        - $ref: '#/components/parameters/FamilyPersonId'
+      responses:
+        '200': { description: Authorized profile projection }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/people/{familyPersonId}/relationships:
+    get:
+      tags: [Relationships]
+      summary: List relationships for a family person
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+        - $ref: '#/components/parameters/FamilyPersonId'
+      responses:
+        '200': { description: Authorized family-scoped relationships }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/people/{familyPersonId}/memories:
+    get:
+      tags: [People]
+      summary: List memories linked to a family person
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+        - $ref: '#/components/parameters/FamilyPersonId'
+      responses:
+        '200': { description: Authorized memories only }
         '404': { $ref: '#/components/responses/NotFound' }
   /families/{familyId}/tree:
     get:
@@ -317,6 +593,23 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Envelope' }
         '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/relationship-path:
+    get:
+      tags: [Tree]
+      summary: Resolve relationship paths between two family people
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+        - in: query
+          name: from
+          required: true
+          schema: { type: string, format: uuid }
+        - in: query
+          name: to
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: Explainable path(s) in the authorized family graph }
+        '404': { $ref: '#/components/responses/NotFound' }
   /health/live:
     get:
       tags: [Auth]
@@ -349,6 +642,18 @@ components:
       name: familyPersonId
       required: true
       schema: { type: string, format: uuid }
+    CsrfToken:
+      in: header
+      name: X-CSRF-Token
+      required: true
+      schema: { type: string, minLength: 32 }
+      description: Session-bound synchronizer token issued by GET /auth/csrf.
+    IdempotencyKey:
+      in: header
+      name: Idempotency-Key
+      required: true
+      schema: { type: string, minLength: 16, maxLength: 128 }
+      description: Client-generated key scoped to actor, family and operation; replay returns the original result.
     IfMatch:
       in: header
       name: If-Match
@@ -365,6 +670,15 @@ components:
           type: object
           properties:
             requestId: { type: string, format: uuid }
+    DateAssertion:
+      type: object
+      properties:
+        startDate: { type: [string, 'null'], format: date }
+        endDate: { type: [string, 'null'], format: date }
+        precision: { type: string, enum: [day, month, year, decade, range, unknown] }
+        qualifier: { type: string, enum: [exact, about, before, after, between, unknown] }
+        calendarSystem: { type: [string, 'null'], maxLength: 40 }
+        originalText: { type: [string, 'null'], maxLength: 200 }
     CurrentUser:
       type: object
       properties:
@@ -398,12 +712,7 @@ components:
         biography: { type: [string, 'null'] }
         visibility: { type: string, enum: [private, family, restricted] }
         birthDate:
-          type: [object, 'null']
-          properties:
-            value: { type: [string, 'null'], format: date }
-            precision: { type: string, enum: [day, month, year, decade, unknown] }
-            qualifier: { type: string, enum: [exact, about, before, after, between, unknown] }
-            originalText: { type: [string, 'null'] }
+          $ref: '#/components/schemas/DateAssertion'
         version: { type: integer }
     CreateFamilyPerson:
       type: object
@@ -413,12 +722,7 @@ components:
         biography: { type: string, maxLength: 20000 }
         visibility: { type: string, enum: [private, family, restricted], default: private }
         birthDate:
-          type: object
-          properties:
-            value: { type: [string, 'null'], format: date }
-            precision: { type: string, enum: [day, month, year, decade, unknown] }
-            qualifier: { type: string, enum: [exact, about, before, after, between, unknown] }
-            originalText: { type: string }
+          $ref: '#/components/schemas/DateAssertion'
         sourceIds:
           type: array
           items: { type: string, format: uuid }
