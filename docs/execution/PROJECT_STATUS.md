@@ -39,7 +39,7 @@ The product owner has approved the UX visual direction after reviewing desktop/m
 
 ## Review and validation status
 - UX visual direction approved; complete design system, P0 screen, accessibility and engineering handoff approval remain outstanding.
-- UX clickable prototype v0.2 committed on `workstream/ux-design`; includes a semantic list alternative for tree navigation. Not merged.
+- UX clickable prototype v0.2 committed on `workstream/ux-design`; includes a semantic list alternative and keyboard-selectable SVG person nodes. Not merged.
 - Backend architecture review pass completed; no backend architecture sign-off yet. ORM, cross-family identity linking, RLS/pooler, branch scope, graph concurrency and job queue choices remain to be resolved.
 - OpenAPI structural checks completed; Redocly CI workflow added but not yet observed passing.
 - ERD/schema has not yet been reviewed against the final API contract.
@@ -47,7 +47,7 @@ The product owner has approved the UX visual direction after reviewing desktop/m
 
 ## Next actions
 1. Apply the approved visual direction consistently across the P0 screen specifications and prototype; refine tree prominence and mobile navigation without changing the approved design language.
-2. Complete prototype edge cases: multiple partners/parent types, blended families, unknown/disputed relationships, long names and deeper trees; verify the newly added accessible list alternative.
+2. Complete prototype edge cases: multiple partners/parent types, blended families, unknown/disputed relationships, long names and deeper trees; verify the newly added accessible list alternative and keyboard tree selection.
 3. Run responsive, keyboard, screen-reader, contrast and regional-script QA; record evidence and decisions.
 4. Review PR #64 and `docs/architecture/ARCHITECTURE_REVIEW.md`; resolve identity, schema, ORM, RLS and transaction questions.
 5. Obtain a successful Redocly OpenAPI 3.1 validation run and reconcile every P0 journey with endpoint contracts.
