@@ -22,3 +22,9 @@
 - Explicitly documented static-only behavior: fictional sample data, no API/auth/persistence/authorization/uploads, and no production genealogy layout engine.
 - Prepared browser-rendered desktop/mobile dashboard review snapshots for product feedback. These are visual review aids, not hosted preview links or completed QA evidence.
 - Updated UX workstream plan, project status and changelog. PR #63 remains draft. Product review and accessibility/regional-script QA remain pending; no PR merged and no production application implementation started.
+
+## 2026-10-30 — UX visual direction approved
+- Product owner reviewed the desktop/mobile dashboard visual direction and asked the team to proceed.
+- Recorded approval for warm neutral surfaces, evergreen accents, calm editorial styling, clear family-space context and a family-tree-centered information hierarchy.
+- Updated the UX workstream plan and project status. Token-level contrast/regional-script checks, complete P0 screen validation, accessibility QA and engineering handoff remain open.
+- Backend architecture review and the overall Phase 0 gate remain open. No implementation branch resumed and no PR merged.
