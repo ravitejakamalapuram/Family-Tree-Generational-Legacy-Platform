@@ -545,6 +545,67 @@ paths:
       responses:
         '200': { description: Authorized memories only }
         '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/dashboard:
+    get:
+      tags: [Families]
+      summary: Get a privacy-filtered family dashboard
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+      responses:
+        '200': { description: Dashboard projection limited to the current member's permissions }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/tree/search:
+    get:
+      tags: [Tree]
+      summary: Search people in the authorized family tree
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+        - in: query
+          name: q
+          required: true
+          schema: { type: string, minLength: 1, maxLength: 120 }
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 50, default: 20 }
+      responses:
+        '200': { description: Family-scoped authorized people matches only }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/tree/ancestors/{familyPersonId}:
+    get:
+      tags: [Tree]
+      summary: Read a bounded ancestor projection
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+        - $ref: '#/components/parameters/FamilyPersonId'
+        - in: query
+          name: generations
+          schema: { type: integer, minimum: 1, maximum: 8, default: 3 }
+      responses:
+        '200': { description: Bounded authorized ancestor projection }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/tree/descendants/{familyPersonId}:
+    get:
+      tags: [Tree]
+      summary: Read a bounded descendant projection
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+        - $ref: '#/components/parameters/FamilyPersonId'
+        - in: query
+          name: generations
+          schema: { type: integer, minimum: 1, maximum: 8, default: 3 }
+      responses:
+        '200': { description: Bounded authorized descendant projection }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/tree/branches:
+    get:
+      tags: [Tree]
+      summary: List family branches visible to the current member
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+      responses:
+        '200': { description: Authorized branch metadata only }
+        '404': { $ref: '#/components/responses/NotFound' }
   /families/{familyId}/tree:
     get:
       tags: [Tree]
