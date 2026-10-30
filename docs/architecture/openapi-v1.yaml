@@ -20,7 +20,8 @@ paths:
       security: []
       summary: Issue a session-bound CSRF token
       description: Return a synchronizer token for the current anonymous or authenticated session. Clients retain it in memory and send it in X-CSRF-Token on every cookie-authenticated state-changing request. Rotate it after login and privilege changes.
-      responses:
+    
+  responses:
         '200':
           description: CSRF token issued
           content:
