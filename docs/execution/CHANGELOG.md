@@ -63,3 +63,9 @@
 ## 2026-10-30 — Prototype validation automation
 - Added a GitHub Actions check to extract inline prototype JavaScript and run Node syntax validation on relevant UX prototype changes.
 - First validation run is queued; no pass is claimed yet.
+
+## 2026-10-30 — Validation fixes and passing checks
+- Fixed duplicate YAML mapping keys in family create, family patch and person patch operations; moved ErrorEnvelope into the OpenAPI schemas component.
+- Redocly CLI 1.34.5 successfully bundled OpenAPI 3.1 in GitHub Actions run 41003090188.
+- Fixed literal escaped line breaks in the prototype's inline JavaScript and simplified the syntax-check workflow extraction.
+- Prototype inline JavaScript syntax check passes in GitHub Actions run 41002983442. Browser, keyboard and screen-reader QA remain open.
