@@ -75,3 +75,10 @@
 - Strengthened ERD tenant-scope design with normalized membership/invitation branch-scope join tables, family-scoped association constraints and temporal checks.
 - Redocly CLI 1.34.5 passed OpenAPI bundling after the latest additions: 32 unique paths and 39 operations in run 41003237580.
 - API contract integration tests, complete journey mapping and remaining ADR decisions are still open.
+
+## 2026-10-30 — Proposed backend ADRs
+- Added ADR-0005: disable cross-family identity linking in v1 (Proposed).
+- Added ADR-0006: Prisma with reviewed SQL-first migrations (Proposed).
+- Added ADR-0007: PostgreSQL RLS as defense in depth (Proposed).
+- Added ADR-0008: PostgreSQL-backed durable jobs for initial release (Proposed).
+- Indexed proposals and linked them from the architecture review. None is marked Accepted; implementation remains gated on explicit review.
