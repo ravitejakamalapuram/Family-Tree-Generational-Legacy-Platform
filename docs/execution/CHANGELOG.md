@@ -69,3 +69,9 @@
 - Redocly CLI 1.34.5 successfully bundled OpenAPI 3.1 in GitHub Actions run 41003090188.
 - Fixed literal escaped line breaks in the prototype's inline JavaScript and simplified the syntax-check workflow extraction.
 - Prototype inline JavaScript syntax check passes in GitHub Actions run 41002983442. Browser, keyboard and screen-reader QA remain open.
+
+## 2026-10-30 — P0 API coverage expansion
+- Added family dashboard, tree search, ancestor/descendant and branch-list endpoints to the OpenAPI contract and reconciled API_DESIGN.md.
+- Strengthened ERD tenant-scope design with normalized membership/invitation branch-scope join tables, family-scoped association constraints and temporal checks.
+- Redocly CLI 1.34.5 passed OpenAPI bundling after the latest additions: 32 unique paths and 39 operations in run 41003237580.
+- API contract integration tests, complete journey mapping and remaining ADR decisions are still open.
