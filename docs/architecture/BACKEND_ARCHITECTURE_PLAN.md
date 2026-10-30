@@ -1,6 +1,6 @@
 # Backend Architecture Workstream — ARCH-001 to ARCH-005
 
-**Status:** Planned; architecture approval is a gate before FL-002/FL-003 implementation.  
+**Status:** ARCH-001 draft produced; awaiting architecture review. ARCH-002–ARCH-005 remain planned.  
 **Source inputs:** ARCHITECTURE, DATA_MODEL, API_DESIGN, SECURITY_PRIVACY and accepted ADRs.
 
 ## Objective
