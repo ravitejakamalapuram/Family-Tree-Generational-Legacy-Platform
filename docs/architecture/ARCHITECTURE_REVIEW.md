@@ -31,7 +31,7 @@ The review found contract gaps between API_DESIGN.md and OpenAPI, an underspecif
 | Background jobs | Start with a PostgreSQL-backed durable queue if expected volume is modest; benchmark and document lock/lease/retry behavior before implementation. | Keeps transactional enqueue simple without adding an operational dependency prematurely. |
 | Contribution approval | Make approval and domain mutation atomic within one module boundary, or use an explicit outbox/saga with idempotent application and visible recovery state. | Avoids approved proposals that never apply or apply twice. |
 
-These are recommendations, not accepted ADRs. Record final choices in ADRs before implementation.
+Proposed ADRs 0005–0008 now capture the v1 identity-isolation, Prisma/SQL-first migration, PostgreSQL RLS and PostgreSQL-backed job recommendations. They remain Proposed, not Accepted. Product/privacy and engineering owners must review them before implementation.
 
 ## 4. Schema questions to close
 
