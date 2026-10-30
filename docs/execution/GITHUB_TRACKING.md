@@ -71,15 +71,15 @@ These nine issues are prerequisites to implementation and are tracked separately
 
 ### UX / Product design
 - UX-001 — [#54](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/54): Information architecture and journeys. Draft: [`INFORMATION_ARCHITECTURE_AND_JOURNEYS.md`](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/blob/workstream/ux-design/docs/ux/INFORMATION_ARCHITECTURE_AND_JOURNEYS.md).
-- UX-002 — [#55](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/55): Visual direction and design system.
-- UX-003 — [#56](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/56): High-fidelity P0 screens.
-- UX-004 — [#57](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/57): Design-to-engineering handoff.
+- UX-002 — [#55](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/55): Visual direction and design system. Draft: [DESIGN_SYSTEM.md](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/blob/workstream/ux-design/docs/ux/DESIGN_SYSTEM.md).
+- UX-003 — [#56](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/56): High-fidelity P0 screens. Draft: [P0_SCREEN_SPECIFICATIONS.md](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/blob/workstream/ux-design/docs/ux/P0_SCREEN_SPECIFICATIONS.md).
+- UX-004 — [#57](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/57): Design-to-engineering handoff. Draft: [DESIGN_HANDOFF.md](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/blob/workstream/ux-design/docs/ux/DESIGN_HANDOFF.md).
 
 ### Backend architecture
 - ARCH-001 — [#58](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/58): Domain boundaries and module architecture. Draft: [`MODULE_BOUNDARIES.md`](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/blob/workstream/backend-architecture/docs/architecture/MODULE_BOUNDARIES.md).
-- ARCH-002 — [#59](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/59): ERD, constraints and migration design.
-- ARCH-003 — [#60](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/60): P0 API contracts and OpenAPI.
-- ARCH-004 — [#61](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/61): Security, privacy and threat model.
-- ARCH-005 — [#62](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/62): Runtime, operations and implementation blueprint.
+- ARCH-002 — [#59](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/59): ERD, constraints and migration design. Draft: [ERD_AND_SCHEMA.md](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/blob/workstream/backend-architecture/docs/architecture/ERD_AND_SCHEMA.md).
+- ARCH-003 — [#60](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/60): P0 API contracts and OpenAPI. Draft: [openapi-v1.yaml](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/blob/workstream/backend-architecture/docs/architecture/openapi-v1.yaml).
+- ARCH-004 — [#61](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/61): Security, privacy and threat model. Draft: [SECURITY_THREAT_MODEL.md](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/blob/workstream/backend-architecture/docs/architecture/SECURITY_THREAT_MODEL.md).
+- ARCH-005 — [#62](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/62): Runtime, operations and implementation blueprint. Draft: [RUNTIME_OPERATIONS.md](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/blob/workstream/backend-architecture/docs/architecture/RUNTIME_OPERATIONS.md).
 
 Complete UX and ARCH workstreams in parallel, then conduct a joint design/architecture review. FL-001, FL-002, FL-003 and FL-008 implementation must not start until the mandatory Phase 0 exit gate in DELIVERY_PLAN.md is explicitly approved.
