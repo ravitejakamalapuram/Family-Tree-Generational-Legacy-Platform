@@ -8,8 +8,8 @@ Family Legacy is a private-by-default, collaborative family knowledge platform f
 > Every family has a history. Family Legacy helps preserve it, connect it, and pass it on.
 
 ## Project status
-- Stage: Product definition and architecture baseline
-- Implementation: Not started
+- Stage: Pre-implementation design and architecture
+- Implementation: Paused pending UX and backend architecture approval
 - Current release target: R1 — Working family tree
 - Source of truth: This repository
 
@@ -44,7 +44,7 @@ Family Legacy is a private-by-default, collaborative family knowledge platform f
 10. [Agent instructions](AGENTS.md)
 
 ## Immediate next step
-Review this baseline, then execute R1 foundation: repository tooling, database migrations, authentication, family spaces, Person/FamilyPerson identity, and relationship integrity. Do not jump to AI or public pages before graph and privacy foundations are reliable.
+Complete the UX design and backend architecture workstreams before implementing FL-001/FL-002. Start with [Product Design Plan](docs/ux/PRODUCT_DESIGN_PLAN.md) and [Backend Architecture Plan](docs/architecture/BACKEND_ARCHITECTURE_PLAN.md). Track UX-001–UX-004 and ARCH-001–ARCH-005 in GitHub. The existing foundation branches are parked; no application code should be started until the design and architecture gates are approved.
 
 ## Non-negotiable principles
 - Correct relationships over visual polish.
