@@ -22,7 +22,7 @@ The product owner has approved the UX visual direction after reviewing desktop/m
 - UX-004 draft: `docs/ux/DESIGN_HANDOFF.md` — component inventory, screen mapping, interaction contracts, state matrix and frontend guardrails.
 - Prototype scope: dashboard, tree selection/inspector, people search, person profile, add-person form, family setup, memories and members. Static HTML/CSS/JS with fictional sample data only; no backend, auth, persistence, authorization, uploads or production graph algorithm.
 - Desktop/mobile dashboard review mockups were reviewed and the visual direction approved on 2026-10-30. They are visual review aids, not hosted app screenshots or proof of full prototype QA.
-- Tree geometry remains illustrative. Keyboard/screen-reader, contrast, regional-script and cross-browser QA remain open. A prototype inline-JavaScript syntax workflow has been added; run result is pending.
+- Tree geometry remains illustrative. Keyboard/screen-reader, contrast, regional-script and cross-browser QA remain open. A prototype inline-JavaScript syntax workflow passes (run 41002983442). Browser, responsive and assistive-technology QA remain outstanding.
 - Design issues #54–#57 remain open; do not mark UX work complete based solely on visual-direction approval.
 
 ## Backend architecture progress
@@ -41,7 +41,7 @@ The product owner has approved the UX visual direction after reviewing desktop/m
 - UX visual direction approved; complete design system, P0 screen, accessibility and engineering handoff approval remain outstanding.
 - UX clickable prototype v0.2 committed on `workstream/ux-design`; includes a semantic list alternative and keyboard-selectable SVG person nodes. Not merged.
 - Backend architecture review pass completed; no backend architecture sign-off yet. ORM, cross-family identity linking, RLS/pooler, branch scope, graph concurrency and job queue choices remain to be resolved.
-- OpenAPI structural checks completed; Redocly CI workflow added; first run caught a duplicate YAML mapping, which was fixed. Follow-up run #5 is in progress.
+- OpenAPI structural checks completed; Redocly CI workflow added; first runs caught duplicate YAML mappings and a misplaced ErrorEnvelope schema; fixes were applied and Redocly CLI 1.34.5 successfully bundled the OpenAPI 3.1 document in run 41003090188.
 - ERD/schema has not yet been reviewed against the final API contract.
 - No application code, automated tests or CI execution are claimed.
 
