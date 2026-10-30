@@ -17,8 +17,8 @@
 - Recorded open validation and review gates; no application implementation or sign-off claimed.
 
 ## 2026-10-30 — Clickable P0 prototype v0.1
-- Added `docs/ux/prototype/index.html` on `workstream/ux-design`, with responsive navigation and representative dashboard, family tree, people, profile, add-person, onboarding, memories and members screens.
+- Added `docs/ux/prototype/index.html` on `workstream/ux-design`, with representative dashboard, family tree, people, profile, add-person, onboarding, memories and members screens.
 - Added prototype usage/limitations README and mapped prototype coverage into P0 screen specifications and engineering handoff.
 - Explicitly documented static-only behavior: fictional sample data, no API/auth/persistence/authorization/uploads, and no production genealogy layout engine.
-- Updated UX workstream plan; UX-003/UX-004 remain draft pending visual, responsive, accessibility, regional-script and product review.
-- Updated project status and tracking; PR #63 remains draft. No PR merged and no production application implementation started.
+- Prepared browser-rendered desktop/mobile dashboard review snapshots for product feedback. These are visual review aids, not hosted preview links or completed QA evidence.
+- Updated UX workstream plan, project status and changelog. PR #63 remains draft. Product review and accessibility/regional-script QA remain pending; no PR merged and no production application implementation started.
