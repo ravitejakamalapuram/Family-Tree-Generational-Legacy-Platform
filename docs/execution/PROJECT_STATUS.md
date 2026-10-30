@@ -22,7 +22,7 @@ The product owner has approved the UX visual direction after reviewing desktop/m
 - UX-004 draft: `docs/ux/DESIGN_HANDOFF.md` — component inventory, screen mapping, interaction contracts, state matrix and frontend guardrails.
 - Prototype scope: dashboard, tree selection/inspector, people search, person profile, add-person form, family setup, memories and members. Static HTML/CSS/JS with fictional sample data only; no backend, auth, persistence, authorization, uploads or production graph algorithm.
 - Desktop/mobile dashboard review mockups were reviewed and the visual direction approved on 2026-10-30. They are visual review aids, not hosted app screenshots or proof of full prototype QA.
-- Tree geometry remains illustrative. Keyboard/screen-reader, contrast, regional-script and cross-browser QA remain open.
+- Tree geometry remains illustrative. Keyboard/screen-reader, contrast, regional-script and cross-browser QA remain open. A prototype inline-JavaScript syntax workflow has been added; run result is pending.
 - Design issues #54–#57 remain open; do not mark UX work complete based solely on visual-direction approval.
 
 ## Backend architecture progress
