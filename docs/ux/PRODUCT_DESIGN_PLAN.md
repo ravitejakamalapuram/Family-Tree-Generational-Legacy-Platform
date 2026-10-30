@@ -33,7 +33,7 @@ Deliver desktop/mobile sitemap, role-specific journeys, P0 flows, critical state
 Deliver reviewed color, typography, spacing, shape, elevation, motion and breakpoint tokens; reusable component states; responsive and accessibility rules. Visual direction is approved; token-level validation and regional font fallback checks remain open.
 
 ## UX-003 — High-fidelity P0 screens
-Prioritize landing/auth, family onboarding, dashboard, people directory, add/edit person, person profile, family tree, member management and responsive navigation/global Add. Each screen needs desktop/mobile behavior, fictional examples, interactions, validation, permission and error states. The clickable prototype covers representative flows across these screens; it is not yet a complete nine-screen design QA pass. Version 0.2 adds a semantic list alternative for the family tree and explicit selection state.
+Prioritize landing/auth, family onboarding, dashboard, people directory, add/edit person, person profile, family tree, member management and responsive navigation/global Add. Each screen needs desktop/mobile behavior, fictional examples, interactions, validation, permission and error states. The clickable prototype covers representative flows across these screens; it is not yet a complete nine-screen design QA pass. Version 0.2 adds a semantic list alternative for the family tree, explicit selection state, and keyboard activation (Enter/Space) on SVG person nodes.
 
 ## UX-004 — Design-to-engineering handoff
 Deliver component/token inventory, screen mapping, interaction/state specifications, asset guidance, QA checklist, open decisions and explicit product/frontend sign-off.
@@ -52,7 +52,7 @@ Deliver component/token inventory, screen mapping, interaction/state specificati
 - Save-person and onboarding actions explicitly report that no data was saved/created.
 - Browser-based visual review snapshots were prepared for desktop and mobile. They are review aids for the approved dashboard visual direction, not hosted screenshots or a complete capture of every interactive state.
 - Product owner reviewed the visual direction and asked the team to proceed on 2026-10-30.
-- Keyboard-only, screen-reader, regional-script, contrast and cross-browser QA remain outstanding. The semantic list alternative is implemented but not yet accessibility-tested.
+- Keyboard-only, screen-reader, regional-script, contrast and cross-browser QA remain outstanding. The semantic list alternative and keyboard tree selection are implemented but not yet accessibility-tested.
 
 ## Scope boundary
 This workstream does not implement production React components. FL-008 remains the engineering implementation of the approved design system and responsive application shell. The prototype is a disposable design-validation artifact, not an application foundation or production code. The overall Phase 0 engineering gate remains open until UX handoff and backend architecture are reviewed and explicitly approved.
