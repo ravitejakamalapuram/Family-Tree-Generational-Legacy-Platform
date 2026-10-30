@@ -1,14 +1,9 @@
 # Project Status
 
-**Last updated:** 2026-10-30  
-**Stage:** Product definition and architecture baseline  
-**Implementation:** Not started  
-**Milestone:** R1 — Working family tree  
-**Default branch:** main
+**Last updated:** 2026-10-30 | **Stage:** Product definition and architecture baseline | **Implementation:** Not started | **Milestone:** R1 — Working family tree | **Default branch:** main
 
 ## State
-Repository was initially empty. The initial commit establishes documentation/governance only; no application code or tests exist yet.
-Product vision/use cases, PRD, UX, architecture, data model, API, security/privacy, four ADRs, delivery plan, and backlog FL-001–FL-104 documented. All implementation tasks are Not Started. CI/CD not started.
+Repository was initially empty. Initial commit establishes README; documentation/governance is being added. No application code or tests are claimed. Product vision/use cases, PRD, UX, architecture, data model, API, security/privacy, ADRs, delivery plan and backlog are the durable project baseline. FL-001–FL-104 implementation tasks start Not Started.
 
 ## Next actions
 1. Review documentation baseline.
@@ -20,6 +15,6 @@ Product vision/use cases, PRD, UX, architecture, data model, API, security/priva
 7. Implement Person/FamilyPerson and relationship integrity before tree UI.
 
 ## Risks
-Shared identity privacy; complex graph correctness; public publication leakage; contribution/adoption; free-model media/AI costs; historical uncertainty/provenance; archive preservation/succession.
+Shared identity privacy; complex graph correctness; public publication leakage; contribution/adoption; free-model media/AI cost; historical uncertainty/provenance; preservation/succession.
 
-Every implementation PR/task updates status with completed IDs, evidence, checks, blockers, milestone and next actions. Repository state overrides old conversation memory.
+Every implementation PR updates this file with completed IDs, evidence, checks, blockers, milestone and next actions. Repository state overrides old conversation memory.
