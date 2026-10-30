@@ -56,3 +56,7 @@ Deliver component/token inventory, screen mapping, interaction/state specificati
 
 ## Scope boundary
 This workstream does not implement production React components. FL-008 remains the engineering implementation of the approved design system and responsive application shell. The prototype is a disposable design-validation artifact, not an application foundation or production code. The overall Phase 0 engineering gate remains open until UX handoff and backend architecture are reviewed and explicitly approved.
+
+
+## Automated validation
+A GitHub Actions workflow at `.github/workflows/prototype-validation.yml` extracts inline JavaScript from the prototype and runs `node --check`. The workflow has been committed; its first run is pending. This does not replace browser, responsive, keyboard or screen-reader QA.
