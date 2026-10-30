@@ -65,7 +65,8 @@ Core relationships:
 
 **family_invitations**
 - id uuid PK; family_id uuid NOT NULL; created_by_membership_id uuid NOT NULL
-- email_normalized citext NOT NULL; role; optional branch scope
+- email_normalized citext NOT NULL; role; timestamps
+- Invitation branch scope is normalized in family_invitation_branch_scopes.
 - token_hash bytea UNIQUE NOT NULL (never store raw invitation token)
 - expires_at timestamptz NOT NULL; accepted_at; revoked_at
 - UNIQUE(family_id,id) for scoped invitation associations
