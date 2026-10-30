@@ -2,6 +2,20 @@
 
 Dependency-based plan; calendar/effort estimates are not committed until tasks are estimated and capacity understood.
 
+## Phase 0 — Product design and backend architecture (mandatory gate)
+Before application implementation, complete two parallel workstreams:
+- UX-001–UX-004: information architecture and journeys, visual direction/design system, high-fidelity P0 screens, design-to-engineering handoff. See [Product Design Plan](../ux/PRODUCT_DESIGN_PLAN.md).
+- ARCH-001–ARCH-005: domain boundaries, ERD/constraints/migrations, P0 OpenAPI, security/threat model, runtime/operations blueprint. See [Backend Architecture Plan](../architecture/BACKEND_ARCHITECTURE_PLAN.md).
+
+UX and architecture proceed in parallel, with shared domain vocabulary and P0 user journeys reviewed together.
+
+**Exit gate:** P0 UX flows/screens/responsive states are approved; design tokens and component handoff are implementation-ready; backend module boundaries, ERD, constraints, API contracts, authorization/security model and runtime plan are reviewed; decisions are recorded; PROJECT_STATUS explicitly authorizes implementation.
+
+Until then, `feature/fl-001-frontend-foundation` and `feature/fl-002-backend-foundation` remain parked. Do not implement FL-001/FL-002/FL-003/FL-008 yet.
+
+## Phase 1 — Engineering foundations
+Scope FL-001–FL-008, sequenced against Phase 0 outputs. FL-001 and FL-002 establish FE/BE scaffolding; FL-003 database/migrations; FL-004 configuration; FL-005 CI; FL-006 logging; FL-007 monitoring; FL-008 implements the approved design system and responsive shell.
+
 ## R1 — Working family tree
 Scope FL-001–FL-039. Create private family, people/complex relationships, ancestor/descendant tree, relationship calculation, invite member, prove tenant isolation.
 Exit: five-generation scenario; multiple family representations; graph integrity; auth/authorization suite.
