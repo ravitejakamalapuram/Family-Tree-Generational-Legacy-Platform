@@ -28,6 +28,10 @@ Phase 0 is mandatory before application implementation. UX-001–UX-004 and ARCH
 - ARCH-004 draft: `docs/architecture/SECURITY_THREAT_MODEL.md` — threat scenarios, authorization matrix and security controls.
 - ARCH-005 draft: `docs/architecture/RUNTIME_OPERATIONS.md` — topology, environments, jobs, observability, testing, deployment and recovery.
 
+## Draft review pull requests
+- UX design: [Draft PR #63](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/63).
+- Backend architecture: [Draft PR #64](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/64).
+
 ## Review and validation status
 - Draft artifacts committed to their workstream branches.
 - No design/architecture sign-off yet.
@@ -37,7 +41,7 @@ Phase 0 is mandatory before application implementation. UX-001–UX-004 and ARCH
 - No application code, automated tests or CI execution are claimed.
 
 ## Next actions
-1. Review UX-001/UX-002/UX-003 and resolve open product decisions; create or review clickable P0 prototype.
+1. Review draft PRs #63 and #64; resolve UX-001/UX-002/UX-003 product decisions and create/review clickable P0 prototype.
 2. Review ARCH-001/ARCH-002 and resolve identity, schema, ORM, RLS and transaction questions.
 3. Validate OpenAPI 3.1 syntax and reconcile every P0 journey with endpoint contracts.
 4. Review ARCH-004/ARCH-005 threat controls, provider choices and operational targets.
