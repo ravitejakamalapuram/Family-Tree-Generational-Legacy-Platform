@@ -38,6 +38,9 @@ Prioritize landing/auth, family onboarding, dashboard, people directory, add/edi
 ## UX-004 — Design-to-engineering handoff
 Deliver component/token inventory, screen mapping, interaction/state specifications, asset guidance, QA checklist, open decisions and explicit product/frontend sign-off.
 
+## Product decisions for review
+See `docs/ux/PRODUCT_DECISIONS.md` for proposed defaults UX-DEC-002–UX-DEC-006 covering first-person onboarding/root focus, tree entry, publication approval, Viewer/public visitor separation and design-system implementation choices. These are not accepted until product-owner approval.
+
 ## Design review gates
 1. Product information architecture and P0 journeys approved.
 2. Visual direction approved; token contrast, typography and regional-script checks completed.
