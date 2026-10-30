@@ -1,61 +1,20 @@
 # Design-to-Engineering Handoff
 
 **Workstream:** UX-004  
-**Status:** Draft v0.1 — pending final design review  
-**Related:** DESIGN_SYSTEM.md, INFORMATION_ARCHITECTURE_AND_JOURNEYS.md, P0_SCREEN_SPECIFICATIONS.md
+**Status:** Draft v0.1 — clickable prototype v0.1 available; final review and sign-off pending  
+**Related:** DESIGN_SYSTEM.md, INFORMATION_ARCHITECTURE_AND_JOURNEYS.md, P0_SCREEN_SPECIFICATIONS.md, prototype/index.html
 
 ## 1. Handoff objective
-
-Give frontend engineering a consistent, testable contract for implementing the first release experience. This handoff is not complete until tokens, components, screens, interaction states and responsive behavior are reviewed together.
+Give frontend engineering a consistent, testable contract for implementing the first release experience. Handoff is incomplete until tokens, components, screens, interaction states and responsive behavior are reviewed together.
 
 ## 2. Component inventory
+Foundation: semantic color/type/spacing/shape/elevation/motion tokens, breakpoints, icon and image treatment.
 
-### Foundation
-- Color and semantic tokens.
-- Typography and text styles.
-- Spacing, sizing, radius, border, elevation and motion tokens.
-- Breakpoints and responsive container rules.
-- Icon sizing and illustration/photo treatment.
+Navigation/layout: AppShell, WorkspaceSwitcher, DesktopSidebar, MobileBottomNavigation, TopBar, Breadcrumbs, PageHeader, ResponsiveContentContainer, ContextualAddSheet.
 
-### Navigation and layout
-- AppShell
-- WorkspaceSwitcher
-- DesktopSidebar
-- MobileBottomNavigation
-- TopBar
-- Breadcrumbs
-- PageHeader
-- ResponsiveContentContainer
-- ContextualAddSheet
+Data display: PersonAvatar, PersonCard, PersonTreeNode, RelationshipEdge/Badge, PrivacyIndicator, ProvenanceIndicator, FactRow, TimelineItem, MemoryCard, StoryCard, EventCard, MemberRow, ActivityItem.
 
-### Data display
-- PersonAvatar
-- PersonCard
-- PersonTreeNode
-- RelationshipEdge/RelationshipBadge
-- PrivacyIndicator
-- ProvenanceIndicator
-- FactRow
-- TimelineItem
-- MemoryCard
-- StoryCard
-- EventCard
-- MemberRow
-- ActivityItem
-
-### Inputs and actions
-- Button variants
-- TextField/TextArea
-- Select/Combobox
-- DatePrecisionField
-- LanguageSelector
-- VisibilitySelector
-- SearchField
-- FileUploadDropzone
-- Dialog/Drawer/BottomSheet
-- Tabs/Accordion
-- Toast/InlineAlert
-- Skeleton/EmptyState/ErrorState
+Inputs/actions: Button variants, TextField/TextArea, Select/Combobox, DatePrecisionField, LanguageSelector, VisibilitySelector, SearchField, FileUploadDropzone, Dialog/Drawer/BottomSheet, Tabs/Accordion, Toast/InlineAlert, Skeleton/EmptyState/ErrorState.
 
 ## 3. Screen-to-component mapping
 
@@ -72,57 +31,42 @@ Give frontend engineering a consistent, testable contract for implementing the f
 | Global Add | ContextualAddSheet, ActionList, ContextBadge |
 
 ## 4. Interaction contracts
-
 - Every interactive component supports visible keyboard focus.
 - Buttons distinguish loading/disabled states and prevent duplicate submission.
 - Forms preserve values on recoverable server/network errors.
 - DatePrecisionField never silently invents day/month precision.
 - VisibilitySelector explains audience and warns before any public transition.
-- PersonTreeNode exposes an accessible name and selection state; graph has a keyboard/list alternative.
+- PersonTreeNode exposes accessible name and selection state; graph has keyboard/list alternative.
 - UploadDropzone supports keyboard file selection and reports progress/errors.
 - Dialog/Drawer manages focus, escape behavior and unsaved changes.
-- EmptyState offers one contextual action; no dead ends.
-- Toasts announce status without stealing focus.
+- EmptyState offers one contextual action; toasts announce status without stealing focus.
 
 ## 5. State matrix
-
-Each major screen/component must account for:
-- Default.
-- Loading.
-- Empty.
-- Validation error.
-- Server error.
-- Permission denied.
-- Read-only.
-- Saving/success.
-- Concurrent update/conflict.
-- Offline/retry where relevant.
-- Destructive confirmation.
-- Narrow/mobile layout.
-- Keyboard and screen-reader behavior.
+Each major screen/component must account for default, loading, empty, validation error, server error, permission denied, read-only, saving/success, concurrent update/conflict, offline/retry, destructive confirmation, mobile layout, keyboard and screen-reader behavior.
 
 ## 6. Asset guidance
-
 - Use fictional placeholder identities and generated/appropriately licensed imagery in prototypes.
 - Do not use real family photos or personal data in public design files.
 - Portrait crops should be consistent but preserve original media in product storage.
-- Icons should be semantically consistent and accompanied by labels/tooltips where meaning is not obvious.
-- Illustrations must not imply that every family has a single lineage, one mother/father pair or a fixed cultural structure.
+- Icons need consistent semantics and labels/tooltips where meaning is not obvious.
+- Illustrations must not imply a single lineage or fixed cultural structure.
 
-## 7. Engineering handoff package
+## 7. Clickable prototype
+Artifact: [prototype/index.html](prototype/index.html). It demonstrates representative navigation and interactions across dashboard, tree, people search, profile, add-person, onboarding, memories and members.
 
-Required before UX-004 completion:
+Run locally by opening the HTML file in a modern browser. No build/install step is required. The artifact uses inline CSS/JavaScript and fictional sample data. It has no network/API calls, authentication, persistence, server authorization, upload pipeline or production graph algorithm. Save/Continue interactions are intentionally non-persistent. It is not production frontend code and must not be used as the basis for domain or API behavior.
+
+## 8. Required sign-off package
 1. Approved DESIGN_SYSTEM.md tokens and component variants.
 2. Approved INFORMATION_ARCHITECTURE_AND_JOURNEYS.md.
 3. Reviewed P0_SCREEN_SPECIFICATIONS.md with desktop/mobile states.
-4. Clickable prototype or equivalent reviewable screen artifact.
+4. Clickable prototype review, including tree edge cases.
 5. Component inventory and screen mapping.
-6. Accessibility and responsive QA checklist.
-7. Open design decisions resolved or explicitly deferred with owner/date.
+6. Accessibility, responsive and regional-script QA.
+7. Open decisions resolved or explicitly deferred with owner/date.
 8. Product and frontend sign-off recorded in issue #57.
 
-## 8. Frontend implementation guardrails
-
+## 9. Frontend implementation guardrails
 - FL-008 implements approved tokens/components and responsive shell; it must not invent a parallel design system.
 - Keep genealogy domain data separate from XYFlow rendering nodes.
 - Use server authorization as truth; UI permission checks are affordances only.
@@ -130,4 +74,4 @@ Required before UX-004 completion:
 - Design screens around bounded API payloads and progressive graph expansion.
 - Use accessible list/profile routes as fallback for complex tree canvas interactions.
 
-UX-004 remains draft until a prototype/handoff review and sign-off are attached to issue #57.
+UX-004 remains draft until prototype review, QA and sign-off are attached to issue #57.
