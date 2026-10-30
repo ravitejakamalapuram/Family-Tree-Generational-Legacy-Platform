@@ -49,3 +49,8 @@
 ## 2026-10-30 — OpenAPI validation automation
 - Added a pinned Redocly bundle-validation workflow on the backend architecture branch, triggered by OpenAPI/validator changes.
 - The workflow is committed but no successful run is visible yet; validation remains pending.
+
+## 2026-10-30 — Keyboard-accessible tree prototype
+- Made SVG person nodes focusable with accessible labels and selected state; Enter/Space now select a node.
+- Synchronized selected state with the semantic list alternative and added an announced selected-person summary.
+- Updated design handoff and product design plan. Keyboard/screen-reader testing remains outstanding.
