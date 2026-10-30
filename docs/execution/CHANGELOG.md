@@ -45,3 +45,7 @@
 - Added an architecture review report with remaining schema, identity privacy, ORM/RLS, graph concurrency, jobs and recovery decisions.
 - Performed structural OpenAPI checks (unique path keys and response blocks); full OpenAPI 3.1 parser/validator and CI contract tests remain outstanding.
 - PR #64 remains draft/unmerged; Phase 0 approval and production implementation remain blocked.
+
+## 2026-10-30 — OpenAPI validation automation
+- Added a pinned Redocly bundle-validation workflow on the backend architecture branch, triggered by OpenAPI/validator changes.
+- The workflow is committed but no successful run is visible yet; validation remains pending.
