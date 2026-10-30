@@ -423,10 +423,9 @@ paths:
         '404': { $ref: '#/components/responses/NotFound' }
     patch:
       tags: [People]
-      parameters:
-        - $ref: '#/components/parameters/CsrfToken'
       summary: Update permitted family-specific profile fields
       parameters:
+        - $ref: '#/components/parameters/CsrfToken'
         - $ref: '#/components/parameters/IfMatch'
       requestBody:
         required: true
