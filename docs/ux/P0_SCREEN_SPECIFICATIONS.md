@@ -76,3 +76,7 @@ Production flow is Account → Family → First person → First relationship �
 The artifact at [prototype/index.html](prototype/index.html) is static HTML/CSS/JavaScript. It has no backend, auth, persistence, authorization, API calls, media upload or production graph algorithm. “Save” and “Continue” are deliberately non-persistent. The artifact has not yet been browser/device/accessibility validated.
 
 UX-003 remains draft until visual review, required edge-case/accessibility QA and product/design sign-off are recorded.
+
+
+## Visual direction decision update — 2026-10-30
+The product owner approved the warm-neutral/evergreen, calm editorial direction with a family-tree-centered dashboard hierarchy. This approval does not waive the responsive, accessibility, contrast, regional-script or edge-case acceptance criteria above. The tree screen must provide a semantic list alternative, and unknown relationship placeholders must remain visibly distinct from person records.
