@@ -82,3 +82,7 @@
 - Added ADR-0007: PostgreSQL RLS as defense in depth (Proposed).
 - Added ADR-0008: PostgreSQL-backed durable jobs for initial release (Proposed).
 - Indexed proposals and linked them from the architecture review. None is marked Accepted; implementation remains gated on explicit review.
+
+## 2026-10-30 — Proposed UX product decisions
+- Added UX-DEC-002–UX-DEC-006 proposals for first-person/root behavior, default tree focus, publication review, Viewer/public visitor boundaries and design-system implementation defaults.
+- Linked proposals from IA and product design plan. They remain Proposed and require product-owner approval before UX-001/UX-002 sign-off or publication behavior implementation.
