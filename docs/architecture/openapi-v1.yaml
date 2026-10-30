@@ -21,6 +21,18 @@ paths:
       summary: Issue a session-bound CSRF token
       description: Return a synchronizer token for the current anonymous or authenticated session. Clients retain it in memory and send it in X-CSRF-Token on every cookie-authenticated state-changing request. Rotate it after login and privilege changes.
     
+    ErrorEnvelope:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, requestId]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details: { type: object }
+            requestId: { type: string, format: uuid }
   responses:
         '200':
           description: CSRF token issued
@@ -821,15 +833,4 @@ components:
           schema: { $ref: '#/components/schemas/ErrorEnvelope' }
     RateLimited:
       description: Too many requests
-    ErrorEnvelope:
-      type: object
-      required: [error]
-      properties:
-        error:
-          type: object
-          required: [code, message, requestId]
-          properties:
-            code: { type: string }
-            message: { type: string }
-            details: { type: object }
-            requestId: { type: string, format: uuid }
+
