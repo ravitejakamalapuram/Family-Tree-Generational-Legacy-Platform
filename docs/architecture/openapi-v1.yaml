@@ -180,10 +180,9 @@ paths:
                         items: { $ref: '#/components/schemas/FamilySummary' }
     post:
       tags: [Families]
-      parameters:
-        - $ref: '#/components/parameters/CsrfToken'
       summary: Create a private family workspace
       parameters:
+        - $ref: '#/components/parameters/CsrfToken'
         - $ref: '#/components/parameters/IdempotencyKey'
       requestBody:
         required: true
