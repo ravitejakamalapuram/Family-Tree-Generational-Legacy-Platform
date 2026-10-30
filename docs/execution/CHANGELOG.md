@@ -17,3 +17,8 @@
 - Added draft backend module boundaries, ERD/schema, OpenAPI contract, security threat model and runtime/operations blueprint.
 - Updated README, AGENTS, delivery plan, backlog, UX/architecture references, tracking and project status.
 - Drafts are pending review; no implementation, tests, OpenAPI validation or design sign-off is claimed.
+
+- Added UX-002 design system, UX-003 P0 screen specifications and UX-004 engineering handoff drafts.
+- Added ARCH-002 ERD/schema, ARCH-003 OpenAPI, ARCH-004 security threat model and ARCH-005 runtime/operations drafts.
+- Opened documentation-only draft review PRs #63 (UX) and #64 (backend architecture); neither is approved or merged.
+- Updated project status, tracking and changelog with draft links and outstanding validation/review gates.
