@@ -4,7 +4,7 @@
 - Date: 2026-10-30
 
 ## Context
-The product has multiple domains but is at definition/initial build stage. Distributed services add deployment, observability and consistency overhead before scale/team boundaries are known.
+Multiple domains exist, but the product is at definition/initial build stage. Distributed services add operational, deployment and consistency overhead before scale or team boundaries are known.
 
 ## Decision
 Use a TypeScript modular monolith with explicit domain modules/interfaces. Run async jobs in a worker sharing domain/application packages and database.
