@@ -1,5 +1,7 @@
 # System Architecture
 
+> High-level baseline. Complete ARCH-001–ARCH-005 in [Backend Architecture Plan](BACKEND_ARCHITECTURE_PLAN.md) to produce reviewed implementation-ready module boundaries, ERD, API contracts, security model and runtime blueprint before backend implementation.
+
 ## Baseline
 Responsive React web application + TypeScript Node.js modular monolith + PostgreSQL + S3-compatible media storage + background worker.
 
