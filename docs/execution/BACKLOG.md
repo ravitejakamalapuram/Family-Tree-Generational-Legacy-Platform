@@ -2,6 +2,13 @@
 
 All tasks start **Not Started**. IDs are stable. Never mark Done without evidence.
 
+## Pre-implementation design workstreams (mandatory gate)
+These workstreams are tracked separately from the stable FL implementation backlog. Complete them before FL-001/FL-002/FL-003/FL-008 implementation.
+- UX-001–UX-004: information architecture/journeys, visual direction/design system, high-fidelity P0 screens, engineering handoff. See [Product Design Plan](../ux/PRODUCT_DESIGN_PLAN.md) and GitHub issues #54–#57.
+- ARCH-001–ARCH-005: domain/module architecture, ERD/constraints/migrations, P0 OpenAPI, security/threat model, runtime/operations. See [Backend Architecture Plan](../architecture/BACKEND_ARCHITECTURE_PLAN.md) and GitHub issues #58–#62.
+
+FL-008 is implementation of the approved design system and responsive shell; it is not a substitute for the UX design workstream.
+
 ## Epic 01 — Foundation (P0)
 | ID | Task | Acceptance |
 |---|---|---|
