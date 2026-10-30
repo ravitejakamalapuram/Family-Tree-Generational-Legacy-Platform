@@ -36,7 +36,7 @@ Inputs/actions: Button variants, TextField/TextArea, Select/Combobox, DatePrecis
 - Forms preserve values on recoverable server/network errors.
 - DatePrecisionField never silently invents day/month precision.
 - VisibilitySelector explains audience and warns before any public transition.
-- PersonTreeNode exposes accessible name and selection state; semantic list alternative is included in prototype v0.2. Keyboard/screen-reader verification remains required.
+- PersonTreeNode exposes accessible name, focusability and pressed/selected state; Enter/Space activate selection. A semantic list alternative is included in prototype v0.2. Keyboard/screen-reader verification remains required.
 - UploadDropzone supports keyboard file selection and reports progress/errors.
 - Dialog/Drawer manages focus, escape behavior and unsaved changes.
 - EmptyState offers one contextual action; toasts announce status without stealing focus.
