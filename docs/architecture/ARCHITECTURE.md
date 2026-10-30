@@ -15,15 +15,8 @@ Data: PostgreSQL, object storage, PostgreSQL FTS initially; cache only when meas
 ## Frontend
 React + TypeScript + Vite; React Router; TanStack Query; Zustand only where genuinely needed; Tailwind/design system; XYFlow custom nodes/edges; React Hook Form + Zod; i18next; IndexedDB for draft/upload queue if useful.
 
-Feature folders:
-```
-src/app/{router,providers,layouts,config}
-src/features/{auth,onboarding,families,family-tree,people,relationships,branches,memories,stories,events,places,collaboration,historian,archive,public-pages,settings}
-src/shared/{components,hooks,api,utils,types,i18n}
-```
-
 ## Backend
-Node.js + TypeScript; NestJS preferred; PostgreSQL; Prisma or Drizzle, with explicit SQL/CTEs as needed. Modules: auth, users, families, memberships, persons, family-persons, relationships, branches, events, places, media, memories, stories, contributions, notifications, search, historian, archives, public-pages.
+Node.js + TypeScript; NestJS preferred; PostgreSQL; Prisma or Drizzle, with explicit SQL/CTEs where needed. Modules: auth, users, families, memberships, persons, family-persons, relationships, branches, events, places, media, memories, stories, contributions, notifications, search, historian, archives, public-pages.
 
 ## Repository shape
 ```
@@ -41,7 +34,7 @@ README.md
 Static CDN hosting; container API/worker; managed PostgreSQL; S3-compatible storage; email; GitHub Actions; structured logs/error monitoring. Separate environments. No secrets in repo.
 
 ## Performance/reliability
-Bounded graph responses; profile details loaded separately; recursive CTE depth/node limits; indexed relationship endpoints; measured cache and invalidation; resumable upload; cursor pagination; transactions for graph/publication/approval/membership; optimistic versions; idempotency; durable jobs; tested database/media restore.
+Bounded graph responses; profile details loaded separately; recursive CTE depth/node limits; indexed relationship endpoints; measured cache/invalidation; resumable uploads; cursor pagination; transactions for graph/publication/approval/membership; optimistic versions; idempotency; durable jobs; tested database/media restore.
 
 ## Avoid initially
 Kubernetes, microservices, Kafka, Neo4j, complex event streaming and premature complexity.
