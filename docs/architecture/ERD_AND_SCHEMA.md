@@ -59,7 +59,6 @@ Core relationships:
 - user_id uuid NOT NULL FK users
 - role text constrained to owner, admin, branch_manager, contributor, reviewer, viewer
 - status text constrained to invited, active, suspended, revoked
-- branch_scope jsonb NULL (temporary proposal; normalize if query-critical)
 - joined_at and timestamps
 - UNIQUE(family_id,user_id)
 - UNIQUE(family_id,id) for scoped foreign keys
@@ -69,8 +68,9 @@ Core relationships:
 - email_normalized citext NOT NULL; role; optional branch scope
 - token_hash bytea UNIQUE NOT NULL (never store raw invitation token)
 - expires_at timestamptz NOT NULL; accepted_at; revoked_at
+- UNIQUE(family_id,id) for scoped invitation associations
 - composite FK (family_id, created_by_membership_id) to membership
-- index (family_id, expires_at); unique active invitation policy to be finalized
+- index (family_id, expires_at); enforce one active invitation per normalized email/family/role policy
 
 ### Person identity and family representation
 
@@ -97,7 +97,7 @@ Core relationships:
 - id uuid PK; family_id uuid NOT NULL; family_person_id uuid NOT NULL
 - name text NOT NULL; name_type text; language_tag varchar(35); script text; is_primary boolean
 - valid_from, valid_to date nullable; source_id nullable
-- Composite FK (family_id,family_person_id) to family_people
+- Composite FK (family_id,family_person_id) to family_people and (family_id,source_id) to sources when source_id is present.
 
 ### Facts and provenance
 
@@ -119,6 +119,8 @@ Core relationships:
 - created_by_membership_id uuid; supersedes_fact_id uuid NULL
 - version integer NOT NULL DEFAULT 1; timestamps
 - Composite FK to family_people and membership; self-reference for supersession scoped to family.
+- CHECK(date_start IS NULL OR date_end IS NULL OR date_start <= date_end).
+- CHECK((value_text IS NULL) OR (value_json IS NULL)); typed value validation is performed by fact_type policy.
 - Competing assertions coexist; accepted/current representation is a derived selection, not destructive update.
 
 **fact_sources**
@@ -153,7 +155,19 @@ Relationship type codes initially include biological_parent, adoptive_parent, st
 - id uuid PK; family_id uuid NOT NULL; name text NOT NULL; description text
 - root_family_person_id uuid NULL; manager_membership_id uuid NULL
 - timestamps, version
+- UNIQUE(family_id,id) for scoped foreign keys.
 - Composite FKs enforce same-family root and manager.
+
+**family_membership_branch_scopes**
+- family_id uuid NOT NULL; membership_id uuid NOT NULL; branch_id uuid NOT NULL
+- PRIMARY KEY(family_id,membership_id,branch_id)
+- Composite FKs to family_memberships(family_id,id) and family_branches(family_id,id).
+- A membership with no scope rows has the role's explicitly defined family-wide or no-branch scope; do not infer scope from missing JSON.
+
+**family_invitation_branch_scopes**
+- family_id uuid NOT NULL; invitation_id uuid NOT NULL; branch_id uuid NOT NULL
+- PRIMARY KEY(family_id,invitation_id,branch_id)
+- Composite FKs to family_invitations(family_id,id) and family_branches(family_id,id).
 
 **family_branch_members**
 - family_id uuid; branch_id uuid; family_person_id uuid
@@ -203,6 +217,7 @@ Relationship type codes initially include biological_parent, adoptive_parent, st
 **audit_events**
 - id uuid PK; family_id uuid NULL; actor_user_id uuid NULL; actor_membership_id uuid NULL
 - action text; target_type text; target_id uuid; request_id uuid; metadata jsonb; created_at
+- When family_id and actor_membership_id are present, composite FK (family_id,actor_membership_id) must resolve to family_memberships(family_id,id).
 - Append-only application permissions; exclude secrets and minimize copied sensitive payload.
 
 **publications**
@@ -224,7 +239,9 @@ Relationship type codes initially include biological_parent, adoptive_parent, st
 - starts_at timestamptz NULL; ends_at timestamptz NULL
 - local_start timestamp NULL; local_end timestamp NULL; timezone_id text NULL
 - date_precision text; place_id uuid NULL; visibility text; version integer
-- Define whether all-day/historical events use local dates rather than instants.
+- Composite FK (family_id,place_id) to places when place_id is present.
+- CHECK(starts_at IS NULL OR ends_at IS NULL OR starts_at <= ends_at); define local-time equivalent.
+- All-day/historical events use local dates rather than instants; IANA timezone is required for local civil times.
 
 **event_participants**
 - family_id, event_id, family_person_id, participation_type
@@ -252,6 +269,8 @@ Relationship type codes initially include biological_parent, adoptive_parent, st
 10. Public projection rows contain only approved fields and are versioned.
 11. Optimistic concurrency uses integer version or ETag; stale writes return conflict.
 12. Audit records are append-only for application roles.
+13. Branch authorization is represented by normalized, family-scoped membership/branch join rows; no authorization decision depends on unvalidated JSONB.
+14. Temporal ranges are internally consistent, and date precision/qualifier combinations are validated at the application boundary and by database checks where practical.
 
 ## 5. Tenant isolation and PostgreSQL RLS
 
