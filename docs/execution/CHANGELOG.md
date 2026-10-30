@@ -54,3 +54,8 @@
 - Made SVG person nodes focusable with accessible labels and selected state; Enter/Space now select a node.
 - Synchronized selected state with the semantic list alternative and added an announced selected-person summary.
 - Updated design handoff and product design plan. Keyboard/screen-reader testing remains outstanding.
+
+## 2026-10-30 — OpenAPI validation feedback
+- First Redocly run found a duplicate YAML mapping in the family creation operation.
+- Merged the CSRF and idempotency parameter references into one valid parameters list and committed the correction.
+- Follow-up validation run #5 is in progress; do not treat OpenAPI as validated until it passes.
