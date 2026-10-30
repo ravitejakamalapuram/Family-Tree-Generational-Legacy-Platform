@@ -21,8 +21,9 @@ Phase 0 is mandatory before application implementation. UX-001–UX-004 and ARCH
 - UX-003 draft: `docs/ux/P0_SCREEN_SPECIFICATIONS.md` — nine P0 screen specs plus clickable prototype v0.1 at `docs/ux/prototype/index.html`.
 - UX-004 draft: `docs/ux/DESIGN_HANDOFF.md` — component inventory, screen mapping, interaction contracts, state matrix and frontend guardrails.
 - Prototype scope: dashboard, tree selection/inspector, people search, person profile, add-person form, family setup, memories and members. Static HTML/CSS/JS with fictional sample data only; no backend, auth, persistence, authorization, uploads or production graph algorithm.
-- Prototype is not yet browser/device/accessibility validated. Save/Continue are intentionally non-persistent. Tree sample geometry is illustrative.
-- Design issues #54–#57 remain open pending review; no UX sign-off recorded.
+- Dashboard desktop/mobile review snapshots have been rendered for feedback. They are visual review aids for the intended dashboard direction, not hosted app screenshots or proof of full prototype QA.
+- Product owner feedback is pending. Tree geometry remains illustrative.
+- Design issues #54–#57 remain open; no UX sign-off recorded.
 
 ## Backend architecture progress
 - ARCH-001 draft: `docs/architecture/MODULE_BOUNDARIES.md`.
@@ -37,21 +38,23 @@ Phase 0 is mandatory before application implementation. UX-001–UX-004 and ARCH
 
 ## Review and validation status
 - UX clickable prototype artifact committed on `workstream/ux-design`; not merged.
+- Desktop/mobile dashboard snapshots prepared for visual feedback; not committed as authoritative design assets.
 - No design/architecture sign-off yet.
 - OpenAPI file has not yet been run through a validator.
 - ERD/schema has not yet been reviewed against the final API contract.
 - Token contrast and regional font fallback have not yet been verified in rendered UI.
-- Prototype has not yet been tested across browsers/devices or with keyboard/screen readers.
+- Full prototype keyboard/screen-reader and cross-browser QA remain outstanding.
 - No application code, automated tests or CI execution are claimed.
 
 ## Next actions
-1. Review prototype v0.1 and draft PR #63; capture product/design feedback and revise screens/tokens.
-2. Complete prototype edge cases: multiple partners/parent types, blended families, unknown/disputed relationships, long names and deeper trees; add a proper accessible list alternative.
-3. Run responsive, keyboard, screen-reader, contrast and regional-script QA; record evidence and decisions.
-4. Review PR #64; resolve identity, schema, ORM, RLS and transaction questions.
-5. Validate OpenAPI 3.1 syntax and reconcile every P0 journey with endpoint contracts.
-6. Review security/runtime controls and conduct joint product/design/backend Phase 0 gate.
-7. Only after explicit approval, resume FL-001/FL-002/FL-003/FL-008 in dependency order.
+1. Get product owner review of the desktop/mobile visual direction and record changes.
+2. Revise dashboard layout, navigation and tree preview from that feedback.
+3. Complete prototype edge cases: multiple partners/parent types, blended families, unknown/disputed relationships, long names and deeper trees; add a proper accessible list alternative.
+4. Run responsive, keyboard, screen-reader, contrast and regional-script QA; record evidence and decisions.
+5. Review PR #64; resolve identity, schema, ORM, RLS and transaction questions.
+6. Validate OpenAPI 3.1 syntax and reconcile every P0 journey with endpoint contracts.
+7. Review security/runtime controls and conduct joint product/design/backend Phase 0 gate.
+8. Only after explicit approval, resume FL-001/FL-002/FL-003/FL-008 in dependency order.
 
 ## Risks
 Shared identity privacy; graph integrity and concurrent cycle prevention; public projection leakage/revocation; living-person/minor privacy; regional-script accessibility; media security; provider retention for AI; backup/restore and succession.
