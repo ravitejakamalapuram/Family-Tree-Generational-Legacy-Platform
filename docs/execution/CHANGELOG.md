@@ -36,3 +36,12 @@
 - Added visible keyboard-focus styling to primary prototype controls.
 - Updated P0 screen and engineering handoff notes. Accessibility behavior is implemented as a design prototype but still requires keyboard and screen-reader QA.
 - Phase 0 remains open; backend architecture has not been approved and no production implementation has started.
+
+
+## 2026-10-30 — Backend architecture review pass
+- Reconciled OpenAPI v1 with P0 auth, family invitation/membership, people/facts and relationship correction flows.
+- Added cookie-session CSRF synchronizer-token contract, exact-origin/CORS guidance and idempotency-key requirements.
+- Standardized date assertions to represent ranges, approximate values and unknown precision.
+- Added an architecture review report with remaining schema, identity privacy, ORM/RLS, graph concurrency, jobs and recovery decisions.
+- Performed structural OpenAPI checks (unique path keys and response blocks); full OpenAPI 3.1 parser/validator and CI contract tests remain outstanding.
+- PR #64 remains draft/unmerged; Phase 0 approval and production implementation remain blocked.
