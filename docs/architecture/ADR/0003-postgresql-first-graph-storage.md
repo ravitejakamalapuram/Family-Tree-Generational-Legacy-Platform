@@ -1,5 +1,4 @@
 # ADR-0003: PostgreSQL-First Genealogy Graph
-
 - Status: Accepted
 - Date: 2026-10-30
 
@@ -10,4 +9,4 @@ The graph is family-scoped people and typed relationships. Initial traversal can
 Store graph nodes/edges in PostgreSQL. Use bounded recursive CTEs and dedicated genealogy domain service. Render with XYFlow and custom genealogy layout.
 
 ## Consequences
-Lower infrastructure complexity and transactional integrity. Monitor graph query performance; reconsider graph database only with measured evidence.
+Lower infrastructure complexity and transactional integrity. Monitor query performance; reconsider graph database only with measured evidence.
