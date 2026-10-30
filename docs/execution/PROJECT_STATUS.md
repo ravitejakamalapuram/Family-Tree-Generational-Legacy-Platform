@@ -18,7 +18,7 @@ The product owner has approved the UX visual direction after reviewing desktop/m
 ## UX progress
 - UX-001 draft: `docs/ux/INFORMATION_ARCHITECTURE_AND_JOURNEYS.md`.
 - UX-002: visual direction approved; design tokens remain provisional pending contrast and regional-script validation. See `docs/ux/DESIGN_SYSTEM.md` on UX branch.
-- UX-003 draft: `docs/ux/P0_SCREEN_SPECIFICATIONS.md` — nine P0 screen specs plus clickable prototype v0.1 at `docs/ux/prototype/index.html`.
+- UX-003 draft: `docs/ux/P0_SCREEN_SPECIFICATIONS.md` — nine P0 screen specs plus clickable prototype v0.2 at `docs/ux/prototype/index.html`.
 - UX-004 draft: `docs/ux/DESIGN_HANDOFF.md` — component inventory, screen mapping, interaction contracts, state matrix and frontend guardrails.
 - Prototype scope: dashboard, tree selection/inspector, people search, person profile, add-person form, family setup, memories and members. Static HTML/CSS/JS with fictional sample data only; no backend, auth, persistence, authorization, uploads or production graph algorithm.
 - Desktop/mobile dashboard review mockups were reviewed and the visual direction approved on 2026-10-30. They are visual review aids, not hosted app screenshots or proof of full prototype QA.
@@ -38,7 +38,7 @@ The product owner has approved the UX visual direction after reviewing desktop/m
 
 ## Review and validation status
 - UX visual direction approved; complete design system, P0 screen, accessibility and engineering handoff approval remain outstanding.
-- UX clickable prototype artifact committed on `workstream/ux-design`; not merged.
+- UX clickable prototype v0.2 committed on `workstream/ux-design`; includes a semantic list alternative for tree navigation. Not merged.
 - No backend architecture sign-off yet.
 - OpenAPI file has not yet been run through a validator.
 - ERD/schema has not yet been reviewed against the final API contract.
@@ -46,7 +46,7 @@ The product owner has approved the UX visual direction after reviewing desktop/m
 
 ## Next actions
 1. Apply the approved visual direction consistently across the P0 screen specifications and prototype; refine tree prominence and mobile navigation without changing the approved design language.
-2. Complete prototype edge cases: multiple partners/parent types, blended families, unknown/disputed relationships, long names and deeper trees; add a proper accessible list alternative.
+2. Complete prototype edge cases: multiple partners/parent types, blended families, unknown/disputed relationships, long names and deeper trees; verify the newly added accessible list alternative.
 3. Run responsive, keyboard, screen-reader, contrast and regional-script QA; record evidence and decisions.
 4. Review PR #64; resolve identity, schema, ORM, RLS and transaction questions.
 5. Validate OpenAPI 3.1 syntax and reconcile every P0 journey with endpoint contracts.
