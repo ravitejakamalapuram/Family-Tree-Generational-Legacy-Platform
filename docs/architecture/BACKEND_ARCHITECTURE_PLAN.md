@@ -1,6 +1,6 @@
 # Backend Architecture Workstream — ARCH-001 to ARCH-005
 
-**Status: Draft artifacts and internal review pass completed; pending full validation and explicit architecture decisions.
+**Status:** Draft artifacts and internal review pass completed; OpenAPI 3.1 bundling passes; architecture decisions and contract completeness remain open.
 **Source inputs:** ARCHITECTURE, DATA_MODEL, API_DESIGN, SECURITY_PRIVACY and accepted ADRs.
 
 ## Objective
@@ -78,8 +78,8 @@ Specify:
 - API versioning and compatibility.
 
 Acceptance:
-- OpenAPI validates.
-- Every P0 UI journey maps to API operations.
+- OpenAPI 3.1 document parses and bundles in CI (passed in run 41003090188).
+- Every P0 UI journey maps to API operations, including endpoint-level authorization and error behavior (reconciliation remains in progress).
 - Authorization and error behavior documented per operation.
 
 ## ARCH-004 — Security, privacy and threat model
