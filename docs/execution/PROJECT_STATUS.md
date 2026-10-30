@@ -41,7 +41,7 @@ The product owner has approved the UX visual direction after reviewing desktop/m
 - UX visual direction approved; complete design system, P0 screen, accessibility and engineering handoff approval remain outstanding.
 - UX clickable prototype v0.2 committed on `workstream/ux-design`; includes a semantic list alternative and keyboard-selectable SVG person nodes. Not merged.
 - Backend architecture review pass completed; no backend architecture sign-off yet. ORM, cross-family identity linking, RLS/pooler, branch scope, graph concurrency and job queue choices remain to be resolved.
-- OpenAPI structural checks completed; Redocly CI workflow added but not yet observed passing.
+- OpenAPI structural checks completed; Redocly CI workflow added; first run caught a duplicate YAML mapping, which was fixed. Follow-up run #5 is in progress.
 - ERD/schema has not yet been reviewed against the final API contract.
 - No application code, automated tests or CI execution are claimed.
 
