@@ -47,8 +47,14 @@ Updated: 2026-10-30. FL-001–FL-039 are represented by the canonical issue link
 ## Scope
 Issues FL-001–FL-039 cover R1: engineering foundation, authentication/family spaces, identity and people, relationship graph, tree UI and performance.
 
-## Important reconciliation note
-During issue creation, an initial batch partially completed before the integration returned an error. This produced additional duplicate issue records for some FL IDs. The table above points to one canonical issue per FL ID. Duplicate issue records have deliberately not been closed automatically; they should be reviewed and closed as duplicates after confirmation.
+## Duplicate reconciliation
+Fourteen duplicate issue records were cross-checked against their canonical counterparts. Each duplicate has the same FL backlog ID and matching task title; descriptions differ only in wording/detail. All fourteen have been closed with GitHub's duplicate reason:
+
+- #8–#14 duplicate canonical issues #1–#7.
+- #28–#31 duplicate canonical issues #24–#27.
+- #36–#38 duplicate canonical issues #33–#35.
+
+The canonical issues remain open and are the only execution records to use.
 
 ## Operating rules
 - Master backlog markdown is the canonical full task catalogue and acceptance baseline.
