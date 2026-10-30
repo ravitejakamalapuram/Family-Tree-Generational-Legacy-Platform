@@ -299,10 +299,9 @@ paths:
         '404': { $ref: '#/components/responses/NotFound' }
     patch:
       tags: [Families]
-      parameters:
-        - $ref: '#/components/parameters/CsrfToken'
       summary: Update permitted family settings
       parameters:
+        - $ref: '#/components/parameters/CsrfToken'
         - $ref: '#/components/parameters/IfMatch'
       requestBody:
         required: true
