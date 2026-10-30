@@ -1,5 +1,4 @@
 # ADR-0004: Explicit Published Projections for Public Pages
-
 - Status: Accepted
 - Date: 2026-10-30
 
