@@ -146,7 +146,7 @@ All tasks start **Not Started**. IDs are stable. Never mark Done without evidenc
 |---|---|---|
 | FL-096 | API integration tests | Critical flows |
 | FL-097 | Authorization tests | Cross-family blocked |
-| FL-098 | Graph integrity tests | Invalid edges rejected |
+| FL-098 | Graph integrity tests | Invalid edges |
 | FL-099 | Performance tests | Large graph |
 | FL-100 | Accessibility | Keyboard/screen reader |
 | FL-101 | Responsive QA | Mobile flows |
