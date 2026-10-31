@@ -1,7 +1,7 @@
 # Information Architecture and P0 Journeys
 
 **Workstream:** UX-001  
-**Status:** Draft for product review  
+**Status:** Draft; approved product defaults recorded  
 **Version:** 0.1  
 **Inputs:** PRODUCT_REQUIREMENTS.md, USE_CASES.md, UX_SPECIFICATION.md
 
@@ -219,10 +219,10 @@ Every P0 screen must define:
 
 ## 7. Product questions and proposed defaults
 
-See [PRODUCT_DECISIONS.md](PRODUCT_DECISIONS.md) for UX-DEC-002–UX-DEC-006 proposals. Until approved, treat them as working assumptions only.
+See [PRODUCT_DECISIONS.md](PRODUCT_DECISIONS.md) for accepted UX-DEC-002–UX-DEC-006 product defaults (approved 2026-10-31).
 1. UX-DEC-002 proposes allowing the creator to add themselves, another person, or defer; never assume the creator is the genealogical root.
 2. UX-DEC-003 proposes last-focused person, then configured focus, then a guided empty state.
 3. UX-DEC-004 proposes Owner/delegated Admin publication, with second review and consent safeguards for living/minor/sensitive content.
 4. UX-DEC-005 proposes member-authorized data for Viewers and allowlisted published projections only for public visitors.
 
-These proposals require product-owner approval before UX-001 is marked complete or publication/access behavior is implemented.
+The product defaults are approved for design and contract work. UX-001 remains open until journey coverage and validation are complete; publication/access behavior remains gated on legal/privacy review and executable authorization tests.
