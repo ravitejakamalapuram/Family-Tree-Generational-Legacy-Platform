@@ -1,7 +1,7 @@
 # P0 High-Fidelity Screen Specifications
 
 **Workstream:** UX-003  
-**Status:** Draft v0.1 — clickable prototype v0.1 available; review and QA pending  
+**Status:** Draft v0.2 — product defaults approved; P0 coverage and QA pending  
 **Related:** INFORMATION_ARCHITECTURE_AND_JOURNEYS.md, DESIGN_SYSTEM.md, prototype/index.html
 
 This document defines layout hierarchy, content, interaction and responsive behavior. All names and content are fictional. The prototype is a visual interaction aid, not an API-backed application.
@@ -41,7 +41,7 @@ Production flow is Account → Family → First person → First relationship �
 - Display name is the only required field.
 - Date precision options include Exact, About, Before, After, Between and Unknown.
 - Relationship context is optional and family-scoped.
-- Private-to-family is the default; public publishing is not offered in the prototype.
+- Private-to-family is the default; public publishing is a separate explicit workflow and is not offered in the prototype. Living people/minors and sensitive attributes are excluded from public projection by default; required consent and second-review checks are enforced server-side.
 - Duplicate suggestions are advisory only; never auto-merge.
 - Prototype validation is local and does not save data.
 
@@ -72,7 +72,7 @@ Production flow is Account → Family → First person → First relationship �
 - [ ] Regional-script and long-name rendering reviewed.
 - [ ] Product review of unresolved UX-001 questions is complete.
 
-## Prototype limitations
+### Tree entry behavior\nRestore the last-focused person in the active family; otherwise use the configured tree focus; otherwise show a guided empty state. Never infer a root from age or family hierarchy.\n\n### Publication and visitor access\nPublishing is off by default. Owner/delegated Admin may approve deceased-person content; living-person, minor or sensitive disclosures require applicable subject/guardian consent and a second authorized reviewer. Authenticated Viewer access is governed by membership, role, branch and record visibility; public visitors receive only the allowlisted published projection. These are product rules, not a substitute for legal review or executable authorization tests.\n\n## Prototype limitations
 The artifact at [prototype/index.html](prototype/index.html) is static HTML/CSS/JavaScript. It has no backend, auth, persistence, authorization, API calls, media upload or production graph algorithm. “Save” and “Continue” are deliberately non-persistent. The artifact has not yet been browser/device/accessibility validated.
 
 UX-003 remains draft until visual review, required edge-case/accessibility QA and product/design sign-off are recorded.
