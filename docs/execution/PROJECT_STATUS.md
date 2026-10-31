@@ -46,10 +46,10 @@ The product owner has approved the UX visual direction and UX-DEC-002–UX-DEC-0
 - No application code, automated tests or CI execution are claimed.
 
 ## Next actions
-1. Complete P0 screen and prototype browser/device review, including complex genealogy cases, long names and deep trees.
-2. Run keyboard-only, screen-reader, contrast and regional-script QA; record reproducible evidence.
-3. Map each P0 journey to API operations and add negative role/branch/visibility/tenant contract tests.
-4. Review PR #64, `docs/architecture/ARCHITECTURE_REVIEW.md` and proposed ADRs 0005–0008; obtain privacy/product and engineering decisions before implementation.
+1. Complete manual review of all P0 screens and complex genealogy cases, long names and deep trees; the automated browser suite currently covers representative flows and viewport smoke checks.
+2. Complete full keyboard-only and screen-reader review, regional-script review, and the complete token/control contrast matrix.
+3. Turn the P0 contract matrix into executable API tests once the application foundation exists; prioritize cross-family IDOR, role/branch visibility, CSRF, invitation replay and graph concurrency.
+4. Prove Prisma SQL migration/composite-FK behavior, RLS transaction context and pooler isolation, parentage graph serialization and durable-job idempotency.
 5. Resolve retention/deletion, provider, backup/RPO/RTO and operational ownership.
 6. Conduct joint product/design/backend Phase 0 gate; only after explicit sign-off, resume FL-001/FL-002/FL-003/FL-008 in dependency order.
 
