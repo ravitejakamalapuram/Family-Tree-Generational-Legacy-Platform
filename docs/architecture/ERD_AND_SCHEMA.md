@@ -50,6 +50,7 @@ Core relationships:
 - default_language varchar(35) NOT NULL
 - created_by_user_id uuid FK users
 - privacy_mode text constrained to private, invite_only, public_presence; default private
+- configured_tree_focus_family_person_id uuid NULL; nullable family-scoped FK to family_people(family_id,id), used only as the family fallback when a member has no personal last focus
 - version integer NOT NULL DEFAULT 1
 - timestamps
 
@@ -72,6 +73,12 @@ Core relationships:
 - UNIQUE(family_id,id) for scoped invitation associations
 - composite FK (family_id, created_by_membership_id) to membership
 - index (family_id, expires_at); enforce one active invitation per normalized email/family/role policy
+
+**family_tree_preferences** (personal focus per family)
+- family_id uuid NOT NULL; user_id uuid NOT NULL; last_focused_family_person_id uuid NULL; updated_at timestamptz NOT NULL
+- PRIMARY KEY (family_id,user_id)
+- Composite FK (family_id,user_id) to family_memberships(family_id,user_id); composite FK (family_id,last_focused_family_person_id) to family_people(family_id,id) when non-null.
+- Update only after the user focuses a person they are authorized to see; clear or revalidate when membership/record access changes.
 
 ### Person identity and family representation
 
