@@ -86,3 +86,11 @@
 ## 2026-10-30 — Proposed UX product decisions
 - Added UX-DEC-002–UX-DEC-006 proposals for first-person/root behavior, default tree focus, publication review, Viewer/public visitor boundaries and design-system implementation defaults.
 - Linked proposals from IA and product design plan. They remain Proposed and require product-owner approval before UX-001/UX-002 sign-off or publication behavior implementation.
+
+
+## 2026-10-31 — Phase 0 product and architecture defaults approved
+- Product owner approved UX-DEC-002–UX-DEC-006: no assumed genealogical root, deterministic tree-entry focus, private-by-default publication with heightened consent/review safeguards, strict Viewer/public projection separation, and design-system implementation defaults.
+- Product owner approved the direction recorded in ADR-0005–0008: v1 cross-family identity isolation, Prisma with reviewed SQL-first migrations, PostgreSQL RLS defense in depth, and PostgreSQL-backed durable jobs.
+- Updated the UX workstream decisions, IA/design plan, architecture ADRs and architecture review; updated the main decision log and project status.
+- Approval selects product and technical direction only. It does not constitute UX handoff sign-off, legal/privacy approval, technical proof, security validation or joint Phase 0 approval.
+- Next: complete cross-workstream contract review, accessibility/browser QA, threat-model-to-test mapping and technical proof of the accepted architecture choices. No implementation branches resumed and no PR merged.
