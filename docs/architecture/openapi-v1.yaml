@@ -606,6 +606,27 @@ paths:
       responses:
         '200': { description: Authorized branch metadata only }
         '404': { $ref: '#/components/responses/NotFound' }
+  /families/{familyId}/tree/focus:
+    put:
+      tags: [Tree]
+      summary: Persist the current member's last-focused person
+      description: Stores a family-scoped personal preference. The target must be visible to the current member; this does not change the family-configured fallback focus.
+      parameters:
+        - $ref: '#/components/parameters/FamilyId'
+        - $ref: '#/components/parameters/CsrfToken'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [familyPersonId]
+              properties:
+                familyPersonId: { type: [string, 'null'], format: uuid }
+      responses:
+        '204': { description: Personal tree focus saved or cleared }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
   /families/{familyId}/tree:
     get:
       tags: [Tree]
