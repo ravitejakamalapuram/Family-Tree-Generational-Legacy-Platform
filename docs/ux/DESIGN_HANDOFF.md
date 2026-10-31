@@ -1,7 +1,7 @@
 # Design-to-Engineering Handoff
 
 **Workstream:** UX-004  
-**Status:** Draft v0.2 — visual direction approved; accessibility/list alternative and full review/sign-off pending  
+**Status:** Draft v0.3 — visual direction and product defaults approved; accessibility QA and full review/sign-off pending  
 **Related:** DESIGN_SYSTEM.md, INFORMATION_ARCHITECTURE_AND_JOURNEYS.md, P0_SCREEN_SPECIFICATIONS.md, prototype/index.html
 
 ## 1. Handoff objective
@@ -74,4 +74,4 @@ Run locally by opening the HTML file in a modern browser. No build/install step 
 - Design screens around bounded API payloads and progressive graph expansion.
 - Use accessible list/profile routes as fallback for complex tree canvas interactions.
 
-UX-004 remains draft until prototype review, QA and sign-off are attached to issue #57. Visual direction approval alone does not constitute engineering handoff approval.
+UX-DEC-002–UX-DEC-006 are approved product defaults and should be reflected in implementation contracts. UX-004 remains draft until prototype review, QA and product/frontend sign-off are attached to issue #57. Product-default approval does not constitute engineering handoff approval.
