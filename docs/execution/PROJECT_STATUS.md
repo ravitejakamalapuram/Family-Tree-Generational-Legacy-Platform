@@ -1,13 +1,13 @@
 # Project Status
 
-**Last updated:** 2026-10-30
-**Stage:** Phase 0 — UX design and backend architecture
+**Last updated:** 2026-10-31
+**Stage:** Phase 0 — cross-review and validation
 **Implementation:** Paused pending complete Phase 0 approval
 **Milestone:** R1 — Working family tree
 **Default branch:** main
 
 ## State
-The product owner has approved the UX visual direction after reviewing desktop/mobile dashboard review mockups: warm neutral surfaces, evergreen accents, calm editorial styling, clear family-space context, and a family-tree-centered hierarchy. This is a meaningful design decision, but it is not approval of all UX artifacts or the backend architecture. Phase 0 remains open; application implementation remains gated until UX handoff and backend architecture receive explicit approval.
+The product owner has approved the UX visual direction and UX-DEC-002–UX-DEC-006 defaults, and approved the direction in ADR-0005–0008 on 2026-10-31. This selects product/technical direction but is not final UX handoff sign-off, proof that architecture works, legal/privacy approval, or the joint Phase 0 gate. Phase 0 remains open; production implementation remains gated.
 
 ## Workstream branches
 - `workstream/ux-design` — UX draft artifacts and clickable P0 prototype.
@@ -16,7 +16,7 @@ The product owner has approved the UX visual direction after reviewing desktop/m
 - `feature/fl-002-backend-foundation` — parked.
 
 ## UX progress
-- UX-001 draft: `docs/ux/INFORMATION_ARCHITECTURE_AND_JOURNEYS.md`; proposed product defaults UX-DEC-002–UX-DEC-006 are documented in `docs/ux/PRODUCT_DECISIONS.md` on the UX branch and await approval.
+- UX-001 draft: `docs/ux/INFORMATION_ARCHITECTURE_AND_JOURNEYS.md`; accepted product defaults UX-DEC-002–UX-DEC-006 are documented in `docs/ux/PRODUCT_DECISIONS.md` on the UX branch.
 - UX-002: visual direction approved; design tokens remain provisional pending contrast and regional-script validation. See `docs/ux/DESIGN_SYSTEM.md` on UX branch.
 - UX-003 draft: `docs/ux/P0_SCREEN_SPECIFICATIONS.md` — nine P0 screen specs plus clickable prototype v0.2 at `docs/ux/prototype/index.html`.
 - UX-004 draft: `docs/ux/DESIGN_HANDOFF.md` — component inventory, screen mapping, interaction contracts, state matrix and frontend guardrails.
@@ -46,13 +46,13 @@ The product owner has approved the UX visual direction after reviewing desktop/m
 - No application code, automated tests or CI execution are claimed.
 
 ## Next actions
-1. Apply the approved visual direction consistently across the P0 screen specifications and prototype; refine tree prominence and mobile navigation without changing the approved design language.
+1. Apply the approved visual direction and accepted UX product defaults consistently across P0 screen specifications and prototype; refine tree prominence and mobile navigation without changing the approved design language.
 2. Complete prototype edge cases: multiple partners/parent types, blended families, unknown/disputed relationships, long names and deeper trees; verify the newly added accessible list alternative and keyboard tree selection.
 3. Run responsive, keyboard, screen-reader, contrast and regional-script QA; record evidence and decisions.
 4. Review PR #64, `docs/architecture/ARCHITECTURE_REVIEW.md` and proposed ADRs 0005–0008; obtain privacy/product and engineering decisions before implementation.
-5. Obtain a successful Redocly OpenAPI 3.1 validation run and reconcile every P0 journey with endpoint contracts.
-6. Review security/runtime controls and conduct joint product/design/backend Phase 0 gate.
-7. Only after explicit approval, resume FL-001/FL-002/FL-003/FL-008 in dependency order.
+5. Map every P0 journey to OpenAPI operations and negative authorization/contract tests.
+6. Prove Prisma migration behavior, RLS tenant context/pooler isolation, graph concurrency and durable job idempotency.
+7. Conduct joint product/design/backend Phase 0 gate; only after explicit sign-off, resume FL-001/FL-002/FL-003/FL-008 in dependency order.
 
 ## Risks
 Shared identity privacy; graph integrity and concurrent cycle prevention; public projection leakage/revocation; living-person/minor privacy; regional-script accessibility; media security; provider retention for AI; backup/restore and succession.
