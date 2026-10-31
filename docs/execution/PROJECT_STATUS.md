@@ -22,7 +22,7 @@ The product owner has approved the UX visual direction and UX-DEC-002–UX-DEC-0
 - UX-004 draft: `docs/ux/DESIGN_HANDOFF.md` — component inventory, screen mapping, interaction contracts, state matrix and frontend guardrails.
 - Prototype scope: dashboard, tree selection/inspector, people search, person profile, add-person form, family setup, memories and members. Static HTML/CSS/JS with fictional sample data only; no backend, auth, persistence, authorization, uploads or production graph algorithm.
 - Desktop/mobile dashboard review mockups were reviewed and the visual direction approved on 2026-10-30. They are visual review aids, not hosted app screenshots or proof of full prototype QA.
-- Tree geometry remains illustrative. Keyboard/screen-reader, contrast, regional-script and cross-browser QA remain open. A prototype inline-JavaScript syntax workflow passes (run 41002983442). Browser, responsive and assistive-technology QA remain outstanding.
+- Tree geometry remains illustrative. Full keyboard-only/screen-reader, complete token contrast matrix, regional-script and all-screen cross-browser QA remain open. The automated axe scan found and drove a fix for muted-text contrast (4.49:1 to a darker semantic token); current automated scan passes. A prototype inline-JavaScript syntax workflow passes (run 41002983442). Browser, responsive and assistive-technology QA remain outstanding.
 - Design issues #54–#57 remain open; do not mark UX work complete based solely on visual-direction approval.
 
 ## Backend architecture progress
@@ -39,10 +39,10 @@ The product owner has approved the UX visual direction and UX-DEC-002–UX-DEC-0
 
 ## Review and validation status
 - UX visual direction approved; complete design system, P0 screen, accessibility and engineering handoff approval remain outstanding.
-- UX clickable prototype v0.2 committed on `workstream/ux-design`; includes a semantic list alternative and keyboard-selectable SVG person nodes. Not merged.
+- UX clickable prototype v0.2 committed on `workstream/ux-design`; includes a semantic list alternative and keyboard-selectable SVG person nodes. Playwright/axe browser QA passes at 1440px, 768px, 390px and 320px, including no-horizontal-overflow checks and key interaction smoke tests (run 41180347724); screenshot artifact is attached to the run. This is not full manual screen-reader or all-screen QA. Not merged.
 - Backend architecture review pass completed; proposed ADRs 0005–0008 now cover v1 cross-family identity isolation, Prisma/SQL-first migrations, PostgreSQL RLS and PostgreSQL-backed jobs. They remain Proposed; no backend architecture sign-off yet.
-- OpenAPI structural checks completed; Redocly CI workflow added; first runs caught duplicate YAML mappings and a misplaced ErrorEnvelope schema; fixes were applied and Redocly CLI 1.34.5 successfully bundled the revised OpenAPI 3.1 document after duplicate-route consolidation and tree-focus persistence (32 paths, 39 operations) in run 41179809644.
-- Cross-review found and corrected a v1 identity-anchor constraint gap: ERD now requires UNIQUE(person_id) so an opaque Person anchor cannot be reused across families. Added personal last-focus persistence and family-configured focus to the ERD; OpenAPI now includes PUT /families/{familyId}/tree/focus. Removed a duplicate relationship-path route.
+- OpenAPI structural checks completed; Redocly CI workflow added; first runs caught duplicate YAML mappings and a misplaced ErrorEnvelope schema; fixes were applied and Redocly CLI 1.34.5 successfully bundled the revised OpenAPI 3.1 document after duplicate-route consolidation, personal/family tree-focus persistence and Owner/Admin authorization schema (32 paths, 39 operations) in run 41180375558.
+- Cross-review found and corrected a v1 identity-anchor constraint gap: ERD now requires UNIQUE(person_id) so an opaque Person anchor cannot be reused across families. Added personal last-focus persistence and family-configured focus to the ERD; OpenAPI now includes PUT /families/{familyId}/tree/focus and Owner/Admin family-focus authorization. Removed a duplicate relationship-path route.
 - No application code, automated tests or CI execution are claimed.
 
 ## Next actions
