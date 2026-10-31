@@ -1,6 +1,6 @@
 # Architecture Review — ARCH-001 to ARCH-005
 
-**Status:** Internal review pass completed; architecture remains draft pending explicit product/engineering decisions.
+**Status:** Internal review pass completed; ADR-0005–0008 direction accepted by product owner on 2026-10-31; architecture remains draft pending technical proof and Phase 0 sign-off.
 **Date:** 2026-10-30
 **Scope:** Module boundaries, relational schema, OpenAPI v1, threat model and runtime operations.
 
@@ -31,7 +31,7 @@ The review found contract gaps between API_DESIGN.md and OpenAPI, an underspecif
 | Background jobs | Start with a PostgreSQL-backed durable queue if expected volume is modest; benchmark and document lock/lease/retry behavior before implementation. | Keeps transactional enqueue simple without adding an operational dependency prematurely. |
 | Contribution approval | Make approval and domain mutation atomic within one module boundary, or use an explicit outbox/saga with idempotent application and visible recovery state. | Avoids approved proposals that never apply or apply twice. |
 
-Proposed ADRs 0005–0008 now capture the v1 identity-isolation, Prisma/SQL-first migration, PostgreSQL RLS and PostgreSQL-backed job recommendations. They remain Proposed, not Accepted. Product/privacy and engineering owners must review them before implementation.
+ADR-0005–0008 now record accepted defaults for v1 identity isolation, Prisma/SQL-first migrations, PostgreSQL RLS and PostgreSQL-backed jobs. Acceptance selects direction; it does not claim implementation readiness. Proof-of-concept, migration, RLS/pooler and queue integration tests remain required.
 
 ## 4. Schema questions to close
 
