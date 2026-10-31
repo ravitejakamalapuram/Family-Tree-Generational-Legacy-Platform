@@ -1,12 +1,14 @@
 # ADR-0008: PostgreSQL-backed durable jobs for the initial release
 
-**Status:** Proposed — requires engineering approval
+**Status:** Accepted — engineering direction approved 2026-10-31
 **Date:** 2026-10-30
 
 ## Context
 The modular monolith needs asynchronous work for email, media processing, publication projection, transcription and archive export. Initial expected volume is modest, and transactionally enqueueing work with domain writes is valuable. Introducing a separate broker adds operational cost before scale is known.
 
 ## Decision
+
+**Approval note:** Product owner approved this initial-release direction on 2026-10-31. Validate the selected maintained queue, transactional enqueue/outbox behavior, retries, idempotency and authorization rechecks before production use.
 Use a PostgreSQL-backed durable job queue for the initial release. Prefer a maintained PostgreSQL queue such as pg-boss rather than implementing a bespoke queue. Keep job payloads versioned and minimal; carry opaque IDs and family scope, not unnecessary personal content.
 
 - Enqueue durable work in the same transaction or via a transactional outbox when a domain write must reliably trigger a job.
