@@ -1,7 +1,7 @@
 # Security, Privacy and Threat Model
 
 **Workstream:** ARCH-004  
-**Status:** Draft v0.1 — pending security review  
+**Status:** Draft v0.2 — accepted privacy direction; executable threat controls and security review pending  
 **Related:** SECURITY_PRIVACY.md, MODULE_BOUNDARIES.md, ERD_AND_SCHEMA.md, openapi-v1.yaml
 
 ## 1. Security objectives
@@ -54,7 +54,7 @@ Assume client input, uploaded files, external provider responses and public traf
 | Graph abuse | Huge graph query exhausts DB | Depth/node/edge limits, timeouts, pagination, rate limits, query plan tests | Load/abuse tests |
 | Account deletion collateral | Deleting one account removes shared family data | Membership revocation separate from family/person deletion; deletion workflow and retention rules | Multi-family deletion tests |
 
-## 4. Authorization model
+## 4. Authorization model\n\nAccepted privacy/product defaults (2026-10-31): public publication is off by default; living people and minors are excluded from public projections by default; sensitive/living/minor publication requires applicable subject/guardian consent and a second authorized reviewer. Authenticated Viewer permissions are distinct from public visitor access. Public visitors receive only allowlisted published projections, never private membership, internal IDs, hidden branches, unpublished facts or private media URLs. These rules require explicit API/service enforcement and negative tests; client-side hiding is insufficient.
 
 Every family operation resolves:
 1. Authenticated user and active session.
@@ -142,9 +142,9 @@ Open policy decisions:
 ## 10. Security acceptance gates
 
 - [ ] Threat model reviewed by engineering and product.
-- [ ] Role/action matrix approved.
+- [ ] Role/action matrix approved and aligned with the UX-DEC-005 Viewer/public boundary.
 - [ ] Cross-family negative tests specified for every family-scoped endpoint.
-- [ ] Public projection and revocation threat tests specified.
+- [ ] Public projection and revocation threat tests specified, including consent evidence, second-review enforcement, living/minor exclusions, cache/media revocation and Viewer/public separation.
 - [ ] Media upload/signing threat tests specified.
 - [ ] Session/CSRF/recovery controls agreed.
 - [ ] AI and worker authorization flow agreed.
