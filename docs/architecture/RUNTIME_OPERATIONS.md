@@ -1,7 +1,7 @@
 # Runtime, Operations and Implementation Blueprint
 
 **Workstream:** ARCH-005  
-**Status:** Draft v0.1 — pending architecture review  
+**Status:** Draft v0.2 — ADR direction accepted; runtime provider and operational proof pending  
 **Related:** ARCHITECTURE.md, MODULE_BOUNDARIES.md, ERD_AND_SCHEMA.md, SECURITY_THREAT_MODEL.md
 
 ## 1. Initial runtime topology
@@ -79,7 +79,7 @@ Job contract:
 - Do not put raw secrets or unnecessary personal content in job payloads.
 - Long-running jobs expose progress/status and allow safe cancellation where possible.
 
-Decision pending: PostgreSQL-backed job queue for initial release versus managed queue. Prefer PostgreSQL-backed queue if volume is modest and transactionally enqueued jobs are valuable; benchmark before committing.
+Accepted direction (ADR-0008, 2026-10-31): use a maintained PostgreSQL-backed durable queue initially (pg-boss is the preferred candidate), subject to a proof of transactional enqueue/outbox behavior, lease/retry/idempotency semantics, authorization rechecks and load/lock testing. Do not implement a bespoke queue by default.
 
 ## 7. Storage lifecycle
 
@@ -160,7 +160,7 @@ These are provisional targets, not measured guarantees:
 ## 12. Decisions required
 
 1. Deployment host and managed PostgreSQL provider.
-2. Job queue implementation.
+2. Validate the selected PostgreSQL-backed job queue implementation (pg-boss candidate) and operational limits.
 3. Session persistence and refresh-token storage model.
 4. Object storage provider and malware scanning availability.
 5. Observability provider and retention/redaction settings.
