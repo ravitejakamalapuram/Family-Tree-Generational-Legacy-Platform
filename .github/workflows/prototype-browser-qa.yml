@@ -1,0 +1,44 @@
+name: Prototype Browser and Accessibility QA
+
+on:
+  pull_request:
+    paths:
+      - "docs/ux/prototype/**"
+      - ".github/workflows/prototype-browser-qa.yml"
+  push:
+    branches:
+      - main
+      - "workstream/**"
+    paths:
+      - "docs/ux/prototype/**"
+      - ".github/workflows/prototype-browser-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  browser-qa:
+    name: Browser, responsive and axe accessibility checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install browser QA dependencies
+        run: |
+          npm init -y
+          npm install --no-save playwright @axe-core/playwright
+          npx playwright install --with-deps chromium
+      - name: Run prototype browser QA
+        run: node docs/ux/prototype/qa/run.mjs
+      - name: Upload desktop and responsive screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prototype-browser-qa-screenshots
+          path: artifacts/prototype-qa/
+          if-no-files-found: warn
+          retention-days: 14
