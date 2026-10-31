@@ -104,3 +104,16 @@
 - Redocly CLI 1.34.5 passed after the route/focus contract changes: run 41179809644. The contract remains 32 paths and 39 operations.
 - UX prototype syntax validation also passes: run 41179691052. Browser, responsive, keyboard, screen-reader, contrast and regional-script QA remain outstanding.
 - PRs #63 and #64 remain draft/unmerged; implementation branches remain parked pending complete Phase 0 sign-off.
+
+
+## 2026-10-31 — Automated prototype browser and accessibility QA
+- Added Playwright/Chromium QA for desktop (1440px), tablet (768px), mobile (390px) and small-mobile (320px) viewports, including horizontal-overflow checks, navigation/search/tree keyboard/list/form smoke tests, axe WCAG scans and screenshot artifacts.
+- Initial runs exposed a test-navigation issue and a muted-text contrast ratio of 4.49:1. Corrected the test flow and darkened the semantic muted-text token; the subsequent axe scan and browser suite passed.
+- Latest passing run: #41180347724. It uploaded desktop/tablet/mobile/small-mobile screenshots as the prototype-browser-qa-screenshots artifact.
+- Reviewed generated desktop/mobile screenshots and adjusted mobile page-header stacking and Add button wrapping.
+- Automated checks do not replace full keyboard-only, screen-reader, all-screen, complex-family or regional-script QA.
+
+## 2026-10-31 — Final P0 OpenAPI focus authorization update
+- Added Owner/delegated Admin authorization guidance and configuredTreeFocusPersonId to PATCH /families/{familyId}.
+- Redocly CLI 1.34.5 passed the final 32-path, 39-operation OpenAPI 3.1 bundle: run #41180375558.
+- Added operation-level authorization and negative-test plan in docs/architecture/P0_CONTRACT_TEST_MATRIX.md.
