@@ -27,7 +27,7 @@ All values are provisional design tokens. The visual direction and semantic-toke
 | surface | #FFFFFF | Cards, panels, dialogs |
 | surface-muted | #F0F1EC | Secondary panels |
 | ink | #202923 | Primary text |
-| ink-muted | #657168 | Secondary text |
+| ink-muted | #5D6A61 | Secondary text |
 | line | #E1E5DE | Borders/dividers |
 | brand | #285B4A | Primary actions, active navigation |
 | brand-hover | #1F493B | Hover/pressed primary |
@@ -169,7 +169,7 @@ Target WCAG 2.2 AA:
 
 ## 7. Design QA checklist
 
-- [ ] Contrast checked for token combinations.
+- [ ] Full contrast matrix checked for every token combination; prototype muted-text color was darkened after axe detected a 4.49:1 ratio against the muted surface.
 - [ ] Telugu/Tamil/Kannada/Hindi mixed-script rendering reviewed.
 - [ ] Long names and dates do not break cards/forms.
 - [ ] Mobile layouts tested at narrow widths.
