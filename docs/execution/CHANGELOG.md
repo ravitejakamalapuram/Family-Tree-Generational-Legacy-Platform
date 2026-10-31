@@ -94,3 +94,13 @@
 - Updated the UX workstream decisions, IA/design plan, architecture ADRs and architecture review; updated the main decision log and project status.
 - Approval selects product and technical direction only. It does not constitute UX handoff sign-off, legal/privacy approval, technical proof, security validation or joint Phase 0 approval.
 - Next: complete cross-workstream contract review, accessibility/browser QA, threat-model-to-test mapping and technical proof of the accepted architecture choices. No implementation branches resumed and no PR merged.
+
+
+## 2026-10-31 — Phase 0 cross-workstream contract review
+- Tightened ADR-0005 enforcement in the ERD: v1 Person identity anchors are opaque and unique across all FamilyPerson rows, preventing reuse across family spaces.
+- Added family-configured tree focus and per-member last-focused-person persistence to the ERD; added PUT /families/{familyId}/tree/focus to OpenAPI and API_DESIGN.
+- Removed the duplicate relationship-path endpoint from OpenAPI; retained one canonical family relationship-path route.
+- Added docs/architecture/PHASE_0_CROSS_REVIEW.md with P0 journey-to-contract mapping, review findings and blocking validation gates.
+- Redocly CLI 1.34.5 passed after the route/focus contract changes: run 41179809644. The contract remains 32 paths and 39 operations.
+- UX prototype syntax validation also passes: run 41179691052. Browser, responsive, keyboard, screen-reader, contrast and regional-script QA remain outstanding.
+- PRs #63 and #64 remain draft/unmerged; implementation branches remain parked pending complete Phase 0 sign-off.
