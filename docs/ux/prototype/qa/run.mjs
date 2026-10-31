@@ -7,7 +7,8 @@ import fs from "node:fs";
 const file = pathToFileURL(resolve("docs/ux/prototype/index.html")).href;
 fs.mkdirSync("artifacts/prototype-qa", { recursive: true });
 const browser = await chromium.launch({ headless: true });
-const page = await browser.newPage({ reducedMotion: "reduce" });
+const context = await browser.newContext({ reducedMotion: "reduce" });
+const page = await context.newPage();
 const failures = [];
 
 try {
