@@ -36,7 +36,7 @@ Inputs/actions: Button variants, TextField/TextArea, Select/Combobox, DatePrecis
 - Forms preserve values on recoverable server/network errors.
 - DatePrecisionField never silently invents day/month precision.
 - VisibilitySelector explains audience and warns before any public transition.
-- PersonTreeNode exposes accessible name, focusability and pressed/selected state; Enter/Space activate selection. A semantic list alternative is included in prototype v0.2. Keyboard/screen-reader verification remains required.
+- PersonTreeNode exposes accessible name, focusability and pressed/selected state; Enter/Space activate selection. A semantic list alternative is included in prototype v0.2. Automated keyboard activation and axe WCAG scans pass in CI; full keyboard-only and screen-reader verification remains required.
 - UploadDropzone supports keyboard file selection and reports progress/errors.
 - Dialog/Drawer manages focus, escape behavior and unsaved changes.
 - EmptyState offers one contextual action; toasts announce status without stealing focus.
@@ -74,4 +74,4 @@ Run locally by opening the HTML file in a modern browser. No build/install step 
 - Design screens around bounded API payloads and progressive graph expansion.
 - Use accessible list/profile routes as fallback for complex tree canvas interactions.
 
-UX-DEC-002–UX-DEC-006 are approved product defaults and should be reflected in implementation contracts. UX-004 remains draft until prototype review, QA and product/frontend sign-off are attached to issue #57. Product-default approval does not constitute engineering handoff approval.
+UX-DEC-002–UX-DEC-006 are approved product defaults and should be reflected in implementation contracts. Automated browser QA now captures desktop/tablet/mobile/320px screenshots, checks horizontal overflow and exercises core navigation/tree/form interactions. Latest pass: run #41180347724. UX-004 remains draft until all-screen visual review, full keyboard/screen-reader/regional-script QA and product/frontend sign-off are attached to issue #57. Product-default approval does not constitute engineering handoff approval.
