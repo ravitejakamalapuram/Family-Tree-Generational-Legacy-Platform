@@ -1,6 +1,6 @@
 # Product Design Workstream — UX-001 to UX-004
 
-**Status:** Visual direction approved by product owner; UX-001–UX-004 remain in progress pending detailed design validation and handoff. Clickable P0 prototype v0.2 and desktop/mobile review snapshots prepared.
+**Status:** Visual direction and UX-DEC-002–UX-DEC-006 product defaults approved by product owner on 2026-10-31; UX-001–UX-004 remain in progress pending detailed design validation and handoff. Clickable P0 prototype v0.2 and desktop/mobile review snapshots prepared.
 **Owner:** Product/design workstream.
 **Source inputs:** PROJECT_CHARTER, PRODUCT_REQUIREMENTS, USE_CASES, UX_SPECIFICATION.
 
@@ -39,7 +39,7 @@ Prioritize landing/auth, family onboarding, dashboard, people directory, add/edi
 Deliver component/token inventory, screen mapping, interaction/state specifications, asset guidance, QA checklist, open decisions and explicit product/frontend sign-off.
 
 ## Product decisions for review
-See `docs/ux/PRODUCT_DECISIONS.md` for proposed defaults UX-DEC-002–UX-DEC-006 covering first-person onboarding/root focus, tree entry, publication approval, Viewer/public visitor separation and design-system implementation choices. These are not accepted until product-owner approval.
+See `docs/ux/PRODUCT_DECISIONS.md` for accepted defaults UX-DEC-002–UX-DEC-006 covering first-person onboarding/root focus, tree entry, publication approval, Viewer/public visitor separation and design-system implementation choices. Product approval does not waive legal/privacy review or executable security validation.
 
 ## Design review gates
 1. Product information architecture and P0 journeys approved.
