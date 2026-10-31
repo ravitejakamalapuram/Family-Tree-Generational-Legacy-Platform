@@ -16,7 +16,13 @@ Approval applies to the visual direction shown in the desktop/mobile dashboard r
 | 2026-10-30 | ARCH-REC-002 | SQL-first migrations; evaluate ORM against RLS/composite-FK/CTE requirements | Recommended, pending ADR | architecture/ARCHITECTURE_REVIEW.md |
 | 2026-10-30 | ARCH-REC-003 | Use transactionally protected family-scoped parentage mutations | Required invariant; implementation strategy pending | architecture/ARCHITECTURE_REVIEW.md |
 
-| 2026-10-30 | ADR-0005 | Disable cross-family identity linking in v1 | Proposed | architecture/ADR/0005 |
-| 2026-10-30 | ADR-0006 | Prisma client with reviewed SQL-first migrations | Proposed | architecture/ADR/0006 |
-| 2026-10-30 | ADR-0007 | PostgreSQL RLS defense in depth | Proposed | architecture/ADR/0007 |
-| 2026-10-30 | ADR-0008 | PostgreSQL-backed durable jobs initially | Proposed | architecture/ADR/0008 |
+| 2026-10-31 | ADR-0005 | Disable cross-family identity linking in v1 | Accepted | architecture/ADR/0005 |
+| 2026-10-31 | ADR-0006 | Prisma client with reviewed SQL-first migrations | Accepted | architecture/ADR/0006 |
+| 2026-10-31 | ADR-0007 | PostgreSQL RLS defense in depth | Accepted | architecture/ADR/0007 |
+| 2026-10-31 | ADR-0008 | PostgreSQL-backed durable jobs initially | Accepted | architecture/ADR/0008 |
+
+| 2026-10-31 | UX-DEC-002 | Creator may add self, another person, or defer; no assumed genealogical root | Approved | ux/PRODUCT_DECISIONS.md on workstream/ux-design |
+| 2026-10-31 | UX-DEC-003 | Restore last focus, then configured focus, otherwise guided empty state | Approved | ux/PRODUCT_DECISIONS.md on workstream/ux-design |
+| 2026-10-31 | UX-DEC-004 | Private-by-default public publication with heightened consent and second-review safeguards | Approved | ux/PRODUCT_DECISIONS.md on workstream/ux-design |
+| 2026-10-31 | UX-DEC-005 | Separate authenticated Viewer permissions from allowlisted public projections | Approved | ux/PRODUCT_DECISIONS.md on workstream/ux-design |
+| 2026-10-31 | UX-DEC-006 | System sans baseline, optional editorial serif, no initial dark theme, semantic CSS tokens | Approved | ux/PRODUCT_DECISIONS.md on workstream/ux-design |
