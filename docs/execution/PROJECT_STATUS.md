@@ -29,7 +29,7 @@ The product owner has approved the UX visual direction and UX-DEC-002–UX-DEC-0
 - ARCH-001 draft: `docs/architecture/MODULE_BOUNDARIES.md`.
 - ARCH-002 draft: `docs/architecture/ERD_AND_SCHEMA.md`.
 - ARCH-003 draft: `docs/architecture/openapi-v1.yaml` — expanded to cover P0 auth/CSRF, invitations/memberships, people/facts and relationship corrections; structural checks passed (27 unique paths, 34 operations with response blocks), and a pinned Redocly bundle-validation workflow has been added; no successful workflow run is available yet.
-- Architecture review: `docs/architecture/ARCHITECTURE_REVIEW.md` on `workstream/backend-architecture` records contract fixes, privacy recommendations and unresolved ADR decisions.
+- Architecture review: `docs/architecture/ARCHITECTURE_REVIEW.md` and `docs/architecture/PHASE_0_CROSS_REVIEW.md` on `workstream/backend-architecture` record cross-workstream findings, accepted defaults and remaining proof gates.
 - ARCH-004 draft: `docs/architecture/SECURITY_THREAT_MODEL.md`.
 - ARCH-005 draft: `docs/architecture/RUNTIME_OPERATIONS.md`.
 
@@ -41,18 +41,18 @@ The product owner has approved the UX visual direction and UX-DEC-002–UX-DEC-0
 - UX visual direction approved; complete design system, P0 screen, accessibility and engineering handoff approval remain outstanding.
 - UX clickable prototype v0.2 committed on `workstream/ux-design`; includes a semantic list alternative and keyboard-selectable SVG person nodes. Not merged.
 - Backend architecture review pass completed; proposed ADRs 0005–0008 now cover v1 cross-family identity isolation, Prisma/SQL-first migrations, PostgreSQL RLS and PostgreSQL-backed jobs. They remain Proposed; no backend architecture sign-off yet.
-- OpenAPI structural checks completed; Redocly CI workflow added; first runs caught duplicate YAML mappings and a misplaced ErrorEnvelope schema; fixes were applied and Redocly CLI 1.34.5 successfully bundled the expanded OpenAPI 3.1 document (32 paths, 39 operations) in run 41003237580.
-- ERD/schema has not yet been reviewed against the final API contract.
+- OpenAPI structural checks completed; Redocly CI workflow added; first runs caught duplicate YAML mappings and a misplaced ErrorEnvelope schema; fixes were applied and Redocly CLI 1.34.5 successfully bundled the revised OpenAPI 3.1 document after duplicate-route consolidation and tree-focus persistence (32 paths, 39 operations) in run 41179809644.
+- Cross-review found and corrected a v1 identity-anchor constraint gap: ERD now requires UNIQUE(person_id) so an opaque Person anchor cannot be reused across families. Added personal last-focus persistence and family-configured focus to the ERD; OpenAPI now includes PUT /families/{familyId}/tree/focus. Removed a duplicate relationship-path route.
 - No application code, automated tests or CI execution are claimed.
 
 ## Next actions
-1. Apply the approved visual direction and accepted UX product defaults consistently across P0 screen specifications and prototype; refine tree prominence and mobile navigation without changing the approved design language.
-2. Complete prototype edge cases: multiple partners/parent types, blended families, unknown/disputed relationships, long names and deeper trees; verify the newly added accessible list alternative and keyboard tree selection.
-3. Run responsive, keyboard, screen-reader, contrast and regional-script QA; record evidence and decisions.
+1. Complete P0 screen and prototype browser/device review, including complex genealogy cases, long names and deep trees.
+2. Run keyboard-only, screen-reader, contrast and regional-script QA; record reproducible evidence.
+3. Map each P0 journey to API operations and add negative role/branch/visibility/tenant contract tests.
 4. Review PR #64, `docs/architecture/ARCHITECTURE_REVIEW.md` and proposed ADRs 0005–0008; obtain privacy/product and engineering decisions before implementation.
-5. Map every P0 journey to OpenAPI operations and negative authorization/contract tests.
-6. Prove Prisma migration behavior, RLS tenant context/pooler isolation, graph concurrency and durable job idempotency.
-7. Conduct joint product/design/backend Phase 0 gate; only after explicit sign-off, resume FL-001/FL-002/FL-003/FL-008 in dependency order.
+5. Resolve retention/deletion, provider, backup/RPO/RTO and operational ownership.
+6. Conduct joint product/design/backend Phase 0 gate; only after explicit sign-off, resume FL-001/FL-002/FL-003/FL-008 in dependency order.
+
 
 ## Risks
 Shared identity privacy; graph integrity and concurrent cycle prevention; public projection leakage/revocation; living-person/minor privacy; regional-script accessibility; media security; provider retention for AI; backup/restore and succession.
