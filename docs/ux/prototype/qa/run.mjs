@@ -36,8 +36,8 @@ try {
   // Primary navigation and person search.
   await page.getByRole("button", { name: /people/i }).first().click();
   if (!(await page.locator("#people").evaluate(el => el.classList.contains("active")))) failures.push("People navigation did not activate People screen.");
-  await page.locator("#peopleSearch").fill("Maya");
-  if (!(await page.locator("#peopleList .personrow").filter({ hasText: "Maya" }).isVisible())) failures.push("People search hid the matching person.");
+  await page.locator("#peopleSearch").fill("Nora");
+  if (!(await page.locator("#peopleList .personrow").filter({ hasText: "Nora" }).isVisible())) failures.push("People search hid the matching person.");
 
   // Tree keyboard selection and semantic list synchronization.
   await page.getByRole("button", { name: /family tree/i }).first().click();
