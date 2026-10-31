@@ -56,6 +56,9 @@ Acceptance selects direction. It does not prove implementation, replace legal re
 - Full OpenAPI contract tests and negative role/branch/visibility tests.
 - Resolve retention/deletion, storage provider, AI provider, backup/RPO/RTO and operational ownership.
 
+## Contract test plan
+A detailed operation-by-operation authorization and negative-test matrix is maintained in [P0_CONTRACT_TEST_MATRIX.md](P0_CONTRACT_TEST_MATRIX.md). It is a test design only; no application handlers or automated API tests exist yet.
+
 ## Current validation evidence
 - Prototype inline-JavaScript syntax check: passing (run #41179691052). This does not validate browser behavior or accessibility.
 - OpenAPI Redocly 3.1 bundle check: passing (run #41179705774 before the latest route/focus contract edits). A fresh run is required after those edits.
