@@ -37,7 +37,7 @@ try {
   await page.getByRole("button", { name: /people/i }).first().click();
   if (!(await page.locator("#people").evaluate(el => el.classList.contains("active")))) failures.push("People navigation did not activate People screen.");
   await page.locator("#peopleSearch").fill("Maya");
-  if (!(await page.locator("#peopleList .personrow").first().isVisible())) failures.push("People search hid the matching person.");
+  if (!(await page.locator("#peopleList .personrow").filter({ hasText: "Maya" }).isVisible())) failures.push("People search hid the matching person.");
 
   // Tree keyboard selection and semantic list synchronization.
   await page.getByRole("button", { name: /family tree/i }).first().click();
@@ -70,6 +70,7 @@ try {
       .analyze();
     for (const violation of results.violations) {
       failures.push(`axe ${viewport.width}px [${violation.impact}] ${violation.id}: ${violation.help} (${violation.nodes.length} nodes)`);
+      for (const node of violation.nodes) failures.push(`  target ${node.target.join(" ")} — ${node.failureSummary || "see axe details"}`);
     }
   }
 } finally {
