@@ -51,9 +51,13 @@ try {
   if ((await listChoice.getAttribute("aria-pressed")) !== "true") failures.push("Semantic list selection did not synchronize selected state.");
 
   // Add-person and onboarding actions must be clearly non-persistent.
+  await page.locator('[data-screen="dashboard"]').first().click();
+  await page.locator('[data-go="add"]').first().click();
   await page.locator("#fullName").fill("QA Example");
   await page.locator("#savePerson").click();
   if (!(await page.locator("#saveStatus").innerText()).includes("No data was sent or saved")) failures.push("Add-person prototype does not clearly disclose non-persistence.");
+  await page.locator('[data-screen="dashboard"]').first().click();
+  await page.locator('[data-go="onboarding"]').first().click();
   await page.locator("#continueOnboarding").click();
   if (!(await page.locator("#onboardStatus").innerText()).includes("No family space was created")) failures.push("Onboarding prototype does not clearly disclose non-persistence.");
 
