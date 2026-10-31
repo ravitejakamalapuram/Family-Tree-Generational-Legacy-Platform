@@ -301,6 +301,7 @@ paths:
     patch:
       tags: [Families]
       summary: Update permitted family settings
+      description: Updating configuredTreeFocusPersonId requires Owner or delegated Admin authorization; the selected FamilyPerson must belong to this family.
       parameters:
         - $ref: '#/components/parameters/CsrfToken'
         - $ref: '#/components/parameters/IfMatch'
@@ -314,6 +315,7 @@ paths:
                 name: { type: string, minLength: 1, maxLength: 160 }
                 description: { type: string, maxLength: 2000 }
                 defaultLanguage: { type: string }
+                configuredTreeFocusPersonId: { type: [string, 'null'], format: uuid }
       responses:
         '200': { description: Updated; returns new ETag }
         '403': { $ref: '#/components/responses/Forbidden' }
