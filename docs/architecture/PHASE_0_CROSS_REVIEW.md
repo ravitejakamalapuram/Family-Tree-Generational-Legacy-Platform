@@ -61,7 +61,7 @@ A detailed operation-by-operation authorization and negative-test matrix is main
 
 ## Current validation evidence
 - Prototype inline-JavaScript syntax check: passing (run #41179691052). This does not validate browser behavior or accessibility.
-- OpenAPI Redocly 3.1 bundle check: passing (run #41179705774 before the latest route/focus contract edits). A fresh run is required after those edits.
+- OpenAPI Redocly 3.1 bundle check: passing after the final configured-focus authorization schema update (run #41180375558).
 - OpenAPI contract currently targets 32 paths and 39 operations after consolidating the duplicate route and adding personal tree-focus persistence. Reconfirm counts in the next validation pass.
 
 ## Gate
