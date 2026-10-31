@@ -37,7 +37,9 @@ try {
   await page.getByRole("button", { name: /people/i }).first().click();
   if (!(await page.locator("#people").evaluate(el => el.classList.contains("active")))) failures.push("People navigation did not activate People screen.");
   await page.locator("#peopleSearch").fill("Nora");
-  if (!(await page.locator("#peopleList .personrow").filter({ hasText: "Nora" }).isVisible())) failures.push("People search hid the matching person.");
+  const noraRow = page.locator("#peopleList .personrow").nth(1);
+  await noraRow.waitFor({ state: "visible" });
+  if (!(await noraRow.innerText()).includes("Nora")) failures.push("People search did not retain the matching Nora row.");
 
   // Tree keyboard selection and semantic list synchronization.
   await page.getByRole("button", { name: /family tree/i }).first().click();
