@@ -1,7 +1,7 @@
 # Visual Direction and Design System
 
 **Workstream:** UX-002  
-**Status:** Draft v0.1 — pending product/design review  
+**Status:** Draft v0.2 — visual direction and implementation defaults approved; token QA pending  
 **Related:** UX-001, UX-003, UX-004
 
 ## 1. Visual concept: a living family archive
@@ -17,7 +17,7 @@ The interface should feel like a contemporary family archive: warm, calm, trustw
 
 ## 2. Proposed foundations
 
-All values are provisional design tokens. UX-002 review must approve or revise them before FL-008 implementation.
+All values are provisional design tokens. The visual direction and semantic-token approach are approved; contrast, regional-script and component-state validation remain required before FL-008 implementation.
 
 ### Color tokens
 
@@ -43,8 +43,8 @@ Use semantic aliases such as text-primary, border-subtle, action-primary and sta
 ### Typography
 
 Proposed stack:
-- UI: Inter, with system sans-serif fallback.
-- Editorial/story accent: Lora or system serif fallback, used only for selected headings/story reading.
+- UI: system sans-serif baseline with tested native-script fallbacks; Inter may be preferred when available.
+- Editorial/story accent: optional serif/system serif fallback, limited to selected story/legacy headings.
 - Regional scripts: system font fallback with explicit testing for Telugu, Tamil, Kannada, Hindi and mixed-script names.
 
 Type scale:
