@@ -1,12 +1,14 @@
 # ADR-0007: PostgreSQL RLS as defense in depth for family tenants
 
-**Status:** Proposed — requires security/engineering approval
+**Status:** Accepted — security direction approved 2026-10-31
 **Date:** 2026-10-30
 
 ## Context
 The platform stores highly sensitive family relationships, living-person information, minors' data, memories and private stories. Every family-owned row carries family_id. Application authorization and scoped repositories are mandatory, but one missed predicate can create a cross-family disclosure.
 
 ## Decision
+
+**Approval note:** Product owner approved this defense-in-depth direction on 2026-10-31. Acceptance does not claim RLS is implemented or proven; policy SQL, role separation, transaction propagation and pooler isolation require integration tests before release.
 Enable PostgreSQL row-level security for family-owned tables as a second authorization barrier, in addition to application-level membership, role, branch and record-level policies.
 
 - Set tenant context transaction-locally, e.g. set_config('app.family_id', family_id, true), inside the same database transaction as protected queries.
