@@ -1,7 +1,7 @@
 # Data Model, ERD and Relational Constraints
 
 **Workstream:** ARCH-002  
-**Status:** Draft v0.1 — pending architecture review  
+**Status:** Draft v0.2 — ADR direction accepted; schema constraints and migration proof pending  
 **Related:** DATA_MODEL.md, MODULE_BOUNDARIES.md, SECURITY_PRIVACY.md
 
 ## 1. Modeling principles
@@ -91,7 +91,7 @@ Core relationships:
 - archived_at timestamptz NULL
 - version integer NOT NULL DEFAULT 1
 - timestamps
-- UNIQUE(family_id,id) and UNIQUE(family_id,person_id) initially; revisit if one identity may intentionally have multiple representations in the same family.
+- UNIQUE(family_id,id) and UNIQUE(person_id) in v1. The globally unique person_id constraint ensures each opaque Person anchor is attached to exactly one FamilyPerson in exactly one family; this is the database enforcement for ADR-0005. Do not reuse or link identity anchors across families in v1.
 - Index (family_id, display_name) and (family_id, archived_at)
 
 **person_names**
@@ -321,4 +321,4 @@ Initial indexes:
 7. How to model fact values: typed tables per fact domain versus typed scalar columns plus validated JSON for less common facts?
 8. What exact audit retention and account deletion obligations apply?
 
-ARCH-002 remains draft until ERD, constraints, query patterns and migration strategy are reviewed and open decisions are recorded.
+ARCH-002 remains draft until ERD constraints, query patterns and migration strategy are reviewed and enforced in migration/integration tests. ADR-0005's v1 isolation choice is accepted; its database invariant must not be weakened to a family-scoped uniqueness constraint.
