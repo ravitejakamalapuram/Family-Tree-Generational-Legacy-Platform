@@ -635,27 +635,6 @@ paths:
               schema: { $ref: '#/components/schemas/EnvelopeTreePage' }
         '400': { $ref: '#/components/responses/ValidationError' }
         '404': { $ref: '#/components/responses/NotFound' }
-  /families/{familyId}/tree/relationship-path:
-    get:
-      tags: [Tree]
-      summary: Calculate relationship paths between two family people
-      parameters:
-        - $ref: '#/components/parameters/FamilyId'
-        - in: query
-          name: fromPersonId
-          required: true
-          schema: { type: string, format: uuid }
-        - in: query
-          name: toPersonId
-          required: true
-          schema: { type: string, format: uuid }
-      responses:
-        '200':
-          description: One or more explainable paths within authorized family graph
-          content:
-            application/json:
-              schema: { $ref: '#/components/schemas/Envelope' }
-        '404': { $ref: '#/components/responses/NotFound' }
   /families/{familyId}/relationship-path:
     get:
       tags: [Tree]
