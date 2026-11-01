@@ -1,7 +1,7 @@
 # P0 High-Fidelity Screen Specifications
 
 **Workstream:** UX-003  
-**Status:** Draft v0.2 — product defaults approved; P0 coverage and QA pending  
+**Status:** Draft v0.3 — product defaults approved; screen-completeness and manual QA pending  
 **Related:** INFORMATION_ARCHITECTURE_AND_JOURNEYS.md, DESIGN_SYSTEM.md, prototype/index.html
 
 This document defines layout hierarchy, content, interaction and responsive behavior. All names and content are fictional. The prototype is a visual interaction aid, not an API-backed application.
@@ -35,7 +35,7 @@ This document defines layout hierarchy, content, interaction and responsive beha
 | Responsive navigation/global Add | Desktop sidebar and mobile bottom navigation | Responsive nav; Add opens add-person screen |
 
 ### Onboarding interaction
-Production flow is Account → Family → First person → First relationship → Privacy → Invite. Prototype v0.1 exposes a reduced Family/language step only. Unknown values are valid; do not create placeholder facts to force completion.
+Production flow is Account → Family → optional first person (creator, another known person, or defer) → optional first relationship → Privacy → Invite. The creator is not assumed to be the genealogical root. Prototype v0.2 exposes a reduced Family/language step only. Unknown values are valid; do not create placeholder facts to force completion.
 
 ### Add/edit person interaction
 - Display name is the only required field.
@@ -72,8 +72,8 @@ Production flow is Account → Family → First person → First relationship �
 - [ ] Regional-script and long-name rendering reviewed.
 - [ ] Product review of unresolved UX-001 questions is complete.
 
-### Tree entry behavior\nRestore the last-focused person in the active family; otherwise use the configured tree focus; otherwise show a guided empty state. Never infer a root from age or family hierarchy.\n\n### Publication and visitor access\nPublishing is off by default. Owner/delegated Admin may approve deceased-person content; living-person, minor or sensitive disclosures require applicable subject/guardian consent and a second authorized reviewer. Authenticated Viewer access is governed by membership, role, branch and record visibility; public visitors receive only the allowlisted published projection. These are product rules, not a substitute for legal review or executable authorization tests.\n\n## Automated browser QA evidence\nA Playwright/axe CI workflow now captures desktop (1440px), tablet (768px), mobile (390px) and small-mobile (320px) screenshots; checks document horizontal overflow; exercises navigation, tree keyboard selection, semantic-list synchronization, non-persistent form feedback; and runs axe WCAG scans at desktop/mobile widths. Latest pass: [run #41180347724](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41180347724). Screenshots are attached to the workflow run as the `prototype-browser-qa-screenshots` artifact. This is automated smoke/accessibility scanning, not manual screen-reader, all-screen or complex-family validation.\n\n## Prototype limitations
-The artifact at [prototype/index.html](prototype/index.html) is static HTML/CSS/JavaScript. It has no backend, auth, persistence, authorization, API calls, media upload or production graph algorithm. “Save” and “Continue” are deliberately non-persistent. The artifact has not yet been browser/device/accessibility validated.
+### Tree entry behavior\nRestore the last-focused person in the active family; otherwise use the configured tree focus; otherwise show a guided empty state. Never infer a root from age or family hierarchy.\n\n### Publication and visitor access\nPublishing is off by default. Owner/delegated Admin may approve deceased-person content; living-person, minor or sensitive disclosures require applicable subject/guardian consent and a second authorized reviewer. Authenticated Viewer access is governed by membership, role, branch and record visibility; public visitors receive only the allowlisted published projection. These are product rules, not a substitute for legal review or executable authorization tests.\n\n## Automated browser QA evidence\nA Playwright/axe CI workflow now captures desktop (1440px), tablet (768px), mobile (390px) and small-mobile (320px) screenshots; checks document horizontal overflow; exercises navigation, tree keyboard selection, semantic-list synchronization, non-persistent form feedback; and runs axe WCAG scans at desktop/mobile widths. Latest pass on the current UX branch head: [run #41180439258](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41180439258). Screenshots are attached to the workflow run as the `prototype-browser-qa-screenshots` artifact. This is automated smoke/accessibility scanning, not manual screen-reader, all-screen or complex-family validation.\n\n## Prototype limitations
+The artifact at [prototype/index.html](prototype/index.html) is static HTML/CSS/JavaScript. It has no backend, auth, persistence, authorization, API calls, media upload or production graph algorithm. “Save” and “Continue” are deliberately non-persistent. The artifact has automated viewport and axe smoke validation, but manual all-screen, complex-family, regional-script, keyboard-only and screen-reader validation remains open.
 
 UX-003 remains draft until visual review, required edge-case/accessibility QA and product/design sign-off are recorded.
 
