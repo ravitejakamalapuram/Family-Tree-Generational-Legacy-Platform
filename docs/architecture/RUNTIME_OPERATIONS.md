@@ -1,7 +1,7 @@
 # Runtime, Operations and Implementation Blueprint
 
 **Workstream:** ARCH-005  
-**Status:** Draft v0.2 — ADR direction accepted; runtime provider and operational proof pending  
+**Status:** Draft v0.3 — runtime defaults selected; provider-specific and production recovery validation pending  
 **Related:** ARCHITECTURE.md, MODULE_BOUNDARIES.md, ERD_AND_SCHEMA.md, SECURITY_THREAT_MODEL.md
 
 ## 1. Initial runtime topology
@@ -30,10 +30,10 @@ No production personal/family data in local or CI environments. Staging must not
 
 ## 3. Local developer experience
 
-Proposed local dependencies:
-- PostgreSQL container with version pinned.
-- Local S3-compatible object store or test adapter.
-- Mail catcher/test email adapter.
+Selected local defaults:
+- PostgreSQL 16 container, direct connection for local development and integration tests.
+- MinIO as a local S3-compatible object-storage adapter; never use it as a production-provider assumption.
+- Mailpit as local mail catcher/test email adapter.
 - API, worker and web apps run with hot reload.
 - One command for dependency startup and one command for migrations/seed.
 - Seed script creates synthetic families covering five generations, multiple partners, adoptive/step/guardian links, unknown dates and multiple family representations.
@@ -52,7 +52,7 @@ Local setup documentation must state required runtime versions, environment vari
 
 ## 5. API process behavior
 
-- Stateless API instances; session state persisted in PostgreSQL or a reviewed shared session store.
+- Stateless API instances; persist opaque server-side sessions and hashed rotating refresh credentials in PostgreSQL for v1. Keep cookie values HttpOnly/Secure/SameSite and never store raw refresh tokens.
 - Graceful shutdown stops accepting requests and drains in-flight work.
 - Request ID and trace context generated/propagated at ingress.
 - Set request body, upload metadata and query complexity limits.
@@ -79,7 +79,7 @@ Job contract:
 - Do not put raw secrets or unnecessary personal content in job payloads.
 - Long-running jobs expose progress/status and allow safe cancellation where possible.
 
-Accepted direction (ADR-0008, 2026-10-31): use a maintained PostgreSQL-backed durable queue initially (pg-boss is the preferred candidate), subject to a proof of transactional enqueue/outbox behavior, lease/retry/idempotency semantics, authorization rechecks and load/lock testing. Do not implement a bespoke queue by default.
+Accepted direction (ADR-0008, 2026-10-31): use a maintained PostgreSQL-backed durable queue initially; pg-boss is the preferred candidate, not yet a final dependency. Domain write + outbox row must commit atomically; an idempotent relay publishes to the queue. The POC proves outbox rollback, dedupe and competing `SKIP LOCKED` claims (run #41337946121), but pg-boss retry/lease/singleton behavior and load/lock testing remain required before worker-heavy features ship. Do not implement a bespoke queue by default.
 
 ## 7. Storage lifecycle
 
@@ -157,14 +157,15 @@ These are provisional targets, not measured guarantees:
 - No acknowledged data loss for committed relational writes under supported backup policy.
 - Job retry and failure visibility for all asynchronous operations.
 
-## 12. Decisions required
+## 12. Selected defaults and production gates
 
-1. Deployment host and managed PostgreSQL provider.
-2. Validate the selected PostgreSQL-backed job queue implementation (pg-boss candidate) and operational limits.
-3. Session persistence and refresh-token storage model.
-4. Object storage provider and malware scanning availability.
-5. Observability provider and retention/redaction settings.
-6. Initial RPO/RTO and backup retention targets.
-7. Feature flag strategy and migration tooling.
+1. **Deployment/database:** choose a managed PostgreSQL provider with an India primary region as the default evaluation target. Do not claim a blanket legal localization mandate. Provider, backup region, subprocessor and transfer terms require review. Start local/CI with direct PostgreSQL; prove the exact production pooler mode before enabling RLS-backed production traffic.
+2. **Jobs:** PostgreSQL durable queue plus transactional outbox; pg-boss preferred candidate pending integration tests and realistic load/lock benchmarks.
+3. **Sessions:** PostgreSQL-backed opaque sessions and hashed rotating refresh credentials; session cookie remains HttpOnly/Secure/SameSite and CSRF-protected.
+4. **Object storage:** S3-compatible abstraction; MinIO local/test. Production provider must support private buckets, object versioning, lifecycle deletion, short-lived signed URLs, checksums and malware-scanning integration.
+5. **Observability:** OpenTelemetry-compatible traces/metrics/logs with vendor-neutral instrumentation. Error monitoring provider is selectable; redact PII, family content, tokens and signed URLs before export.
+6. **Recovery targets:** propose initial production objectives of RPO ≤ 1 hour and RTO ≤ 8 hours for review against provider capabilities/cost. Require point-in-time DB recovery, object versioning/manifests and a witnessed restore drill before production launch; these are targets, not measured guarantees.
+7. **Feature flags:** start with typed environment/config-backed flags for deployment-level switches; use database-backed family/user flags only when a product use case requires them. Avoid adding a flag SaaS dependency in the foundation.
+8. **Migrations:** reviewed SQL migrations, executed by a separate migration role using a controlled deployment step; no runtime schema push/sync.
 
-ARCH-005 remains draft until runtime choices, local setup and operational recovery are reviewed.
+ARCH-005 is sufficient to begin foundation work with these defaults. Provider-specific deployment, pooler, recovery and queue evidence remain release gates before production and before the corresponding features are enabled.
