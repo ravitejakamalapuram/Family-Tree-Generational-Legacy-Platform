@@ -12,21 +12,38 @@ const page = await context.newPage();
 const failures = [];
 
 try {
-  for (const viewport of [
+  const viewports = [
     { name: "desktop", width: 1440, height: 1000 },
     { name: "tablet", width: 768, height: 1024 },
     { name: "mobile", width: 390, height: 844 },
     { name: "small-mobile", width: 320, height: 740 }
-  ]) {
-    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+  ];
+  const screens = ["auth", "onboarding", "dashboard", "people", "add", "profile", "tree", "relationship", "members", "invite"];
+  const openScreen = async id => {
     await page.goto(file);
-    await page.screenshot({ path: `artifacts/prototype-qa/${viewport.name}.png`, fullPage: true });
-    const overflow = await page.evaluate(() => ({
-      scrollWidth: document.documentElement.scrollWidth,
-      clientWidth: document.documentElement.clientWidth
-    }));
-    if (overflow.scrollWidth > overflow.clientWidth + 1) {
-      failures.push(`${viewport.name}: horizontal overflow ${overflow.scrollWidth}px > ${overflow.clientWidth}px`);
+    if (id === "dashboard") return;
+    if (id === "add" || id === "onboarding") {
+      await page.locator(`[data-go="${id}"]`).first().click();
+    } else {
+      await page.locator(`[data-screen="${id}"]`).first().click();
+    }
+  };
+
+  // Capture every R1 screen at every target viewport and check for horizontal overflow.
+  for (const viewport of viewports) {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    for (const screen of screens) {
+      await openScreen(screen);
+      const heading = await page.locator(`.screen#${screen} h1`).first().count();
+      if (!heading) failures.push(`${screen}: missing primary page heading`);
+      await page.screenshot({ path: `artifacts/prototype-qa/${screen}-${viewport.name}.png`, fullPage: true });
+      const overflow = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth
+      }));
+      if (overflow.scrollWidth > overflow.clientWidth + 1) {
+        failures.push(`${screen} @ ${viewport.name}: horizontal overflow ${overflow.scrollWidth}px > ${overflow.clientWidth}px`);
+      }
     }
   }
 
@@ -64,15 +81,29 @@ try {
   await page.locator("#continueOnboarding").click();
   if (!(await page.locator("#onboardStatus").innerText()).includes("No family space was created")) failures.push("Onboarding prototype does not clearly disclose non-persistence.");
 
-  // Automated WCAG scan at desktop and mobile widths.
+  // Verify account, relationship and invitation actions clearly remain non-persistent.
+  await openScreen("auth");
+  await page.locator("#registerPreview").click();
+  if (!(await page.locator("#authStatus").innerText()).includes("no account was created")) failures.push("Account prototype does not disclose non-persistence.");
+  await openScreen("relationship");
+  await page.locator("#saveRelationship").click();
+  if (!(await page.locator("#relationshipStatus").innerText()).includes("no relationship was created")) failures.push("Relationship prototype does not disclose non-persistence.");
+  await openScreen("invite");
+  await page.locator("#acceptInvite").click();
+  if (!(await page.locator("#inviteStatus").innerText()).includes("no invitation was validated")) failures.push("Invitation prototype does not disclose non-persistence.");
+
+  // Automated WCAG scans on every R1 screen at desktop and mobile widths.
   for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
     await page.setViewportSize(viewport);
-    const results = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
-      .analyze();
-    for (const violation of results.violations) {
-      failures.push(`axe ${viewport.width}px [${violation.impact}] ${violation.id}: ${violation.help} (${violation.nodes.length} nodes)`);
-      for (const node of violation.nodes) failures.push(`  target ${node.target.join(" ")} — ${node.failureSummary || "see axe details"}`);
+    for (const screen of screens) {
+      await openScreen(screen);
+      const results = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+        .analyze();
+      for (const violation of results.violations) {
+        failures.push(`axe ${screen} ${viewport.width}px [${violation.impact}] ${violation.id}: ${violation.help} (${violation.nodes.length} nodes)`);
+        for (const node of violation.nodes) failures.push(`  target ${node.target.join(" ")} — ${node.failureSummary || "see axe details"}`);
+      }
     }
   }
 } finally {
@@ -83,5 +114,5 @@ if (failures.length) {
   console.error("Prototype browser QA failures:\n- " + failures.join("\n- "));
   process.exitCode = 1;
 } else {
-  console.log("Prototype browser QA passed: desktop/tablet/mobile widths, no horizontal overflow, key navigation/tree/form flows, and automated WCAG scans.");
+  console.log("Prototype browser QA passed: all R1 screens at desktop/tablet/mobile/320px, no horizontal overflow, key navigation/tree/form flows, and per-screen axe WCAG scans at desktop/mobile.");
 }
