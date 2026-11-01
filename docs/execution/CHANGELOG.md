@@ -129,3 +129,10 @@
 - Reconciled ADR-0002/0005, PRODUCT_REQUIREMENTS, DATA_MODEL, BACKLOG FL-018 and DELIVERY_PLAN with v1 opaque identity anchors.
 - Added BUILD_READINESS.md and marked the R1 foundation start gate satisfied. FL-001/FL-002/FL-003/FL-008 may begin on synthetic data. Pooler, pg-boss, full-schema RLS/migration, manual accessibility/regional scripts, privacy counsel, provider, backup/restore and production controls remain release/feature gates.
 - PRs #63, #64 and #66 remain draft and unmerged; PR #65 closed as superseded by clean main-based PR #66. No production implementation or real personal data processing has begun.
+
+
+## 2026-11-02 — Final UX current-head revalidation and release-scope reconciliation
+- Re-ran inline JavaScript syntax validation and all-R1-screen Playwright/axe checks on the current UX PR head after updating the prototype README: [browser run #41340010653](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41340010653); [40-screen screenshot artifact](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41340010653/artifacts/13096817898).
+- Visual review confirms public account entry and pre-validation invitation screens do not show authenticated family navigation, workspace name or family details. Verified invitation details are a separate simulated post-validation state.
+- Reconciled IA, Product Requirements, Use Cases and Backlog so R1 is family/tree/people/relationships/member invitations; media/memories and contribution review are R2; events/places/public pages R3; AI R4; preservation R5. First-person creation remains optional.
+- Updated BUILD_READINESS.md evidence and retained manual accessibility, legal, provider/pooler, full schema RLS/migration, pg-boss and production operations as explicit release/feature gates.
