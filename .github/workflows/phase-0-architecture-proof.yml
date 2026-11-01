@@ -40,8 +40,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: poc/phase-0-proof/package.json
       - name: Install pinned proof dependencies
         working-directory: poc/phase-0-proof
         run: npm install --no-audit --no-fund
