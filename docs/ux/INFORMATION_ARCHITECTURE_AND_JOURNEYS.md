@@ -122,7 +122,7 @@ The backend remains authoritative. Hiding a navigation item is usability, not au
 7. User adds a first relationship or skips.
 8. User lands on the family dashboard with a guided next action.
 
-Success: a private FamilySpace exists, creator is owner, first FamilyPerson can be created without fabricated facts.
+Success: a private FamilySpace exists, creator is owner, and first-person creation is optional. No placeholder facts or assumed root are introduced.
 
 ### J-02 — Join an existing family
 1. User opens invitation link.
