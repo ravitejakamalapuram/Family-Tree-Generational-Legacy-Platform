@@ -8,14 +8,14 @@
 
 ## State
 
-The product owner approved the UX visual direction and UX-DEC-002–UX-DEC-006 defaults, plus ADR-0005–0008 direction, on 2026-10-31. The user has authorized autonomous continuation through the point where the project is genuinely ready to start building. Do not pause for routine decisions; use conservative defaults, revalidate each change and record evidence. Do not merge Phase 0 PRs or begin production implementation until the build-readiness checklist is satisfied.
+The product owner approved the UX visual direction and UX-DEC-002–UX-DEC-006 defaults, plus ADR-0005–0008 direction, on 2026-10-31. The user has authorized autonomous continuation through the point where the project is genuinely ready to start building. Do not pause for routine decisions; use conservative defaults, revalidate each change and record evidence. Phase 0 PRs remain draft/unmerged; foundation implementation is authorized on synthetic data. No production deployment or personal-data processing is authorized.
 
 ## Workstream branches and pull requests
 
 - `workstream/ux-design` — UX specifications, design handoff and interactive prototype.
 - `workstream/backend-architecture` — architecture, ERD, OpenAPI, threat model, runtime plan and ADRs.
 - `spike/phase-0-proof-only` — isolated PostgreSQL/Prisma proof and India privacy baseline; [Draft PR #66](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/66).
-- `feature/fl-001-frontend-foundation` and `feature/fl-002-backend-foundation` — parked.
+- `feature/fl-001-frontend-foundation` and `feature/fl-002-backend-foundation` — parked but authorized to resume from their respective UX/backend workstream branches when implementation begins.
 - [Draft PR #63 — UX](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/63), [Draft PR #64 — backend architecture](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/64), [Draft PR #66 — isolated proof/privacy](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/66) remain open and unmerged.
 - PR #65 was closed because its head included the unmerged backend architecture branch; its proof artifacts were replayed cleanly on a main-based branch as PR #66.
 
@@ -40,7 +40,7 @@ The product owner approved the UX visual direction and UX-DEC-002–UX-DEC-006 d
 
 - ARCH-001 module boundaries: R1 People module contains separate identity and family-representation subdomains; cross-module contribution orchestration and audit ownership defaults are documented.
 - ARCH-002 ERD: v1 identity anchor uniqueness, family-scoped tree preferences, normalized branch scopes, typed facts and explicit relationship catalog. Resolved defaults: normalized text instead of citext; no PostGIS initially; check constraints for bounded status codes; RLS mandatory.
-- ARCH-003 OpenAPI: 32 unique paths and 39 operations. Duplicate relationship-path route removed; personal tree-focus endpoint and Owner/delegated Admin configured-focus authorization included. Latest Redocly 3.1 validation on backend branch passed in [run #41338795961](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41338795961). This proves parse/bundle only, not API runtime behavior.
+- ARCH-003 OpenAPI: 32 unique paths and 39 operations. Duplicate relationship-path route removed; personal tree-focus endpoint and Owner/delegated Admin configured-focus authorization included. Latest Redocly 3.1 validation on backend branch passed in [run #41339554466](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41339554466). This proves parse/bundle only, not API runtime behavior.
 - ARCH-004 threat model and ARCH-005 runtime operations record authorization, RLS, media, worker, backup and observability controls. Local defaults: PostgreSQL 16, MinIO and Mailpit; PostgreSQL sessions; OpenTelemetry-compatible instrumentation. Provider selection and production pooler remain deferred.
 - P0 operation-level authorization test plan: `docs/architecture/P0_CONTRACT_TEST_MATRIX.md` on backend branch.
 
@@ -53,7 +53,7 @@ The isolated POC under `poc/phase-0-proof` in PR #66 passed against PostgreSQL 1
 - Global Person anchor uniqueness and composite same-family relationship FKs reject cross-family reuse/edges.
 - Two concurrent opposite parentage edges serialize; exactly one commits and the other is rejected as a cycle.
 - Transactional outbox rolls back with the domain transaction, deduplicates event keys, and competing workers use `FOR UPDATE SKIP LOCKED` without double-claiming.
-- Proof passed on the clean main-based branch in [run #41338633914](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41338633914); detailed assertions are visible in [run #41337946121](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41337946121).
+- ERD-aligned proof passed in [run #41339408260](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41339408260); latest PR-head rerun passed in [run #41339514211](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41339514211).
 
 POC limitations: direct PostgreSQL only (production pooler not proven); representative RLS tables only (full schema policies still need tests); pg-boss library retry/lease/singleton semantics and load/lock tests not yet proven; full migration upgrade/rollback/schema-drift tests and API handler authorization are not covered.
 
