@@ -26,3 +26,12 @@ Approval applies to the visual direction shown in the desktop/mobile dashboard r
 | 2026-10-31 | UX-DEC-004 | Private-by-default public publication with heightened consent and second-review safeguards | Approved | ux/PRODUCT_DECISIONS.md on workstream/ux-design |
 | 2026-10-31 | UX-DEC-005 | Separate authenticated Viewer permissions from allowlisted public projections | Approved | ux/PRODUCT_DECISIONS.md on workstream/ux-design |
 | 2026-10-31 | UX-DEC-006 | System sans baseline, optional editorial serif, no initial dark theme, semantic CSS tokens | Approved | ux/PRODUCT_DECISIONS.md on workstream/ux-design |
+
+
+## 2026-11-02 — Authorize R1 foundation build on synthetic data
+- Decision: the project is Ready to Start Building FL-001/FL-002/FL-003/FL-008 foundations.
+- Evidence: accepted UX-DEC-002–006 and ADR-0005–0008; R1 scope reconciled across PRD/use cases/backlog/IA; nine R1 screens specified; all-screen Playwright/axe suite passes; OpenAPI 3.1 32-path/39-operation bundle passes; ERD-aligned PostgreSQL/Prisma proof passes for opaque identity anchors, same-family FKs, representative RLS, concurrent graph-cycle prevention and transactional outbox semantics.
+- Scope: synthetic data only. No production deployment, real personal/child data, public pages or external AI use is authorized.
+- Deferred gates: full-schema RLS/composite-FK and migration upgrade/rollback tests; production pooler proof; pg-boss adapter/load proof; API handler IDOR/role/branch/CSRF tests; manual keyboard/screen-reader/regional-script QA; privacy counsel, provider, backup/restore and incident operations.
+- Implementation sequence: FL-001/FL-002/FL-003/FL-004/FL-005/FL-006/FL-007/FL-008 as recorded in BUILD_READINESS.md.
+- Phase 0 PRs #63/#64/#66 remain draft and unmerged; implementation branches can be stacked from their workstream branches.
