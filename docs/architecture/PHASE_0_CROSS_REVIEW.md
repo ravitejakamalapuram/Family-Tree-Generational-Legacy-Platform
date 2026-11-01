@@ -11,7 +11,7 @@
 - ADR-0007: PostgreSQL RLS as defense in depth.
 - ADR-0008: maintained PostgreSQL-backed durable jobs initially.
 
-Acceptance selects direction. It does not prove implementation, replace legal review, or authorize production data use.
+Acceptance selects direction. It does not prove implementation, replace legal review, or authorize production data use. India-first privacy requirements and phased DPDP implementation are tracked in [PRIVACY_AND_COMPLIANCE_READINESS.md](../product/PRIVACY_AND_COMPLIANCE_READINESS.md).
 
 ## Cross-workstream findings and repairs
 
@@ -38,31 +38,30 @@ Acceptance selects direction. It does not prove implementation, replace legal re
 ## Blocking validation before Phase 0 sign-off
 
 ### UX
-- Browser/device review of all nine P0 screens, not only the dashboard.
+- Manual visual review of all R1 screens at desktop/tablet/mobile; automated screen capture/overflow/axe coverage is being expanded to every R1 screen.
 - Keyboard-only and screen-reader walkthrough, including SVG tree and semantic-list parity.
-- WCAG 2.2 AA contrast measurements for actual text/control pairs.
+- Complete WCAG 2.2 AA contrast measurements for all actual text/control states.
 - Telugu, Tamil, Kannada, Hindi and mixed-script rendering; long-name and five-generation tree cases.
 - Validate multiple partners, biological/adoptive/step/guardian parents, half-siblings, blended families, unknown and disputed relationships.
 - Complete loading, empty, error, conflict, permission-denied and retry states.
 - Product/frontend handoff sign-off on issue #57.
 
 ### Architecture/security
-- Prisma proof of concept for composite foreign keys, reviewed SQL migrations, transaction boundaries and RLS context propagation.
-- RLS integration tests using a non-owner/non-BYPASSRLS application role; prove tenant context does not leak through pooled connections.
-- Two-family IDOR tests across every family-scoped route and background job.
-- Parentage graph mutation serialization/serializable retry strategy and concurrent cycle tests.
-- Contribution approval/application atomicity or outbox recovery semantics.
-- Durable job idempotency, retry, lease expiry, authorization recheck and queue load/lock tests.
+- Production pooler/connection-mode compatibility for Prisma transaction-local RLS context (direct PostgreSQL proof passes; managed pooler not yet selected).
+- Two-family IDOR tests across every family-scoped API route and background job (the POC proves database-level tenant isolation only).
+- pg-boss adapter integration, retry/lease/singleton semantics, authorization rechecks and realistic queue load/lock tests (outbox rollback/dedupe/competing claims pass).
+- Full migration upgrade/rollback and schema-drift tests.
 - Full OpenAPI contract tests and negative role/branch/visibility tests.
-- Resolve retention/deletion, storage provider, AI provider, backup/RPO/RTO and operational ownership.
+- Resolve retention/deletion, storage provider, AI provider, backup/RPO/RTO and operational ownership; legal/privacy counsel review of the India operating model and child-data flows.
 
 ## Contract test plan
 A detailed operation-by-operation authorization and negative-test matrix is maintained in [P0_CONTRACT_TEST_MATRIX.md](P0_CONTRACT_TEST_MATRIX.md). It is a test design only; no application handlers or automated API tests exist yet.
 
 ## Current validation evidence
-- Prototype inline-JavaScript syntax check: passing (run #41179691052). This does not validate browser behavior or accessibility.
-- OpenAPI Redocly 3.1 bundle check: passing after the final configured-focus authorization schema update (run #41180375558).
-- OpenAPI contract currently targets 32 paths and 39 operations after consolidating the duplicate route and adding personal tree-focus persistence. Reconfirm counts in the next validation pass.
+- Latest Playwright/axe browser run before the all-screen expansion: #41180439258 (pass). A broader all-R1-screen × four-viewport screenshot/overflow suite and per-screen desktop/mobile axe scan is being validated on the UX branch.
+- OpenAPI Redocly 3.1 bundle check: latest pass #41180443225; 32 paths and 39 operations.
+- Isolated Prisma/PostgreSQL proof: #41337946121 (pass) for identity-anchor uniqueness, composite same-family FKs, RLS fail-closed/two-family isolation, Prisma transaction-local context, concurrent graph cycle prevention, outbox rollback/deduplication and competing `SKIP LOCKED` worker claims.
+- This POC does not prove managed pooler compatibility, pg-boss library semantics, production migration upgrade/rollback, API handler authorization or load capacity.
 
 ## Gate
 Keep PRs #63 and #64 draft/unmerged. Keep FL-001/FL-002 implementation branches parked. Phase 0 can close only after the UX QA evidence, architecture proof, security/contract tests and joint product/design/engineering sign-off are recorded.
