@@ -54,7 +54,7 @@
 - Use `UNIQUE(family_id,id)` on parent tables that are targets of composite references.
 - FamilyPerson endpoints, fact/source associations, branch/membership scopes, media/memory tags, event/place/participant, invitation scopes, review/contribution and export requester references must include family_id in the FK.
 - Avoid polymorphic target IDs as the only integrity mechanism. The owning module validates target type and family scope inside the same transaction; store a typed target FK when practical.
-- Family-configured tree focus is a circular dependency: create family_spaces first, create family_people, then add the composite FK from family_spaces(family_id, configured_tree_focus_family_person_id) to family_people(family_id,id) using a later ALTER TABLE migration. Use a deferred constraint only if creation workflow needs it.
+- Family-configured tree focus is a circular dependency: create family_spaces first, create family_people, then add the composite FK from family_spaces(id, configured_tree_focus_family_person_id) to family_people(family_id,id) using a later ALTER TABLE migration. Use a deferred constraint only if creation workflow needs it.
 - Person anchor uniqueness is global `UNIQUE(person_id)`, not `UNIQUE(family_id,person_id)`.
 
 ## 4. RLS policy pattern
