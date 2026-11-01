@@ -23,7 +23,7 @@ No real family, child, health, contact or other personal data may be used in dev
 | Backend module boundaries | Modular monolith, module ownership, transaction/audit/outbox defaults | Pass |
 | Data model and tenant constraints | ERD, composite-FK audit, RLS policy matrix, identity constraints | Design pass; full schema migration/tests required during foundation |
 | API contract | OpenAPI 3.1 32 paths/39 operations; Redocly bundle passes | Pass for contract syntax; runtime contract tests deferred until handlers exist |
-| Highest-risk database proof | Prisma + PostgreSQL 16, RLS tenant context, composite FKs, identity uniqueness, concurrent graph-cycle prevention | Pass on ERD-aligned direct connection in #41339408260 |
+| Highest-risk database proof | Prisma + PostgreSQL 16, RLS tenant context, composite FKs, identity uniqueness, concurrent graph-cycle prevention | Pass on ERD-aligned direct connection in #41339408260 and latest PR-head rerun #41339514211 |
 | Durable job proof | Transactional outbox rollback/dedupe and competing SKIP LOCKED claims | Pass in #41339408260; pg-boss adapter behavior deferred |
 | Local developer stack | PostgreSQL 16, MinIO, Mailpit; Node/TypeScript, Prisma SQL-first migrations | Pass as documented default |
 | Security/privacy baseline | Threat model, P0 negative-test matrix, India DPDP readiness baseline | Pass as engineering design; legal sign-off not granted |
