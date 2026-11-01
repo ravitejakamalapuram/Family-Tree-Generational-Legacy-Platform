@@ -1,61 +1,78 @@
 # Project Status
 
-**Last updated:** 2026-11-02
-**Stage:** Phase 0 — technical proof and final readiness validation
-**Implementation:** Paused pending complete Phase 0 approval
-**Milestone:** R1 — Working family tree
+**Last updated:** 2026-11-02  
+**Stage:** Phase 0 — build-readiness validation  
+**Implementation:** Product implementation branches remain parked; isolated architecture proof is allowed  
+**Milestone:** R1 — Working family tree  
 **Default branch:** main
 
 ## State
-The product owner approved the UX visual direction and UX-DEC-002–UX-DEC-006 defaults, plus ADR-0005–0008 direction, on 2026-10-31. The user has authorized autonomous continuation through readiness. Phase 0 remains open until technical proof, remaining UX review, risk/operational decisions and a documented build-readiness checklist are complete.
 
-## Workstream branches
-- `workstream/ux-design` — UX draft artifacts and clickable P0 prototype.
-- `workstream/backend-architecture` — backend architecture draft artifacts.
-- `feature/fl-001-frontend-foundation` — parked.
-- `feature/fl-002-backend-foundation` — parked.
+The product owner approved the UX visual direction and UX-DEC-002–UX-DEC-006 defaults, plus ADR-0005–0008 direction, on 2026-10-31. The user has authorized autonomous continuation through the point where the project is genuinely ready to start building. Do not pause for routine decisions; use conservative defaults, revalidate each change and record evidence. Do not merge Phase 0 PRs or begin production implementation until the build-readiness checklist is satisfied.
+
+## Workstream branches and pull requests
+
+- `workstream/ux-design` — UX specifications, design handoff and interactive prototype.
+- `workstream/backend-architecture` — architecture, ERD, OpenAPI, threat model, runtime plan and ADRs.
+- `spike/phase-0-proof-only` — isolated PostgreSQL/Prisma proof and India privacy baseline; [Draft PR #66](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/66).
+- `feature/fl-001-frontend-foundation` and `feature/fl-002-backend-foundation` — parked.
+- [Draft PR #63 — UX](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/63), [Draft PR #64 — backend architecture](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/64), [Draft PR #66 — isolated proof/privacy](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/66) remain open and unmerged.
+- PR #65 was closed because its head included the unmerged backend architecture branch; its proof artifacts were replayed cleanly on a main-based branch as PR #66.
+
+## Product and identity decisions
+
+- UX-DEC-002–UX-DEC-006 are accepted in `docs/ux/PRODUCT_DECISIONS.md` on the UX branch.
+- ADR-0005–0008 are accepted direction: opaque per-family identity anchors/no cross-family linking in v1; Prisma with reviewed SQL-first migrations; PostgreSQL RLS; PostgreSQL-backed durable jobs.
+- ADR-0005 refines ADR-0002 for v1. Each FamilyPerson has its own opaque Person anchor; `UNIQUE(person_id)` is mandatory. A real-world person in another family gets a separate anchor. Product requirements, logical data model, backlog FL-018 and ADR-0002 addendum on main have been reconciled.
+- India privacy/compliance engineering baseline is in PR #66 at `docs/product/PRIVACY_AND_COMPLIANCE_READINESS.md`. It is not legal advice. The DPDP Act/Rules have phased commencement; child-data, notices, rights, retention, grievance and lawful-basis design must be reviewed with qualified counsel before the relevant production processing.
 
 ## UX progress
-- UX-001 draft: `docs/ux/INFORMATION_ARCHITECTURE_AND_JOURNEYS.md`; accepted product defaults UX-DEC-002–UX-DEC-006 are documented in `docs/ux/PRODUCT_DECISIONS.md` on the UX branch.
-- UX-002: visual direction approved; design tokens remain provisional pending contrast and regional-script validation. See `docs/ux/DESIGN_SYSTEM.md` on UX branch.
-- UX-003 draft: `docs/ux/P0_SCREEN_SPECIFICATIONS.md` — nine P0 screen specs plus clickable prototype v0.2 at `docs/ux/prototype/index.html`.
-- UX-004 draft: `docs/ux/DESIGN_HANDOFF.md` — component inventory, screen mapping, interaction contracts, state matrix and frontend guardrails.
-- Prototype scope: dashboard, tree selection/inspector, people search, person profile, add-person form, family setup, memories and members. Static HTML/CSS/JS with fictional sample data only; no backend, auth, persistence, authorization, uploads or production graph algorithm.
-- Desktop/mobile dashboard review mockups were reviewed and the visual direction approved on 2026-10-30. They are visual review aids, not hosted app screenshots or proof of full prototype QA.
-- Tree geometry remains illustrative. Latest Playwright/axe browser QA passes on commit `aa4600e06750ffe5fb6f4e41fa3fa54c0dab72cc`: [browser QA run #41180439258](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41180439258), [syntax run #41180439232](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41180439232). The suite checks desktop/tablet/mobile/320px viewports, horizontal overflow, representative navigation/search/tree/form flows and axe WCAG scans. Full manual screen-reader, keyboard-only, regional-script, complex-family and all-screen visual review remain open.
-- Design issues #54–#57 remain open; do not mark UX work complete based solely on visual-direction approval.
+
+- UX-001: R1 launch journeys updated to make first-person creation optional and split R1 invitation acceptance from R2 contribution review.
+- UX-002: warm neutral/evergreen direction and semantic-token approach accepted; final contrast matrix and regional-script validation remain.
+- UX-003: nine R1 screen specifications: account entry, create/join onboarding, dashboard, people directory, add/edit person, profile, tree, relationship editor, members/invitations.
+- UX-004: design-to-engineering handoff and component/state contracts.
+- Prototype v0.3 adds account entry, relationship editor and invitation acceptance; Memories is explicitly a future R2 preview, not an R1 active feature. Static fictional data only; no real auth, persistence, authorization, upload or production tree algorithm.
+- Earlier representative browser/axe suite passed on #41180439258. The expanded all-R1-screen × four-viewport screenshot/overflow and per-screen desktop/mobile axe suite found tree-node accessible-name issues; these were corrected by deriving SVG button names from visible text. Revalidation is running on UX head `fc63e6f9c06e2012f4b58c557f4dfcc0c1aff474` in [run #41338832090](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41338832090). Do not call the expanded suite passing until this run succeeds.
+- Manual keyboard-only, screen-reader, regional-script, complex-family and all-screen visual review remain.
 
 ## Backend architecture progress
-- ARCH-001 draft: `docs/architecture/MODULE_BOUNDARIES.md`.
-- ARCH-002 draft: `docs/architecture/ERD_AND_SCHEMA.md`.
-- ARCH-003 draft: `docs/architecture/openapi-v1.yaml` — expanded to cover P0 auth/CSRF, invitations/memberships, people/facts and relationship corrections; structural checks passed (27 unique paths, 34 operations with response blocks), and a pinned Redocly bundle-validation workflow has been added; no successful workflow run is available yet.
-- Architecture review: `docs/architecture/ARCHITECTURE_REVIEW.md` and `docs/architecture/PHASE_0_CROSS_REVIEW.md` on `workstream/backend-architecture` record cross-workstream findings, accepted defaults and remaining proof gates.
-- ARCH-004 draft: `docs/architecture/SECURITY_THREAT_MODEL.md`.
-- ARCH-005 draft: `docs/architecture/RUNTIME_OPERATIONS.md`.
 
-## Draft review pull requests
-- UX design: [Draft PR #63](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/63).
-- Backend architecture: [Draft PR #64](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/64).
+- ARCH-001 module boundaries: R1 People module contains separate identity and family-representation subdomains; cross-module contribution orchestration and audit ownership defaults are documented.
+- ARCH-002 ERD: v1 identity anchor uniqueness, family-scoped tree preferences, normalized branch scopes, typed facts and explicit relationship catalog. Resolved defaults: normalized text instead of citext; no PostGIS initially; check constraints for bounded status codes; RLS mandatory.
+- ARCH-003 OpenAPI: 32 unique paths and 39 operations. Duplicate relationship-path route removed; personal tree-focus endpoint and Owner/delegated Admin configured-focus authorization included. Latest Redocly 3.1 validation on backend branch passed in [run #41338795961](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41338795961). This proves parse/bundle only, not API runtime behavior.
+- ARCH-004 threat model and ARCH-005 runtime operations record authorization, RLS, media, worker, backup and observability controls. Local defaults: PostgreSQL 16, MinIO and Mailpit; PostgreSQL sessions; OpenTelemetry-compatible instrumentation. Provider selection and production pooler remain deferred.
+- P0 operation-level authorization test plan: `docs/architecture/P0_CONTRACT_TEST_MATRIX.md` on backend branch.
 
-## Review and validation status
-- UX visual direction approved; complete design system, P0 screen, accessibility and engineering handoff approval remain outstanding.
-- UX clickable prototype v0.2 committed on `workstream/ux-design`; includes a semantic list alternative and keyboard-selectable SVG person nodes. Playwright/axe browser QA passes at 1440px, 768px, 390px and 320px, including no-horizontal-overflow checks and key interaction smoke tests (run 41180347724); screenshot artifact is attached to the run. This is not full manual screen-reader or all-screen QA. Not merged.
-- ADR-0005–0008 are Accepted direction (not proof): v1 cross-family identity isolation, Prisma/SQL-first migrations, PostgreSQL RLS and PostgreSQL-backed durable jobs. The technical proof is now the critical remaining gate.
-- OpenAPI workflow has passed repeatedly; latest successful run is #41180443225 on the current backend workstream head. It validates parse/bundle only, not runtime handlers or authorization.
-- Cross-review found and corrected a v1 identity-anchor constraint gap: ERD now requires UNIQUE(person_id) so an opaque Person anchor cannot be reused across families. Added personal last-focus persistence and family-configured focus to the ERD; OpenAPI now includes PUT /families/{familyId}/tree/focus and Owner/Admin family-focus authorization. Removed a duplicate relationship-path route.
-- No production application implementation is claimed. A focused architecture proof-of-concept is being prepared separately from the product implementation.
+## Architecture proof evidence
 
-## Next actions
-1. Complete manual review of all P0 screens and complex genealogy cases, long names and deep trees; the automated browser suite currently covers representative flows and viewport smoke checks.
-2. Complete full keyboard-only and screen-reader review, regional-script review, and the complete token/control contrast matrix.
-3. Turn the P0 contract matrix into executable API tests once the application foundation exists; prioritize cross-family IDOR, role/branch visibility, CSRF, invitation replay and graph concurrency.
-4. Run the isolated proof-of-concept for Prisma, composite-FK, RLS transaction context/pooler isolation, concurrent graph writes and durable-job idempotency.
-5. Resolve retention/deletion, provider, backup/RPO/RTO and operational ownership.
-6. Produce a final build-readiness report with explicit pass/fail/deferred gates, implementation sequence and residual risks; then begin FL-001/FL-002/FL-003/FL-008 without merging the Phase 0 review PRs unless separately requested.
+The isolated POC under `poc/phase-0-proof` in PR #66 passed against PostgreSQL 16 and Prisma 6.19.0:
+- Prisma schema validates and client generates.
+- Direct-connection Prisma interactive transaction sets transaction-local tenant context.
+- Runtime role is non-owner, non-superuser and non-BYPASSRLS; RLS fails closed without context and isolates two families.
+- Global Person anchor uniqueness and composite same-family relationship FKs reject cross-family reuse/edges.
+- Two concurrent opposite parentage edges serialize; exactly one commits and the other is rejected as a cycle.
+- Transactional outbox rolls back with the domain transaction, deduplicates event keys, and competing workers use `FOR UPDATE SKIP LOCKED` without double-claiming.
+- Proof passed on the clean main-based branch in [run #41338633914](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41338633914); detailed assertions are visible in [run #41337946121](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41337946121).
 
+POC limitations: direct PostgreSQL only (production pooler not proven); representative RLS tables only (full schema policies still need tests); pg-boss library retry/lease/singleton semantics and load/lock tests not yet proven; full migration upgrade/rollback/schema-drift tests and API handler authorization are not covered.
+
+## Next readiness loop
+
+1. Get the expanded all-screen UX browser/axe suite green; fix every actionable issue and re-run.
+2. Inspect all generated screen screenshots at desktop/tablet/mobile; record visual findings and fixes.
+3. Complete manual keyboard-only/screen-reader and Telugu/Tamil/Kannada/Hindi/mixed-script checks where automation cannot prove behavior.
+4. Complete production pooler proof for transaction-local RLS; if provider is not selected, keep direct connections as the development baseline and make pooler compatibility a deployment gate.
+5. Validate pg-boss adapter semantics or explicitly defer concrete queue selection while keeping outbox contract stable.
+6. Add full migration-from-empty, upgrade, rollback/compensating-migration and schema-drift checks.
+7. Reconcile all ERD composite FKs and RLS policies against every family-owned table; expand POC coverage.
+8. Complete product/privacy operating-model decisions with counsel before real personal/child data, public publishing or external AI use.
+9. Publish `BUILD_READINESS.md` with pass/fail/deferred gates and exact first implementation sequence. Only then mark the repository ready to start FL-001/FL-002/FL-003/FL-008.
 
 ## Risks
-Shared identity privacy; graph integrity and concurrent cycle prevention; public projection leakage/revocation; living-person/minor privacy; regional-script accessibility; media security; provider retention for AI; backup/restore and succession.
+
+Cross-family identity correlation; parentage graph concurrency; incomplete RLS coverage; pooler context leakage; public projection revocation; living-person/minor privacy; child-data legal basis/guardian verification; media security; AI vendor retention/transfers; data-subject rights and deletion; backup/restore and succession.
 
 ## Source of truth
-Meaningful changes to plan, scope, decisions, issues, branches and progress must be recorded in this repository in the same work cycle. Read this file and the linked plans before resuming. Repository state overrides stale conversation memory.
+
+Meaningful changes to plan, scope, decisions, issues, branches and progress must be recorded in this repository in the same work cycle. Read this file and linked plans before resuming. Repository state overrides stale conversation memory.
