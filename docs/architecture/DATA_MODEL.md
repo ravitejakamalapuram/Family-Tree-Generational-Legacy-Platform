@@ -1,13 +1,13 @@
 # Data Model and Domain Invariants
 
 ## Identity model
-Person = underlying identity; FamilySpace = tenant; FamilyPerson = family-specific representation; Relationship = edge between two FamilyPerson records in one space. Person may have multiple FamilyPerson rows. Display name, biography, privacy and family facts can differ; do not synchronize automatically.
+Person = opaque identity anchor; FamilySpace = tenant; FamilyPerson = family-specific representation; Relationship = edge between two FamilyPerson records in one space. In v1, each Person anchor belongs to exactly one FamilyPerson (`UNIQUE(person_id)`); a real-world person represented in another family gets a separate opaque anchor. Cross-family matching/linking is disabled. Display name, biography, privacy and family facts are family-scoped.
 
 ## Entities
 User, FamilySpace, FamilyMembership, Person, FamilyPerson, PersonName, PersonFact, Relationship, Source, FactSource, Place, PersonPlace, FamilyBranch, Event, EventParticipant, MediaAsset, MemoryTag, Story, Document, Contribution, Approval, Notification, AuditLog, FamilySetting, Publication, ArchiveExport.
 
 ## Invariants
-Relationships connect FamilyPerson records from the same family. Composite FKs enforce tenant boundary. No self-edge. Prevent duplicate active equivalent edges and parentage cycles. Do not impose one-parent/one-spouse model. Shared identity does not imply shared access. Hard deletion must account for other family representations. Identity merges are explicit/reviewed/audited.
+Relationships connect FamilyPerson records from the same family. Composite FKs enforce tenant boundary. No self-edge. Prevent duplicate active equivalent edges and parentage cycles. Do not impose one-parent/one-spouse model. Shared identity does not imply shared access. Hard deletion must account for other family representations. Cross-family identity linking is deferred beyond v1 and requires explicit consent, unlink/revocation semantics and privacy/legal review.
 
 ## Relationship types
 Directional parent_of with subtype biological/adoptive/step/guardian/other; spouse_of/partner_of with dates/status; explicit social/family-defined links. Derive inverse labels when possible.
