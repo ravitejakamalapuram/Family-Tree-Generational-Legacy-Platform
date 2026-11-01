@@ -9,7 +9,7 @@ The platform stores highly sensitive family relationships, living-person informa
 ## Decision
 
 **Approval note:** Product owner approved this defense-in-depth direction on 2026-10-31. Acceptance does not claim RLS is implemented or proven; policy SQL, role separation, transaction propagation and pooler isolation require integration tests before release.
-Enable PostgreSQL row-level security for family-owned tables as a second authorization barrier, in addition to application-level membership, role, branch and record-level policies.
+Enable PostgreSQL row-level security for family-owned tables as a second authorization barrier, in addition to application-level membership, role, branch and record-level policies. A PostgreSQL 16 proof passed for two-family isolation, missing-context fail-closed behavior and a runtime role that is not owner/superuser/BYPASSRLS (CI #41337946121); the proof covers representative tables, not the complete production schema.
 
 - Set tenant context transaction-locally, e.g. set_config('app.family_id', family_id, true), inside the same database transaction as protected queries.
 - Apply RLS policies using the transaction-local tenant context; use FORCE ROW LEVEL SECURITY where appropriate.
@@ -22,7 +22,7 @@ Enable PostgreSQL row-level security for family-owned tables as a second authori
 ## Consequences
 - Defense in depth against accidental unscoped queries.
 - All tenant-scoped repository work must run in an explicit transaction; transaction propagation and pooler compatibility become critical.
-- Integration tests must verify tenant context cannot leak between pooled connections and that cross-family reads/writes fail.
+- Integration tests must verify tenant context cannot leak through the selected production pooler and that cross-family reads/writes fail. The current proof validates transaction-local context on direct PostgreSQL connections only.
 - RLS is not a replacement for application authorization, audit, or negative API tests.
 
 ## Alternatives considered
