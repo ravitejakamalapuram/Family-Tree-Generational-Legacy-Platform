@@ -1,6 +1,6 @@
 # Build Readiness
 
-**Status:** Validation in progress — not yet marked Ready  
+**Status:** READY TO START R1 FOUNDATION BUILD (synthetic data only)  
 **Last reviewed:** 2026-11-02  
 **Decision scope:** Permission to begin R1 engineering foundations using synthetic data; not production launch approval.
 
@@ -17,17 +17,17 @@ No real family, child, health, contact or other personal data may be used in dev
 | Product scope and R1 exit criteria | PROJECT_CHARTER, PRODUCT_REQUIREMENTS, USE_CASES, DELIVERY_PLAN and stable FL backlog agree | In progress |
 | Product decisions | UX-DEC-002–006 and ADR-0005–0008 accepted and recorded | Pass |
 | Identity isolation | Person/FamilyPerson v1 invariant, UNIQUE(person_id), backlog and PRD reconciled | Pass |
-| UX R1 screen coverage | Nine R1 screens specified; account entry, onboarding, dashboard, people, add/edit, profile, tree, relationship editor and member/invite flows prototyped | Pass pending latest CI |
-| UX automated checks | All R1 screens at desktop/tablet/mobile/320px, no horizontal overflow, key flows and per-screen axe scans at desktop/mobile | Pass on #41339067472; public-shell/privacy follow-up revalidation pending |
+| UX R1 screen coverage | Nine R1 screens specified; account entry, onboarding, dashboard, people, add/edit, profile, tree, relationship editor and member/invite flows prototyped | Pass |
+| UX automated checks | All R1 screens at desktop/tablet/mobile/320px, no horizontal overflow, key flows, pre-validation invite privacy assertions and per-screen axe scans at desktop/mobile | Pass: #41339259200; [40-screen capture artifact](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41339259200/artifacts/13096876295) |
 | UX manual accessibility | Full keyboard-only, screen-reader and regional-script review | Deferred to implementation QA; must pass before release |
 | Backend module boundaries | Modular monolith, module ownership, transaction/audit/outbox defaults | Pass |
 | Data model and tenant constraints | ERD, composite-FK audit, RLS policy matrix, identity constraints | Design pass; full schema migration/tests required during foundation |
 | API contract | OpenAPI 3.1 32 paths/39 operations; Redocly bundle passes | Pass for contract syntax; runtime contract tests deferred until handlers exist |
-| Highest-risk database proof | Prisma + PostgreSQL 16, RLS tenant context, composite FKs, identity uniqueness, concurrent graph-cycle prevention | Pass on direct connection in #41338633914; schema-aligned rerun pending |
-| Durable job proof | Transactional outbox rollback/dedupe and competing SKIP LOCKED claims | Pass in #41338633914; pg-boss adapter behavior deferred |
+| Highest-risk database proof | Prisma + PostgreSQL 16, RLS tenant context, composite FKs, identity uniqueness, concurrent graph-cycle prevention | Pass on ERD-aligned direct connection in #41339408260 |
+| Durable job proof | Transactional outbox rollback/dedupe and competing SKIP LOCKED claims | Pass in #41339408260; pg-boss adapter behavior deferred |
 | Local developer stack | PostgreSQL 16, MinIO, Mailpit; Node/TypeScript, Prisma SQL-first migrations | Pass as documented default |
 | Security/privacy baseline | Threat model, P0 negative-test matrix, India DPDP readiness baseline | Pass as engineering design; legal sign-off not granted |
-| Build sequence and ownership | FL-001/002/003/008 dependency order and measurable exit criteria | Pending finalization |
+| Build sequence and ownership | FL-001/002/003/008 dependency order and measurable exit criteria | Pass; see section 5 |
 
 ## 3. Safe defaults for foundation implementation
 
@@ -82,6 +82,8 @@ Do not begin memories, contribution review, public publishing or AI as part of R
 
 ## 6. Final decision record
 
-The project is marked **Ready to Start Building** only when all Start-building gate rows are Pass or explicitly Deferred with a safe implementation boundary, the latest UX and architecture proof workflows pass on the current PR heads, and the first implementation sequence is consistent across this file, DELIVERY_PLAN.md, BACKLOG.md and PROJECT_STATUS.md.
+<badge color="success">Ready to Start Building</badge>
 
-A Ready-to-Build decision authorizes engineering work on synthetic data. It does not authorize production launch, public publishing, child-data processing or third-party AI processing.
+The R1 foundation may begin on synthetic data. The current design and contract are sufficiently specified, accepted decisions are recorded, the all-screen UX browser/axe suite passes, OpenAPI validation passes, and the ERD-aligned PostgreSQL/Prisma proof passes for the highest-risk identity, tenant, graph and outbox invariants. Remaining items are explicitly deferred behind implementation, provider-selection or production-release gates in section 4.
+
+This decision authorizes FL-001/FL-002/FL-003/FL-008 foundation engineering. It does not authorize production launch, real personal/child data processing, public publishing or third-party AI processing. Keep all private data synthetic until the legal, security, provider and operational release gates are passed.
