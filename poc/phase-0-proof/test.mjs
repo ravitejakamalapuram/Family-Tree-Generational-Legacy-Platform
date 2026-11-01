@@ -60,13 +60,13 @@ try {
     await client.query("COMMIT");
     assert.equal(noContext.rowCount, 0, "missing tenant context must fail closed");
     await assert.rejects(
-      withTenant(client, A, () => client.query("INSERT INTO relationships(id,family_id,parent_id,child_id) VALUES (gen_random_uuid(),$1,$2,$3)", [B, FP1, FP3])),
+      withTenant(client, A, () => client.query("INSERT INTO relationships(id,family_id,from_family_person_id,to_family_person_id) VALUES (gen_random_uuid(),$1,$2,$3)", [B, FP1, FP3])),
       /row-level security|violates row-level security/i
     );
 
     // Same-family composite FKs reject a relationship whose endpoint belongs to another family.
     await assert.rejects(
-      admin.query("INSERT INTO relationships(id,family_id,parent_id,child_id) VALUES (gen_random_uuid(),$1,$2,$3)", [A, FP1, FP3]),
+      admin.query("INSERT INTO relationships(id,family_id,from_family_person_id,to_family_person_id) VALUES (gen_random_uuid(),$1,$2,$3)", [A, FP1, FP3]),
       /foreign key/i
     );
 
