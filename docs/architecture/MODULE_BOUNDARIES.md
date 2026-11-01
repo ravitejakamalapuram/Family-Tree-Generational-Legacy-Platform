@@ -55,7 +55,7 @@ The precise split of People and Family People may be implemented as one package 
 Families/Memberships owns the use case. Create FamilySpace and owner Membership in one transaction. Authenticated user identity is supplied by the session context, never accepted as an arbitrary owner ID from request body.
 
 ### Add person to family
-People/Identity and Family People coordinate one application use case. Create or select a Person identity, then create a FamilyPerson scoped to the target family. Do not expose global identity search to other family members. Duplicate suggestions are family-scoped and advisory. The transaction must not merge identities.
+People/Identity and Family People coordinate one application use case. Create a new opaque Person anchor and one FamilyPerson scoped to the target family in the same use case. In v1, never select/reuse an anchor from another family; do not expose global identity search. Duplicate suggestions are family-scoped and advisory. The database UNIQUE(person_id) constraint enforces one anchor per representation.
 
 ### Add relationship
 Genealogy owns validation and persistence. Both endpoints must be FamilyPerson records from the same family. Validate relationship type, role permissions, temporal constraints and graph rules in one transaction. Persist provenance/revision/audit information with the change.
