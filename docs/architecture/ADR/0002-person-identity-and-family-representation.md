@@ -10,3 +10,7 @@ Introduce global Person, FamilySpace, FamilyPerson and family-scoped Relationshi
 
 ## Consequences
 Shared identity with independent access. Identity linking/merging is sensitive and explicit, reviewed, audited. Cross-family lookup is not exposed by default.
+
+
+## Scope refinement — ADR-0005 (2026-10-31)
+ADR-0005 narrows this conceptual model for v1. The Person/FamilyPerson separation remains, but a Person anchor is opaque and belongs to exactly one FamilyPerson (UNIQUE(person_id)). If the same real-world person appears in another family, create a separate anchor. Cross-family identity matching, lookup, reuse and linking are disabled in v1. The broader shared-identity capability described above is deferred until consent, unlink/revocation and privacy/legal semantics are separately approved.
