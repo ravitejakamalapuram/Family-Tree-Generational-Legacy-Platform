@@ -21,26 +21,24 @@ Persistent global context:
 - Notifications
 - Account and language preferences
 
-Primary navigation:
+R1 initial-release navigation:
 1. Home
 2. Family Tree
 3. People
-4. Memories
-5. Stories
-6. Events
-7. Places
-8. Members
-9. Activity & Approvals (role-aware)
-10. Family Settings (role-aware)
+4. Members and Invitations (role-aware)
+5. Family Settings (role-aware)
+
+Later-release navigation is introduced only when those modules ship: Memories, Stories, Events, Places, Activity & Approvals.
 
 AI Historian is a contextual capability within the family workspace and may later become a primary navigation item once its permission-aware experience is validated. Do not give it equal prominence before core data workflows work well.
 
-Mobile navigation:
+Mobile R1 navigation:
 - Home
 - Tree
 - Add
-- Memories
-- Profile / More
+- More (People, Members, Settings, Account)
+
+Memories is added in R2, not exposed as an active R1 destination.
 
 The mobile Add action opens a task-oriented sheet: Add person, Add relationship, Upload memory, Record story, Create event, Invite member. Available actions depend on role and context.
 
@@ -110,7 +108,7 @@ The mobile Add action opens a task-oriented sheet: Add person, Add relationship,
 
 The backend remains authoritative. Hiding a navigation item is usability, not authorization.
 
-## 4. P0 journeys
+## 4. R1 launch journeys (P0)
 
 ### J-01 — Register and create a family
 1. User creates account and verifies email.
@@ -166,7 +164,9 @@ Success: edge connects two FamilyPerson records in the same family; relationship
 
 Success: no unbounded fetch; selected focus is preserved; multiple partners/parents and unknown branches remain understandable.
 
-### J-06 — Upload a memory
+### Later milestone journeys (not R1 P0)
+
+#### J-06 — Upload a memory (R2)
 1. Start from Memories or a person's profile.
 2. Select file or capture from device.
 3. Upload progress/retry is visible.
@@ -177,7 +177,7 @@ Success: no unbounded fetch; selected focus is preserved; multiple partners/pare
 
 Success: upload ownership, file validation and permissions are enforced; failed uploads can resume/retry; no accidental public exposure.
 
-### J-07 — Record a family story
+#### J-07 — Record a family story (R2)
 1. Start from Stories or contextual person profile.
 2. Record/upload audio or enter text.
 3. Choose source language.
@@ -188,7 +188,7 @@ Success: upload ownership, file validation and permissions are enforced; failed 
 
 Success: AI output never silently becomes verified fact; source and correction history remain visible.
 
-### J-08 — Invite a member and review a contribution
+#### J-08 — Invite a member and review a contribution (invitation R1; contribution R2)
 1. Authorized member sends an invitation with role and optional branch scope.
 2. Invitee accepts via secure invitation flow.
 3. Contributor proposes a fact or relationship change with source/context.
@@ -196,10 +196,10 @@ Success: AI output never silently becomes verified fact; source and correction h
 5. Reviewer approves, rejects or requests clarification.
 6. Decision and actor are audited.
 
-Success: least privilege; branch scope is respected; no silent overwrite; decision history is retained.
+Success: invitation is single-use, expiring and revocable with least-privilege role/branch scope. Contribution review is a later R2 workflow; no silent overwrite and decision history is retained.
 
 ## 5. Cross-cutting interaction states
-Every P0 screen must define:
+Every R1 P0 screen must define:
 - Initial loading and skeleton behavior.
 - Empty state with one clear next action.
 - Validation and server error states.
