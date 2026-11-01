@@ -1,6 +1,6 @@
 # GitHub Execution Tracking
 
-Updated: 2026-10-30. FL-001–FL-039 are represented by the canonical issue links below. All canonical issues remain open and Not Started.
+Updated: 2026-11-02. FL-001–FL-039 are represented by the canonical issue links below. All canonical issues remain open and Not Started.
 
 | Backlog ID | Canonical GitHub issue | Status |
 |---|---|---|
@@ -77,4 +77,6 @@ The canonical issues remain open and are the only execution records to use.
 - ARCH-004 — [#61](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/61): Security, privacy and threat model.
 - ARCH-005 — [#62](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/issues/62): Runtime, operations and implementation blueprint.
 
-Draft review PRs: [UX #63](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/63) and [Backend architecture #64](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/64). PR #63 now includes the clickable prototype v0.1. Both PRs remain draft, documentation-only and unmerged. Complete UX and ARCH workstreams in parallel, then conduct a joint design/architecture review. FL-001, FL-002, FL-003 and FL-008 implementation must not start until the mandatory Phase 0 exit gate in DELIVERY_PLAN.md is explicitly approved.
+Draft review PRs: [UX #63](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/63), [Backend architecture #64](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/64) and [isolated architecture proof/privacy #66](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/66). All remain draft and unmerged. PR #65 was closed as superseded because it included the unmerged backend workstream; its proof artifacts were replayed cleanly on main-based PR #66.
+
+The Phase 0 start-building gate is satisfied as of 2026-11-02. FL-001/FL-002/FL-003/FL-008 foundation work is authorized on synthetic data per [BUILD_READINESS.md](BUILD_READINESS.md) and [PROJECT_STATUS.md](PROJECT_STATUS.md). Production/release gates remain open; no real personal/child data, public publishing or external AI processing is authorized. No PR merge without explicit repository-owner approval.
