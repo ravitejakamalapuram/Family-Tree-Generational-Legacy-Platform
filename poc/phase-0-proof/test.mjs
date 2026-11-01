@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 
 const { Pool } = pg;
 const admin = new Pool({ connectionString: process.env.ADMIN_DATABASE_URL, max: 2 });
-const runtime = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
+const runtime = new Pool({ connectionString: process.env.DATABASE_URL, max: 4 });
 const prisma = new PrismaClient();
 
 const A = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
@@ -34,9 +34,11 @@ async function withTenant(client, familyId, fn) {
 try {
   const schema = await readFile(new URL("./schema.sql", import.meta.url), "utf8");
   await admin.query(schema);
+  await admin.query("INSERT INTO family_spaces(id,name) VALUES ($1,'Family A'),($2,'Family B')", [A, B]);
+  await admin.query("INSERT INTO persons(id) VALUES ($1),($2),($3)", [P1, P2, P3]);
   await admin.query(
-    "INSERT INTO family_spaces(id,name) VALUES ($1,'Family A'),($2,'Family B'); INSERT INTO persons(id) VALUES ($3),($4),($5); INSERT INTO family_people(id,family_id,person_id,display_name) VALUES ($6,$1,$3,'A Parent'),($7,$1,$4,'A Child'),($8,$2,$5,'B Person')",
-    [A, B, P1, P2, P3, FP1, FP2, FP3]
+    "INSERT INTO family_people(id,family_id,person_id,display_name) VALUES ($1,$2,$3,'A Parent'),($4,$2,$5,'A Child'),($6,$7,$8,'B Person')",
+    [FP1, A, P1, FP2, P2, FP3, B, P3]
   );
 
   // Database identity isolation: one opaque Person anchor cannot be attached to a second family.
@@ -89,7 +91,7 @@ try {
 
   // Prisma transaction-local context must apply to queries in the same transaction.
   const prismaRows = await prisma.$transaction(async tx => {
-    await tx.$executeRaw`SELECT set_config('app.family_id', ${A}, true)`;
+    await tx.$queryRaw`SELECT set_config('app.family_id', ${A}, true)`;
     return tx.$queryRaw`SELECT id FROM family_people ORDER BY id`;
   });
   assert.equal(prismaRows.length, 2, "Prisma transaction must see only its tenant rows");
