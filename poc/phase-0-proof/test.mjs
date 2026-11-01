@@ -85,6 +85,46 @@ try {
     ]);
     assert.equal(concurrent.filter(x => x.status === "fulfilled").length, 1, "exactly one concurrent opposite edge should commit");
     assert.equal(concurrent.filter(x => x.status === "rejected").length, 1, "the second concurrent edge should be rejected as a cycle");
+
+    // Transactional outbox: a domain transaction rollback must also roll back its event.
+    await client.query("BEGIN");
+    await client.query("SELECT set_config('app.family_id', $1, true)", [A]);
+    await client.query("INSERT INTO job_outbox(family_id,event_type,aggregate_id,payload,dedupe_key) VALUES ($1,'person.created',$2,'{}','rollback-event')", [A, FP1]);
+    await client.query("ROLLBACK");
+    const rolledBack = await withTenant(client, A, async () => client.query("SELECT id FROM job_outbox WHERE dedupe_key='rollback-event'"));
+    assert.equal(rolledBack.rowCount, 0, "outbox event must roll back with the domain transaction");
+
+    await withTenant(client, A, async () => client.query(
+      "INSERT INTO job_outbox(family_id,event_type,aggregate_id,payload,dedupe_key) VALUES ($1,'person.created',$2,'{}','person-created-once')",
+      [A, FP1]
+    ));
+    const duplicateEvent = await withTenant(client, A, async () => client.query(
+      "INSERT INTO job_outbox(family_id,event_type,aggregate_id,payload,dedupe_key) VALUES ($1,'person.created',$2,'{}','person-created-once') ON CONFLICT (dedupe_key) DO NOTHING",
+      [A, FP1]
+    ));
+    assert.equal(duplicateEvent.rowCount, 0, "outbox dedupe key must prevent duplicate event creation");
+
+    // Competing workers use SKIP LOCKED: one owns the pending event while another skips it.
+    const workerA = await runtime.connect();
+    const workerB = await runtime.connect();
+    try {
+      await workerA.query("BEGIN");
+      await workerA.query("SELECT set_config('app.family_id', $1, true)", [A]);
+      const claimed = await workerA.query("SELECT id FROM job_outbox WHERE delivered_at IS NULL ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1");
+      assert.equal(claimed.rowCount, 1, "first worker should claim the pending outbox row");
+
+      await workerB.query("BEGIN");
+      await workerB.query("SELECT set_config('app.family_id', $1, true)", [A]);
+      const skipped = await workerB.query("SELECT id FROM job_outbox WHERE delivered_at IS NULL ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1");
+      assert.equal(skipped.rowCount, 0, "second worker should skip the row locked by the first worker");
+
+      await workerA.query("UPDATE job_outbox SET attempts = attempts + 1, delivered_at = now() WHERE id = $1", [claimed.rows[0].id]);
+      await workerA.query("COMMIT");
+      await workerB.query("COMMIT");
+    } finally {
+      await workerA.release();
+      await workerB.release();
+    }
   } finally {
     client.release();
   }
@@ -96,7 +136,7 @@ try {
   });
   assert.equal(prismaRows.length, 2, "Prisma transaction must see only its tenant rows");
 
-  console.log("PASS: Person identity isolation, composite family FKs, RLS fail-closed and tenant isolation, Prisma transaction-local context, and concurrent graph-cycle prevention.");
+  console.log("PASS: Person identity isolation, composite family FKs, RLS fail-closed and tenant isolation, Prisma transaction-local context, concurrent graph-cycle prevention, transactional outbox rollback/deduplication, and SKIP LOCKED worker claiming.");
 } catch (error) {
   console.error(error);
   process.exitCode = 1;
