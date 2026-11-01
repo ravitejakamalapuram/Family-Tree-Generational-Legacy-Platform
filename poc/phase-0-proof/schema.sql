@@ -54,6 +54,23 @@ CREATE POLICY relationships_tenant ON relationships
   USING (family_id = NULLIF(current_setting('app.family_id', true), '')::uuid)
   WITH CHECK (family_id = NULLIF(current_setting('app.family_id', true), '')::uuid);
 
+CREATE TABLE job_outbox (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  family_id uuid NOT NULL REFERENCES family_spaces(id),
+  event_type text NOT NULL,
+  aggregate_id uuid NOT NULL,
+  payload jsonb NOT NULL DEFAULT '{}'::jsonb,
+  dedupe_key text NOT NULL UNIQUE,
+  attempts integer NOT NULL DEFAULT 0,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  delivered_at timestamptz NULL
+);
+ALTER TABLE job_outbox ENABLE ROW LEVEL SECURITY;
+ALTER TABLE job_outbox FORCE ROW LEVEL SECURITY;
+CREATE POLICY job_outbox_tenant ON job_outbox
+  USING (family_id = NULLIF(current_setting('app.family_id', true), '')::uuid)
+  WITH CHECK (family_id = NULLIF(current_setting('app.family_id', true), '')::uuid);
+
 CREATE FUNCTION add_parent_edge(p_family uuid, p_parent uuid, p_child uuid)
 RETURNS void
 LANGUAGE plpgsql
@@ -91,8 +108,8 @@ BEGIN
 END;
 $$;
 
-GRANT SELECT ON family_spaces, family_people, relationships TO app_runtime;
-GRANT INSERT, UPDATE, DELETE ON family_spaces, family_people, relationships TO app_runtime;
+GRANT SELECT ON family_spaces, family_people, relationships, job_outbox TO app_runtime;
+GRANT INSERT, UPDATE, DELETE ON family_spaces, family_people, relationships, job_outbox TO app_runtime;
 GRANT EXECUTE ON FUNCTION add_parent_edge(uuid, uuid, uuid) TO app_runtime;
 
 -- Test fixture setup is performed by the privileged test harness after this schema is installed.
