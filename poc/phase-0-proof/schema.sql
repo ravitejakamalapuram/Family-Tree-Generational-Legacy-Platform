@@ -9,6 +9,7 @@ DO $$ BEGIN
   END IF;
 END $$;
 ALTER ROLE app_runtime NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA public TO app_runtime;
 
 CREATE TABLE family_spaces (
   id uuid PRIMARY KEY,
