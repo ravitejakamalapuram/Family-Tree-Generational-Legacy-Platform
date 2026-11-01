@@ -24,6 +24,8 @@ try {
     await page.evaluate(screenId => {
       document.querySelectorAll(".screen").forEach(node => node.classList.toggle("active", node.id === screenId));
       document.getElementById("crumb").textContent = screenId;
+      document.getElementById("workspaceCrumb").textContent = screenId === "auth" ? "Kinfolk" : screenId === "invite" ? "Invitation" : "The Morgan family";
+      document.body.classList.toggle("public-entry", screenId === "auth" || screenId === "invite");
     }, id);
   };
 
@@ -87,8 +89,12 @@ try {
   await page.locator("#saveRelationship").click();
   if (!(await page.locator("#relationshipStatus").innerText()).includes("no relationship was created")) failures.push("Relationship prototype does not disclose non-persistence.");
   await openScreen("invite");
+  if (await page.locator("#validatedInvite").isVisible()) failures.push("Invitation details were exposed before token validation.");
+  if ((await page.locator("#invite").innerText()).includes("The Morgan family")) failures.push("Private family name was exposed before token validation.");
+  await page.locator("#showValidatedInvite").click();
+  if (!(await page.locator("#validatedInvite").isVisible())) failures.push("Validated invitation state did not open.");
   await page.locator("#acceptInvite").click();
-  if (!(await page.locator("#inviteStatus").innerText()).includes("no invitation was validated")) failures.push("Invitation prototype does not disclose non-persistence.");
+  if (!(await page.locator("#acceptStatus").innerText()).includes("no membership was created")) failures.push("Invitation prototype does not disclose non-persistence.");
 
   // Automated WCAG scans on every R1 screen at desktop and mobile widths.
   for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
