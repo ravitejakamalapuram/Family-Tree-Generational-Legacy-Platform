@@ -64,7 +64,7 @@ FL-008 is implementation of the approved design system and responsive shell; it 
 | FL-038 | Relationship calculator | Explain paths |
 | FL-039 | Performance | Benchmark 5,000+ nodes |
 
-## Epic 05 — Legacy Vault (P0/P1)
+## Epic 05 — Legacy Vault (P1 / R2; not in R1 foundation scope)
 | ID | Task | Acceptance |
 |---|---|---|
 | FL-040 | Object storage | Secure private store |
