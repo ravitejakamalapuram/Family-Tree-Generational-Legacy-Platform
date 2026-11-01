@@ -82,7 +82,7 @@ Do not begin memories, contribution review, public publishing or AI as part of R
 
 ## 6. Final decision record
 
-<badge color="success">Ready to Start Building</badge>
+**Decision: READY TO START BUILDING**
 
 The R1 foundation may begin on synthetic data. The current design and contract are sufficiently specified, accepted decisions are recorded, the all-screen UX browser/axe suite passes, OpenAPI validation passes, and the ERD-aligned PostgreSQL/Prisma proof passes for the highest-risk identity, tenant, graph and outbox invariants. Remaining items are explicitly deferred behind implementation, provider-selection or production-release gates in section 4.
 
