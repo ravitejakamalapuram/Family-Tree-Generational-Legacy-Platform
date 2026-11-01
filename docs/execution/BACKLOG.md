@@ -37,7 +37,7 @@ FL-008 is implementation of the approved design system and responsive shell; it 
 | ID | Task | Acceptance |
 |---|---|---|
 | FL-017 | Global Person | Identity independent |
-| FL-018 | FamilyPerson | Shared Person represented in multiple families |
+| FL-018 | FamilyPerson | One opaque Person anchor per family representation; no cross-family reuse in v1 |
 | FL-019 | Add person | Basic/historical fields |
 | FL-020 | Edit person | Safe partial update |
 | FL-021 | Alternative names | Regional/historical |
@@ -45,7 +45,7 @@ FL-008 is implementation of the approved design system and responsive shell; it 
 | FL-023 | Profile | Overview/family |
 | FL-024 | Directory | Search/pagination |
 | FL-025 | Archive person | Preserve refs |
-| FL-026 | Duplicate detection | Suggest; no auto-merge |
+| FL-026 | Duplicate detection | Suggest within active family only; no auto-merge or cross-family matching |
 
 ## Epic 04 — Relationship/tree (P0)
 | ID | Task | Acceptance |
