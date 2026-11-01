@@ -18,7 +18,7 @@ Scope FL-001–FL-008, sequenced against Phase 0 outputs. FL-001 and FL-002 esta
 
 ## R1 — Working family tree
 Scope FL-001–FL-039. Create private family, people/complex relationships, ancestor/descendant tree, relationship calculation, invite member, prove tenant isolation.
-Exit: five-generation scenario; multiple family representations; graph integrity; auth/authorization suite.
+Exit: five-generation scenario; same real-world person independently represented in two family spaces using separate opaque Person anchors; graph integrity; tenant isolation and authorization suite.
 
 ## R2 — Memories and collaboration
 Scope FL-040–FL-057. Secure vault, multi-person tagging, stories, invitations, contribution review, audit.
