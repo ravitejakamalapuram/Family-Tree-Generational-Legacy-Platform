@@ -83,12 +83,16 @@ try {
 
   // Verify account, relationship and invitation actions clearly remain non-persistent.
   await openScreen("auth");
+  if (await page.locator(".side").isVisible()) failures.push("Unauthenticated account entry shows authenticated family navigation.");
+  if ((await page.locator("#workspaceCrumb").innerText()) !== "Kinfolk") failures.push("Public account entry exposes a family workspace label.");
   await page.locator("#registerPreview").click();
   if (!(await page.locator("#authStatus").innerText()).includes("no account was created")) failures.push("Account prototype does not disclose non-persistence.");
   await openScreen("relationship");
   await page.locator("#saveRelationship").click();
   if (!(await page.locator("#relationshipStatus").innerText()).includes("no relationship was created")) failures.push("Relationship prototype does not disclose non-persistence.");
   await openScreen("invite");
+  if (await page.locator(".side").isVisible()) failures.push("Pre-validation invitation shows authenticated family navigation.");
+  if ((await page.locator("#workspaceCrumb").innerText()) !== "Invitation") failures.push("Pre-validation invitation exposes a family workspace label.");
   if (await page.locator("#validatedInvite").isVisible()) failures.push("Invitation details were exposed before token validation.");
   if ((await page.locator("#invite").innerText()).includes("The Morgan family")) failures.push("Private family name was exposed before token validation.");
   await page.locator("#showValidatedInvite").click();
