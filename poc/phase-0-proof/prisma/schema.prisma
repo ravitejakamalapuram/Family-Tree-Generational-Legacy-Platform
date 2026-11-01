@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model FamilySpace {
+  id      String         @id @db.Uuid
+  people  FamilyPerson[]
+  edges   Relationship[]
+  @@map("family_spaces")
+}
+
+model Person {
+  id             String        @id @db.Uuid
+  familyPerson   FamilyPerson?
+  @@map("persons")
+}
+
+model FamilyPerson {
+  id             String         @id @db.Uuid
+  familyId       String         @db.Uuid @map("family_id")
+  personId       String         @unique @db.Uuid @map("person_id")
+  family         FamilySpace    @relation(fields: [familyId], references: [id])
+  person         Person         @relation(fields: [personId], references: [id])
+  parentEdges    Relationship[] @relation("ParentPerson")
+  childEdges     Relationship[] @relation("ChildPerson")
+  @@unique([familyId, id])
+  @@map("family_people")
+}
+
+model Relationship {
+  id         String       @id @db.Uuid
+  familyId   String       @db.Uuid @map("family_id")
+  parentId   String       @db.Uuid @map("parent_id")
+  childId    String       @db.Uuid @map("child_id")
+  family     FamilySpace  @relation(fields: [familyId], references: [id])
+  parent     FamilyPerson @relation("ParentPerson", fields: [familyId, parentId], references: [familyId, id])
+  child      FamilyPerson @relation("ChildPerson", fields: [familyId, childId], references: [familyId, id])
+  @@unique([familyId, id])
+  @@map("relationships")
+}
