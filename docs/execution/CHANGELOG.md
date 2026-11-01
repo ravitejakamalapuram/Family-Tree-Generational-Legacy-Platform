@@ -117,3 +117,15 @@
 - Added Owner/delegated Admin authorization guidance and configuredTreeFocusPersonId to PATCH /families/{familyId}.
 - Redocly CLI 1.34.5 passed the final 32-path, 39-operation OpenAPI 3.1 bundle: run #41180375558.
 - Added operation-level authorization and negative-test plan in docs/architecture/P0_CONTRACT_TEST_MATRIX.md.
+
+
+## 2026-11-02 — R1 build-readiness gate satisfied
+- Expanded the UX prototype to cover account entry, onboarding, dashboard, people directory, add/edit person, profile, tree, relationship editor, member directory and invitation acceptance. Memories is explicitly a non-functional R2 preview, not an active R1 navigation item.
+- Corrected the public-entry and pre-validation invitation states so they do not display authenticated family navigation, family workspace labels or family names before invitation validation.
+- Expanded Playwright/axe QA to capture all R1 screens at 1440px, 768px, 390px and 320px; check horizontal overflow; exercise key flows; and run per-screen axe scans at desktop/mobile. Pass: run #41339259200; 40 screenshot artifact: https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41339259200/artifacts/13096876295.
+- Visually inspected the generated screen contact sheet and auth/invitation/dashboard/relationship states; fixed the authenticated-shell leakage found in the first screenshot pass.
+- Aligned the isolated PostgreSQL/Prisma proof schema to production ERD relationship columns and relationship type catalog. The suite proves identity-anchor uniqueness, same-family composite FKs, RLS fail-closed/two-family isolation, Prisma transaction-local context, concurrent graph-cycle prevention, transactional outbox rollback/dedupe and competing SKIP LOCKED claims. ERD-aligned pass #41339408260; latest PR-head rerun #41339514211.
+- Added table-by-table schema constraint/RLS audit and India DPDP/privacy/child-data readiness baseline.
+- Reconciled ADR-0002/0005, PRODUCT_REQUIREMENTS, DATA_MODEL, BACKLOG FL-018 and DELIVERY_PLAN with v1 opaque identity anchors.
+- Added BUILD_READINESS.md and marked the R1 foundation start gate satisfied. FL-001/FL-002/FL-003/FL-008 may begin on synthetic data. Pooler, pg-boss, full-schema RLS/migration, manual accessibility/regional scripts, privacy counsel, provider, backup/restore and production controls remain release/feature gates.
+- PRs #63, #64 and #66 remain draft and unmerged; PR #65 closed as superseded by clean main-based PR #66. No production implementation or real personal data processing has begun.
