@@ -1,0 +1,48 @@
+name: Phase 0 Architecture Proof
+
+on:
+  pull_request:
+    paths:
+      - "poc/phase-0-proof/**"
+      - ".github/workflows/phase-0-architecture-proof.yml"
+  push:
+    branches:
+      - "spike/phase-0-architecture-proof"
+    paths:
+      - "poc/phase-0-proof/**"
+      - ".github/workflows/phase-0-architecture-proof.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-proof:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16.6
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: family_poc
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d family_poc"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      ADMIN_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/family_poc
+      DATABASE_URL: postgresql://app_runtime:poc-runtime-password@localhost:5432/family_poc
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install pinned proof dependencies
+        working-directory: poc/phase-0-proof
+        run: npm install --no-audit --no-fund
+      - name: Validate Prisma schema and run PostgreSQL proof
+        working-directory: poc/phase-0-proof
+        run: npm test
