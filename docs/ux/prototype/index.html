@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="app">
-<aside class="side"><div class="brand">kin<span>folk</span></div><div class="workspace"><small>YOUR FAMILY SPACE</small><br><strong>The Morgan family</strong><br><small>Private workspace ▾</small></div><nav class="nav" aria-label="Main navigation"><button class="active" data-screen="dashboard">⌂ &nbsp; Home</button><button data-screen="tree">⌘ &nbsp; Family tree</button><button data-screen="people">♧ &nbsp; People</button><button data-screen="memories">▧ &nbsp; Memories</button><button data-screen="profile">♡ &nbsp; Stories & profile</button><button data-screen="members">♙ &nbsp; Members</button></nav><div class="sidefoot">A private place for your family's story.<br>Prototype v0.2 · Fictional data</div></aside>
+<aside class="side"><div class="brand">kin<span>folk</span></div><div class="workspace"><small>YOUR FAMILY SPACE</small><br><strong>The Morgan family</strong><br><small>Private workspace ▾</small></div><nav class="nav" aria-label="Main navigation"><button class="active" data-screen="dashboard">⌂ &nbsp; Home</button><button data-screen="tree">⌘ &nbsp; Family tree</button><button data-screen="people">♧ &nbsp; People</button><button data-screen="memories">▧ &nbsp; Memories</button><button data-screen="profile">♡ &nbsp; Stories & profile</button><button data-screen="members">♙ &nbsp; Members</button></nav><div class="sidefoot">A private place for your family's story.<br>Prototype v0.3 · Fictional data</div></aside>
 <main class="main"><header class="top"><div><span class="crumb">The Morgan family</span>　/　<span id="crumb">Home</span></div><div class="avatar" title="Your account">AM</div></header>
 <div class="content">
 <section class="screen active" id="dashboard"><div class="pagehead"><div><div class="eyebrow">Family workspace</div><h1 class="h1">Good morning, Alex</h1><p class="lead">A home for the people, memories and stories that make your family.</p></div><button class="btn primary" data-go="add">＋ Add a person</button></div>
@@ -36,10 +36,49 @@
 <section class="screen" id="onboarding"><div class="pagehead"><div><div class="eyebrow">Let's begin</div><h1 class="h1">Create your family space</h1><p class="lead">A few simple steps. You can change these choices later.</p></div></div><div class="card"><div class="steps"><span class="step current">1 · Family</span><span class="step">2 · First person</span><span class="step">3 · Privacy</span><span class="step">4 · Invite</span></div><div class="field"><label for="familyName">What should your family space be called?</label><input id="familyName" value="The Morgan family"></div><div class="field" style="margin-top:14px"><label for="language">Family's primary language</label><select id="language"><option>English</option><option>తెలుగు (Telugu)</option><option>தமிழ் (Tamil)</option><option>ಕನ್ನಡ (Kannada)</option><option>हिन्दी (Hindi)</option></select></div><div class="notice">Your family space starts private. Living people and children are not publicly visible by default.</div><div class="actions"><button class="btn" data-go="dashboard">Back</button><button class="btn primary" id="continueOnboarding">Continue</button></div><p id="onboardStatus" role="status"></p></div></section>
 <section class="screen" id="memories"><div class="pagehead"><div><div class="eyebrow">Preserve the moments</div><h1 class="h1">Memories</h1><p class="lead">Photographs, recordings and stories belong alongside the people they remember.</p></div><button class="btn primary">＋ Add memory</button></div><div class="card"><h2>Your memory archive is ready</h2><p>There are no memories yet. Add a family photograph or record a story to begin.</p><div class="actions"><button class="btn primary">Choose a photograph</button><button class="btn">Record a story</button></div><div class="notice">Upload, consent, retention and sharing workflows are not connected in this prototype.</div></div></section>
 <section class="screen" id="members"><div class="pagehead"><div><div class="eyebrow">Collaborate safely</div><h1 class="h1">Family members</h1><p class="lead">Invite relatives and choose what they can contribute.</p></div><button class="btn primary">＋ Invite member</button></div><div class="card"><div class="personrow"><div class="portrait">AM</div><div><strong>Alex Morgan</strong><small>Owner · Active</small></div><span class="tag">You</span></div><div class="personrow"><div class="portrait">TM</div><div><strong>Maya Morgan</strong><small>Contributor · Active</small></div></div><div class="notice">Invitation and role changes are visual-only. Server authorization is not implemented.</div></div></section>
+<section class="screen" id="auth">
+  <div class="pagehead"><div><div class="eyebrow">Welcome to Kinfolk</div><h1 class="h1">Your family's story, kept together.</h1><p class="lead">Create a private family space, or join one through an invitation.</p></div></div>
+  <div class="grid">
+    <div class="card"><h2>Create your account</h2><p>Start with your own account. A family space is a separate step.</p>
+      <div class="field"><label for="authName">Your name</label><input id="authName" placeholder="Your display name"></div>
+      <div class="field"><label for="authEmail">Email address</label><input id="authEmail" type="email" placeholder="you@example.com"></div>
+      <div class="field"><label for="authPassword">Password</label><input id="authPassword" type="password" placeholder="Create a strong password"></div>
+      <div class="notice">Your account does not automatically create a family tree or make your details public.</div>
+      <div class="actions"><button class="btn primary" id="registerPreview">Create account</button><button class="btn" id="loginPreview">Sign in instead</button></div><p id="authStatus" role="status" aria-live="polite"></p>
+    </div>
+    <div class="card"><h2>Already invited?</h2><p>Use the secure invitation link you received. The family and role are shown only after the invitation is validated.</p><div class="actions"><button class="btn" data-go="invite">Preview invitation acceptance</button><button class="btn" data-go="onboarding">Create a family space</button></div></div>
+  </div>
+</section>
+<section class="screen" id="relationship">
+  <div class="pagehead"><div><div class="eyebrow">Genealogy · Review before saving</div><h1 class="h1">Add a relationship</h1><p class="lead">Record what your family knows without guessing or overwriting disputed history.</p></div></div>
+  <div class="card">
+    <div class="formgrid">
+      <div class="field"><label for="relFrom">Person</label><select id="relFrom"><option>Alex Morgan</option><option>Nora Morgan</option><option>Elias Morgan</option></select></div>
+      <div class="field"><label for="relType">Relationship type</label><select id="relType"><option>Parent of</option><option>Child of</option><option>Partner of</option><option>Adoptive parent of</option><option>Step-parent of</option><option>Guardian of</option><option>Sibling of</option></select></div>
+      <div class="field"><label for="relTo">Related person</label><select id="relTo"><option>Theo Morgan</option><option>Alex Morgan</option><option>Nora Morgan</option><option>Elias Morgan</option></select></div>
+      <div class="field"><label for="relDate">Valid from / date (optional)</label><input id="relDate" placeholder="Exact or approximate"></div>
+      <div class="field full"><label for="relSource">Source or family context</label><textarea id="relSource" placeholder="Who shared this information? What is known or uncertain?"></textarea></div>
+    </div>
+    <div class="notice">The preview must show the proposed direction and affected branch. Conflicting or disputed relationships are preserved for review; biological parentage is never inferred.</div>
+    <div class="actions"><button class="btn" data-go="tree">Cancel</button><button class="btn primary" id="saveRelationship">Preview relationship</button></div><p id="relationshipStatus" role="status" aria-live="polite"></p>
+  </div>
+</section>
+<section class="screen" id="invite">
+  <div class="pagehead"><div><div class="eyebrow">Secure family invitation</div><h1 class="h1">Join a family space</h1><p class="lead">Review who invited you and what access is being granted.</p></div></div>
+  <div class="card">
+    <div class="personrow"><div class="portrait">MF</div><div><strong>The Morgan family</strong><small>Invitation details are fictional in this prototype</small></div><span class="tag private">Private</span></div>
+    <div class="formgrid">
+      <div class="field"><label for="inviteEmail">Invited email</label><input id="inviteEmail" type="email" value="relative@example.com"></div>
+      <div class="field"><label for="inviteRole">Assigned role</label><input id="inviteRole" value="Contributor" readonly></div>
+    </div>
+    <div class="notice">A real invitation must be validated for token, expiry, revocation and intended account/email before showing private family details. Accepting creates membership only in this family and does not expose other family spaces.</div>
+    <div class="actions"><button class="btn" data-go="auth">Sign in with another account</button><button class="btn primary" id="acceptInvite">Accept invitation</button></div><p id="inviteStatus" role="status" aria-live="polite"></p>
+  </div>
+</section>
 </div><nav class="mobilebar" aria-label="Mobile navigation"><button data-screen="dashboard" class="active">⌂<br>Home</button><button data-screen="tree">⌘<br>Tree</button><button data-go="add">＋<br>Add</button><button data-screen="memories">▧<br>Memories</button><button data-screen="members">•••<br>More</button></nav>
 </main></div>
 <script>
-const labels={dashboard:"Home",tree:"Family tree",people:"People",profile:"Person profile",add:"Add a person",onboarding:"Family setup",memories:"Memories",members:"Members"};
+const labels={dashboard:"Home",tree:"Family tree",people:"People",profile:"Person profile",add:"Add a person",onboarding:"Family setup",memories:"Memories preview",members:"Members",auth:"Account entry",relationship:"Relationship editor",invite:"Invitation acceptance"};
 function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.toggle("active",x.id===id));document.querySelectorAll("[data-screen]").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));document.getElementById("crumb").textContent=labels[id]||id;window.scrollTo(0,0)}
 document.querySelectorAll("[data-screen]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.screen)));
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
@@ -49,6 +88,10 @@ document.querySelectorAll("[data-person-choice]").forEach(b=>b.addEventListener(
 document.getElementById("listView").addEventListener("click",()=>{const list=document.getElementById("treeList");const opening=list.hidden;list.hidden=!opening;document.getElementById("listView").setAttribute("aria-expanded",String(opening));document.getElementById("listView").textContent=opening?"Hide list":"List view"});
 document.getElementById("savePerson").addEventListener("click",()=>{const n=document.getElementById("fullName").value.trim();document.getElementById("saveStatus").textContent=n?"Prototype only: “"+n+"” is ready to preview. No data was sent or saved.":"Please enter a display name."});
 document.getElementById("continueOnboarding").addEventListener("click",()=>{document.getElementById("onboardStatus").textContent="Prototype step complete. No family space was created.";});
+document.getElementById("registerPreview").addEventListener("click",()=>{document.getElementById("authStatus").textContent="Prototype only: no account was created and no email was sent.";});
+document.getElementById("loginPreview").addEventListener("click",()=>{document.getElementById("authStatus").textContent="Prototype only: no sign-in request was sent.";});
+document.getElementById("saveRelationship").addEventListener("click",()=>{document.getElementById("relationshipStatus").textContent="Preview only: no relationship was created or changed.";});
+document.getElementById("acceptInvite").addEventListener("click",()=>{document.getElementById("inviteStatus").textContent="Prototype only: no invitation was validated and no membership was created.";});
 document.getElementById("peopleSearch").addEventListener("input",e=>{document.querySelectorAll("#peopleList .personrow").forEach(r=>r.style.display=r.textContent.toLowerCase().includes(e.target.value.toLowerCase())?"flex":"none")});
 document.getElementById("fit").addEventListener("click",()=>{document.querySelector(".tree-stage").scrollTo({left:0,top:0,behavior:"smooth"})});
 document.getElementById("zoom").addEventListener("click",()=>{const s=document.querySelector(".tree-stage svg");const w=parseFloat(s.style.width)||100;s.style.width=(w+10)+"%"});
