@@ -18,7 +18,7 @@ Prohibit production schema push/sync. Keep migration ownership in the database i
 - Advanced PostgreSQL constraints and policies remain explicit SQL and require migration tests.
 - Recursive graph queries use tested SQL repositories rather than ORM relation expansion.
 - Prisma client and generated types remain infrastructure details.
-- Composite-key mapping and direct-connection transaction-local RLS context passed the isolated proof (CI #41337946121). Production pooler compatibility, full migration upgrade/rollback and schema-drift tests remain required before production deployment.
+- Composite-key mapping and direct-connection transaction-local RLS context passed the isolated proof (CI #41339408260). Production pooler compatibility, full migration upgrade/rollback and schema-drift tests remain required before production deployment.
 
 ## Alternatives considered
 - Drizzle: stronger SQL-first feel and lighter abstraction; re-evaluate if Prisma friction around tenant context/composite relations outweighs its productivity benefits.
