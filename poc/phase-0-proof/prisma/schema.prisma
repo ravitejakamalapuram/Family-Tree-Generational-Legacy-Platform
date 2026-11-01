@@ -26,8 +26,8 @@ model FamilyPerson {
   personId       String         @unique @db.Uuid @map("person_id")
   family         FamilySpace    @relation(fields: [familyId], references: [id])
   person         Person         @relation(fields: [personId], references: [id])
-  parentEdges    Relationship[] @relation("ParentPerson")
-  childEdges     Relationship[] @relation("ChildPerson")
+  outgoingEdges  Relationship[] @relation("FromPerson")
+  incomingEdges  Relationship[] @relation("ToPerson")
   @@unique([familyId, id])
   @@map("family_people")
 }
@@ -35,11 +35,12 @@ model FamilyPerson {
 model Relationship {
   id         String       @id @db.Uuid
   familyId   String       @db.Uuid @map("family_id")
-  parentId   String       @db.Uuid @map("parent_id")
-  childId    String       @db.Uuid @map("child_id")
-  family     FamilySpace  @relation(fields: [familyId], references: [id])
-  parent     FamilyPerson @relation("ParentPerson", fields: [familyId, parentId], references: [familyId, id])
-  child      FamilyPerson @relation("ChildPerson", fields: [familyId, childId], references: [familyId, id])
+  fromFamilyPersonId String       @db.Uuid @map("from_family_person_id")
+  toFamilyPersonId   String       @db.Uuid @map("to_family_person_id")
+  relationshipType   String       @map("relationship_type")
+  family             FamilySpace  @relation(fields: [familyId], references: [id])
+  fromPerson         FamilyPerson @relation("FromPerson", fields: [familyId, fromFamilyPersonId], references: [familyId, id])
+  toPerson           FamilyPerson @relation("ToPerson", fields: [familyId, toFamilyPersonId], references: [familyId, id])
   @@unique([familyId, id])
   @@map("relationships")
 }
