@@ -18,7 +18,7 @@ No real family, child, health, contact or other personal data may be used in dev
 | Product decisions | UX-DEC-002–006 and ADR-0005–0008 accepted and recorded | Pass |
 | Identity isolation | Person/FamilyPerson v1 invariant, UNIQUE(person_id), backlog and PRD reconciled | Pass |
 | UX R1 screen coverage | Nine R1 screens specified; account entry, onboarding, dashboard, people, add/edit, profile, tree, relationship editor and member/invite flows prototyped | Pass |
-| UX automated checks | All R1 screens at desktop/tablet/mobile/320px, no horizontal overflow, key flows, pre-validation invite privacy assertions and per-screen axe scans at desktop/mobile | Pass on current UX PR head: #41340010653; [40-screen capture artifact](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41340010653/artifacts/13096817898) |
+| UX automated checks | All R1 screens at desktop/tablet/mobile/320px, no horizontal overflow, key flows, pre-validation invite privacy assertions and per-screen axe scans at desktop/mobile | Pass on current UX PR head: #41340292066 on current UX PR head; [40-screen capture artifact](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41340292066/artifacts/13096888231) |
 | UX manual accessibility | Full keyboard-only, screen-reader and regional-script review | Deferred to implementation QA; must pass before release |
 | Backend module boundaries | Modular monolith, module ownership, transaction/audit/outbox defaults | Pass |
 | Data model and tenant constraints | ERD, composite-FK audit, RLS policy matrix, identity constraints | Design pass; full schema migration/tests required during foundation |
