@@ -8,7 +8,7 @@
 
 The modular-monolith direction, PostgreSQL system of record, family-scoped relationship graph, explicit publication projection and private-by-default posture are coherent with the product charter and accepted ADRs. The draft is a useful foundation, but it is not implementation-ready yet.
 
-The review found contract gaps between API_DESIGN.md and OpenAPI, an underspecified cookie-CSRF mechanism, incomplete P0 endpoints, and several schema/runtime decisions that must be made explicit before implementation. The OpenAPI contract and API design document have been updated on this branch; structural checks found 27 unique paths and 34 operations, each with a responses block, and no duplicate path keys. This is not a full OpenAPI 3.1 parser/validator run; CI validation remains required.
+The initial review found contract gaps between API_DESIGN.md and OpenAPI, an underspecified cookie-CSRF mechanism and incomplete P0 endpoints. Those were reconciled; OpenAPI now has 32 unique paths and 39 operations and the latest Redocly 3.1 bundle run passes (#41180443225). This validates syntax/bundling only, not runtime API behavior.
 
 ## 2. Changes made during this review
 
@@ -31,7 +31,7 @@ The review found contract gaps between API_DESIGN.md and OpenAPI, an underspecif
 | Background jobs | Start with a PostgreSQL-backed durable queue if expected volume is modest; benchmark and document lock/lease/retry behavior before implementation. | Keeps transactional enqueue simple without adding an operational dependency prematurely. |
 | Contribution approval | Make approval and domain mutation atomic within one module boundary, or use an explicit outbox/saga with idempotent application and visible recovery state. | Avoids approved proposals that never apply or apply twice. |
 
-ADR-0005–0008 now record accepted defaults for v1 identity isolation, Prisma/SQL-first migrations, PostgreSQL RLS and PostgreSQL-backed jobs. Acceptance selects direction; it does not claim implementation readiness. Proof-of-concept, migration, RLS/pooler and queue integration tests remain required.
+ADR-0005–0008 record accepted defaults. The isolated PostgreSQL proof passes for Prisma transaction-local tenant context, non-owner/non-BYPASSRLS RLS, cross-family identity isolation, composite same-family foreign keys, concurrent graph cycle prevention, transactional outbox rollback/deduplication and competing worker claims (CI #41337946121). Production pooler compatibility, pg-boss library behavior, full migration upgrade/rollback and load testing remain open.
 
 ## 4. Schema questions to close
 
@@ -60,7 +60,7 @@ Do not start FL-002 backend implementation until:
 - Security controls and role matrix have owners and executable negative tests.
 - Product/engineering explicitly approve Phase 0.
 
-No production code or infrastructure has been created as part of this review.
+No production code or infrastructure has been created as part of this review. A separate disposable PostgreSQL/Prisma proof harness is maintained under `poc/phase-0-proof`; it is not application code.
 
 ## 7. Validation automation
 A GitHub Actions workflow was added at `.github/workflows/openapi-validation.yml`. It bundles the OpenAPI document using a pinned Redocly CLI version on relevant pull-request and branch pushes. The first runs exposed duplicate parameters mappings in family creation, family update and person update operations, plus an ErrorEnvelope schema placed under the response components instead of schemas. All were corrected. Redocly CLI 1.34.5 successfully bundled the OpenAPI 3.1 document in GitHub Actions run 41003090188.
