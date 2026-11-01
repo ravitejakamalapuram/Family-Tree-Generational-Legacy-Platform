@@ -61,6 +61,28 @@ try {
       withTenant(client, A, () => client.query("INSERT INTO relationships(id,family_id,parent_id,child_id) VALUES (gen_random_uuid(),$1,$2,$3)", [B, FP1, FP3])),
       /row-level security|violates row-level security/i
     );
+
+    // Same-family composite FKs reject a relationship whose endpoint belongs to another family.
+    await assert.rejects(
+      admin.query("INSERT INTO relationships(id,family_id,parent_id,child_id) VALUES (gen_random_uuid(),$1,$2,$3)", [A, FP1, FP3]),
+      /foreign key/i
+    );
+
+    // Two concurrent opposite parentage edges serialize; exactly one may commit.
+    const attempt = async (parentId, childId) => {
+      const c = await runtime.connect();
+      try {
+        return await withTenant(c, A, () => c.query("SELECT add_parent_edge($1,$2,$3)", [A, parentId, childId]));
+      } finally {
+        c.release();
+      }
+    };
+    const concurrent = await Promise.allSettled([
+      attempt(FP1, FP2),
+      attempt(FP2, FP1)
+    ]);
+    assert.equal(concurrent.filter(x => x.status === "fulfilled").length, 1, "exactly one concurrent opposite edge should commit");
+    assert.equal(concurrent.filter(x => x.status === "rejected").length, 1, "the second concurrent edge should be rejected as a cycle");
   } finally {
     client.release();
   }
@@ -72,14 +94,7 @@ try {
   });
   assert.equal(prismaRows.length, 2, "Prisma transaction must see only its tenant rows");
 
-  // Same-family composite FKs reject a relationship whose endpoint belongs to another family.
-  await assert.rejects(
-    admin.query("INSERT INTO relationships(id,family_id,parent_id,child_id) VALUES (gen_random_uuid(),$1,$2,$3)", [A, FP1, FP3]),
-    /foreign key/i
-  );
-
-  // Valid edge then reverse edge is rejected as a cycle.
-  await withTenant(clientless(), A, async () => {});
+  console.log("PASS: Person identity isolation, composite family FKs, RLS fail-closed and tenant isolation, Prisma transaction-local context, and concurrent graph-cycle prevention.");
 } catch (error) {
   console.error(error);
   process.exitCode = 1;
@@ -87,8 +102,4 @@ try {
   await prisma.$disconnect();
   await runtime.end();
   await admin.end();
-}
-
-function clientless() {
-  throw new Error("internal test helper should not be called");
 }
