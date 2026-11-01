@@ -40,7 +40,7 @@ Mobile R1 navigation:
 
 Memories is added in R2, not exposed as an active R1 destination.
 
-The mobile Add action opens a task-oriented sheet: Add person, Add relationship, Upload memory, Record story, Create event, Invite member. Available actions depend on role and context.
+The R1 mobile Add action opens a task-oriented sheet: Add person, Add relationship and Invite member. Upload memory and Record story arrive in R2; Create event arrives in R3. Available actions depend on role and context.
 
 ## 2. Information hierarchy
 
@@ -48,11 +48,11 @@ The mobile Add action opens a task-oriented sheet: Add person, Add relationship,
 - Family identity and active workspace
 - Quick actions
 - Tree snapshot / continue exploring
-- Recent memories and stories
-- Upcoming events and milestones
-- Pending invitations and approvals (permission-aware)
-- Recent activity (permission-filtered)
-- Incomplete profiles / contribution prompts (non-invasive)
+- Recently added people and incomplete profiles
+- Pending invitations (permission-aware)
+- Guided next steps for adding people and relationships
+
+R2 adds recent memories/stories and contribution approvals; R3 adds upcoming events/milestones; activity/audit views are introduced with their owning release.
 
 ### Family Tree
 - Modes: Full tree, Ancestors, Descendants, Direct lineage, Branch, Relationship path
@@ -88,11 +88,10 @@ The mobile Add action opens a task-oriented sheet: Add person, Add relationship,
 - Historical place names and approximate location support
 
 ### Members and governance
-- Member directory and invitations
-- Role/branch scope
-- Contribution proposals and review queue
-- Activity/audit view
-- Family privacy/publication and export settings
+- R1: member directory, invitations and role/branch scope.
+- R2: contribution proposals, review queue and member-visible activity.
+- R3: publication/privacy settings for public pages.
+- R5: archive export and succession controls.
 
 ## 3. Role-aware navigation and actions
 
@@ -116,9 +115,9 @@ The backend remains authoritative. Hiding a navigation item is usability, not au
 3. Create flow collects family name and optional description/origin.
 4. User chooses default family language.
 5. Privacy is explained; default is private.
-6. User adds the first known person, with unknown facts allowed.
-7. User adds a first relationship or skips.
-8. User lands on the family dashboard with a guided next action.
+6. User may add themselves, another known person, or defer adding a person; no genealogical root is inferred.
+7. If a person is added, user may add a first relationship or skip; tree focus is configured separately.
+8. User lands on the family dashboard with a guided next action. Tree entry restores personal last focus, then family-configured focus, then a guided empty state.
 
 Success: a private FamilySpace exists, creator is owner, and first-person creation is optional. No placeholder facts or assumed root are introduced.
 
@@ -141,7 +140,7 @@ Success: invitation is single-use/expiring/revocable; membership is scoped; no o
 6. Review family visibility and save.
 7. If a possible duplicate is detected, show explainable suggestions; user can review or continue creating a distinct person.
 
-Success: Person and FamilyPerson are created correctly; family-specific details remain scoped; unknown facts are allowed; no automatic merge.
+Success: a new opaque Person anchor and FamilyPerson are created for this family; family-specific details remain scoped; unknown facts are allowed; duplicate suggestions are family-scoped and no automatic merge or cross-family linking occurs.
 
 ### J-04 — Add or correct a relationship
 1. Select a person and choose Add relationship.
