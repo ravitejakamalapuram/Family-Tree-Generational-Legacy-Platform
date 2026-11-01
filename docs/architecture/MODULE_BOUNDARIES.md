@@ -115,13 +115,13 @@ packages/
 ```
 This is a logical layout, not a mandate to create a large number of packages immediately. Keep one deployable modular application and split folders only where ownership is clear.
 
-## 7. Decisions still required
-1. ORM choice: Prisma vs Drizzle, including raw SQL/recursive CTE strategy.
-2. Whether People and Family People share one module or separate modules/packages.
-3. How domain audit history relates to the general Audit module.
-4. Exact transaction strategy for approved contributions spanning modules.
-5. Whether event/job infrastructure starts with PostgreSQL-backed jobs or a managed queue.
-6. Which actions require second-person review, especially public publication and sensitive relationship corrections.
+## 7. Resolved module defaults and remaining gates
+1. **ORM:** Prisma with reviewed SQL-first migrations per ADR-0006; recursive CTEs, RLS and specialized constraints remain parameterized SQL in infrastructure.
+2. **People and Family People:** one logical People module in R1 with separate identity and family-representation subdomains/repositories. Preserve the Person/FamilyPerson boundary and no cross-family reuse.
+3. **Audit:** aggregate-specific revision/history tables remain owned by each domain; the Audit module owns append-only actor/action/request-level audit events. Do not duplicate full sensitive payloads in general audit metadata.
+4. **Contribution transaction:** R2 application orchestrator performs proposal state transition, target-domain mutation, revision/audit event and outbox insert in one PostgreSQL transaction. If future work crosses a service boundary, introduce an explicit idempotent saga; do not silently weaken atomicity.
+5. **Jobs:** PostgreSQL-backed durable queue direction accepted (ADR-0008); use a transactional outbox for domain events. pg-boss remains the preferred candidate pending library integration/load tests.
+6. **Second-person review:** required for publication of living/minor/sensitive content; sensitive relationship corrections and ownership/role escalation follow a policy matrix to be finalized before those workflows ship. R1 can launch without public publishing or contribution review.
 
 ## 8. Review checklist
 - [ ] Every persistent entity has one owning module.
