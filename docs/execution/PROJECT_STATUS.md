@@ -1,13 +1,13 @@
 # Project Status
 
-**Last updated:** 2026-10-31
-**Stage:** Phase 0 — cross-review and validation
+**Last updated:** 2026-11-02
+**Stage:** Phase 0 — technical proof and final readiness validation
 **Implementation:** Paused pending complete Phase 0 approval
 **Milestone:** R1 — Working family tree
 **Default branch:** main
 
 ## State
-The product owner has approved the UX visual direction and UX-DEC-002–UX-DEC-006 defaults, and approved the direction in ADR-0005–0008 on 2026-10-31. This selects product/technical direction but is not final UX handoff sign-off, proof that architecture works, legal/privacy approval, or the joint Phase 0 gate. Phase 0 remains open; production implementation remains gated.
+The product owner approved the UX visual direction and UX-DEC-002–UX-DEC-006 defaults, plus ADR-0005–0008 direction, on 2026-10-31. The user has authorized autonomous continuation through readiness. Phase 0 remains open until technical proof, remaining UX review, risk/operational decisions and a documented build-readiness checklist are complete.
 
 ## Workstream branches
 - `workstream/ux-design` — UX draft artifacts and clickable P0 prototype.
@@ -22,7 +22,7 @@ The product owner has approved the UX visual direction and UX-DEC-002–UX-DEC-0
 - UX-004 draft: `docs/ux/DESIGN_HANDOFF.md` — component inventory, screen mapping, interaction contracts, state matrix and frontend guardrails.
 - Prototype scope: dashboard, tree selection/inspector, people search, person profile, add-person form, family setup, memories and members. Static HTML/CSS/JS with fictional sample data only; no backend, auth, persistence, authorization, uploads or production graph algorithm.
 - Desktop/mobile dashboard review mockups were reviewed and the visual direction approved on 2026-10-30. They are visual review aids, not hosted app screenshots or proof of full prototype QA.
-- Tree geometry remains illustrative. Full keyboard-only/screen-reader, complete token contrast matrix, regional-script and all-screen cross-browser QA remain open. The automated axe scan found and drove a fix for muted-text contrast (4.49:1 to a darker semantic token); current automated scan passes. A prototype inline-JavaScript syntax workflow passes (run 41002983442). Browser, responsive and assistive-technology QA remain outstanding.
+- Tree geometry remains illustrative. Latest Playwright/axe browser QA passes on commit `aa4600e06750ffe5fb6f4e41fa3fa54c0dab72cc`: [browser QA run #41180439258](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41180439258), [syntax run #41180439232](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41180439232). The suite checks desktop/tablet/mobile/320px viewports, horizontal overflow, representative navigation/search/tree/form flows and axe WCAG scans. Full manual screen-reader, keyboard-only, regional-script, complex-family and all-screen visual review remain open.
 - Design issues #54–#57 remain open; do not mark UX work complete based solely on visual-direction approval.
 
 ## Backend architecture progress
@@ -40,18 +40,18 @@ The product owner has approved the UX visual direction and UX-DEC-002–UX-DEC-0
 ## Review and validation status
 - UX visual direction approved; complete design system, P0 screen, accessibility and engineering handoff approval remain outstanding.
 - UX clickable prototype v0.2 committed on `workstream/ux-design`; includes a semantic list alternative and keyboard-selectable SVG person nodes. Playwright/axe browser QA passes at 1440px, 768px, 390px and 320px, including no-horizontal-overflow checks and key interaction smoke tests (run 41180347724); screenshot artifact is attached to the run. This is not full manual screen-reader or all-screen QA. Not merged.
-- Backend architecture review pass completed; proposed ADRs 0005–0008 now cover v1 cross-family identity isolation, Prisma/SQL-first migrations, PostgreSQL RLS and PostgreSQL-backed jobs. They remain Proposed; no backend architecture sign-off yet.
-- OpenAPI structural checks completed; Redocly CI workflow added; first runs caught duplicate YAML mappings and a misplaced ErrorEnvelope schema; fixes were applied and Redocly CLI 1.34.5 successfully bundled the revised OpenAPI 3.1 document after duplicate-route consolidation, personal/family tree-focus persistence and Owner/Admin authorization schema (32 paths, 39 operations) in run 41180375558.
+- ADR-0005–0008 are Accepted direction (not proof): v1 cross-family identity isolation, Prisma/SQL-first migrations, PostgreSQL RLS and PostgreSQL-backed durable jobs. The technical proof is now the critical remaining gate.
+- OpenAPI workflow has passed repeatedly; latest successful run is #41180443225 on the current backend workstream head. It validates parse/bundle only, not runtime handlers or authorization.
 - Cross-review found and corrected a v1 identity-anchor constraint gap: ERD now requires UNIQUE(person_id) so an opaque Person anchor cannot be reused across families. Added personal last-focus persistence and family-configured focus to the ERD; OpenAPI now includes PUT /families/{familyId}/tree/focus and Owner/Admin family-focus authorization. Removed a duplicate relationship-path route.
-- No application code, automated tests or CI execution are claimed.
+- No production application implementation is claimed. A focused architecture proof-of-concept is being prepared separately from the product implementation.
 
 ## Next actions
 1. Complete manual review of all P0 screens and complex genealogy cases, long names and deep trees; the automated browser suite currently covers representative flows and viewport smoke checks.
 2. Complete full keyboard-only and screen-reader review, regional-script review, and the complete token/control contrast matrix.
 3. Turn the P0 contract matrix into executable API tests once the application foundation exists; prioritize cross-family IDOR, role/branch visibility, CSRF, invitation replay and graph concurrency.
-4. Prove Prisma SQL migration/composite-FK behavior, RLS transaction context and pooler isolation, parentage graph serialization and durable-job idempotency.
+4. Run the isolated proof-of-concept for Prisma, composite-FK, RLS transaction context/pooler isolation, concurrent graph writes and durable-job idempotency.
 5. Resolve retention/deletion, provider, backup/RPO/RTO and operational ownership.
-6. Conduct joint product/design/backend Phase 0 gate; only after explicit sign-off, resume FL-001/FL-002/FL-003/FL-008 in dependency order.
+6. Produce a final build-readiness report with explicit pass/fail/deferred gates, implementation sequence and residual risks; then begin FL-001/FL-002/FL-003/FL-008 without merging the Phase 0 review PRs unless separately requested.
 
 
 ## Risks
