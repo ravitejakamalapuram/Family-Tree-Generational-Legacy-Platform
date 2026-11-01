@@ -25,16 +25,23 @@ CREATE TABLE family_people (
   display_name text NOT NULL,
   UNIQUE (family_id, id)
 );
+CREATE TABLE relationship_type_catalog (
+  code text PRIMARY KEY,
+  is_parentage boolean NOT NULL
+);
+INSERT INTO relationship_type_catalog(code, is_parentage) VALUES ('parent_of', true);
+
 CREATE TABLE relationships (
   id uuid PRIMARY KEY,
   family_id uuid NOT NULL REFERENCES family_spaces(id),
-  parent_id uuid NOT NULL,
-  child_id uuid NOT NULL,
-  CHECK (parent_id <> child_id),
-  FOREIGN KEY (family_id, parent_id) REFERENCES family_people(family_id, id),
-  FOREIGN KEY (family_id, child_id) REFERENCES family_people(family_id, id),
+  from_family_person_id uuid NOT NULL,
+  to_family_person_id uuid NOT NULL,
+  relationship_type text NOT NULL REFERENCES relationship_type_catalog(code),
+  CHECK (from_family_person_id <> to_family_person_id),
+  FOREIGN KEY (family_id, from_family_person_id) REFERENCES family_people(family_id, id),
+  FOREIGN KEY (family_id, to_family_person_id) REFERENCES family_people(family_id, id),
   UNIQUE (family_id, id),
-  UNIQUE (family_id, parent_id, child_id)
+  UNIQUE (family_id, from_family_person_id, to_family_person_id, relationship_type)
 );
 
 ALTER TABLE family_spaces ENABLE ROW LEVEL SECURITY;
@@ -92,10 +99,10 @@ BEGIN
   WITH RECURSIVE descendants(id) AS (
     SELECT p_child
     UNION
-    SELECT r.child_id
+    SELECT r.to_family_person_id
     FROM relationships r
-    JOIN descendants d ON r.parent_id = d.id
-    WHERE r.family_id = p_family
+    JOIN descendants d ON r.from_family_person_id = d.id
+    WHERE r.family_id = p_family AND r.relationship_type = 'parent_of'
   )
   SELECT EXISTS (SELECT 1 FROM descendants WHERE id = p_parent) INTO v_cycle;
 
@@ -103,8 +110,8 @@ BEGIN
     RAISE EXCEPTION 'parentage cycle detected' USING ERRCODE = '23514';
   END IF;
 
-  INSERT INTO relationships(id, family_id, parent_id, child_id)
-  VALUES (gen_random_uuid(), p_family, p_parent, p_child);
+  INSERT INTO relationships(id, family_id, from_family_person_id, to_family_person_id, relationship_type)
+  VALUES (gen_random_uuid(), p_family, p_parent, p_child, 'parent_of');
 END;
 $$;
 
