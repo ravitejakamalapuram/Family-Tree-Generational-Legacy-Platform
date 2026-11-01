@@ -43,8 +43,17 @@ Explicit family public presence; selected people/facts/media/stories; published 
 ### Preservation
 GEDCOM import/export; complete archive with metadata/media; family book/PDF; succession; backups/restoration; integrity checks; portability/deletion. Core export free.
 
+## Release scope
+- **R1 — Working family tree:** account/session, family spaces, people/facts/provenance, complex relationships, tree/relationship navigation, profile core, dashboard and member invitations. First-person creation is optional (creator, another known person or defer); the creator is never assumed to be the genealogical root.
+- **R2 — Memories and collaboration:** Legacy Vault media/stories, tagging, contribution proposals/review and richer audit/activity.
+- **R3 — Family life and public pages:** events, places, multilingual enhancements and explicitly published projections.
+- **R4 — AI Family Historian:** permission-aware, source-grounded AI workflows after provider/privacy approval.
+- **R5 — Preservation and production readiness:** GEDCOM, complete archive export, family books, succession, backups, restore and integrity.
+
+R1 must not expose active Memories/Stories/Events/Public Pages/AI features. Public pages and AI remain off until their explicit privacy, legal and security release gates pass.
+
 ## Journeys
-Create: register → family → language/privacy → first person → relationships → generations → invite.
+Create: register → create/join family → language/privacy → optionally add creator/another person or defer → optionally add relationship → invite. Tree focus is separate from the first person and resolves personal last focus → family-configured focus → guided empty state.
 Add memory: select person/event/collection → upload/record → metadata/tags → visibility → review if required → preserve original.
 Elder story: record → transcribe → correct → optionally translate → link people/places → review/publish.
 Relationship: select two people → calculate paths → explain → explore.
