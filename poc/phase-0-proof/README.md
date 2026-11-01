@@ -31,7 +31,7 @@ export DATABASE_URL=postgresql://app_runtime:poc-runtime-password@localhost:5432
 npm test
 ```
 
-Latest passing CI proof (including outbox and concurrent-worker tests): [run #41337946121](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41337946121).
+Latest passing CI proof after aligning relationship columns/type catalog to the production ERD: [run #41339408260](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41339408260).
 
 The test harness creates an ephemeral schema and synthetic families. Never point this script at a non-disposable database.
 
