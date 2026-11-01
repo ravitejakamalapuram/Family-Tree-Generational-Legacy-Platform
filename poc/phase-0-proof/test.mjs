@@ -66,7 +66,7 @@ try {
 
     // Same-family composite FKs reject a relationship whose endpoint belongs to another family.
     await assert.rejects(
-      admin.query("INSERT INTO relationships(id,family_id,from_family_person_id,to_family_person_id) VALUES (gen_random_uuid(),$1,$2,$3)", [A, FP1, FP3]),
+      admin.query("INSERT INTO relationships(id,family_id,from_family_person_id,to_family_person_id,relationship_type) VALUES (gen_random_uuid(),$1,$2,$3,'parent_of')", [A, FP1, FP3]),
       /foreign key/i
     );
 
