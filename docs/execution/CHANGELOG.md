@@ -136,3 +136,9 @@
 - Visual review confirms public account entry and pre-validation invitation screens do not show authenticated family navigation, workspace name or family details. Verified invitation details are a separate simulated post-validation state.
 - Reconciled IA, Product Requirements, Use Cases and Backlog so R1 is family/tree/people/relationships/member invitations; media/memories and contribution review are R2; events/places/public pages R3; AI R4; preservation R5. First-person creation remains optional.
 - Updated BUILD_READINESS.md evidence and retained manual accessibility, legal, provider/pooler, full schema RLS/migration, pg-boss and production operations as explicit release/feature gates.
+
+
+## 2026-11-02 — UX final validation on current PR head
+- Prototype README and optional first-person/tree-focus note are now on the UX PR head.
+- Re-ran JavaScript syntax and full Playwright/axe browser suite on that exact head: [run #41340292066](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41340292066) passed.
+- Current-head 40-screen screenshot artifact: https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41340292066/artifacts/13096888231.
