@@ -9,9 +9,11 @@ Before application implementation, complete two parallel workstreams:
 
 UX and architecture proceed in parallel, with shared domain vocabulary and P0 user journeys reviewed together.
 
-**Exit gate:** P0 UX flows/screens/responsive states are approved; design tokens and component handoff are implementation-ready; backend module boundaries, ERD, constraints, API contracts, authorization/security model and runtime plan are reviewed; decisions are recorded; PROJECT_STATUS explicitly authorizes implementation.
+**Start-building gate:** accepted UX/product decisions and ADRs are recorded; all nine R1 screens and journeys are specified; the interactive prototype passes automated desktop/tablet/mobile/320px and per-screen axe checks; backend module boundaries, ERD/tenant constraints, P0 OpenAPI, threat model and runtime defaults are documented; the ERD-aligned PostgreSQL/Prisma proof validates opaque identity anchors, composite same-family FKs, representative RLS, concurrent graph cycle prevention and transactional outbox semantics; BUILD_READINESS.md explicitly authorizes foundation work.
 
-Until then, `feature/fl-001-frontend-foundation` and `feature/fl-002-backend-foundation` remain parked. Do not implement FL-001/FL-002/FL-003/FL-008 yet.
+This gate is satisfied as of 2026-11-02. Begin FL-001/FL-002/FL-003/FL-008 foundation work using synthetic data only. The detailed deferred gates in BUILD_READINESS.md remain mandatory before production database traffic, real personal/child data, public publishing, AI or worker-heavy features. Manual screen-reader/regional-script review is required before release; provider/pooler and pg-boss integration are required before the affected production features ship.
+
+The Phase 0 review PRs remain open and unmerged. Implementation branches may be stacked from the approved UX/backend workstream branches until those docs are integrated into main.
 
 ## Phase 1 — Engineering foundations
 Scope FL-001–FL-008, sequenced against Phase 0 outputs. FL-001 and FL-002 establish FE/BE scaffolding; FL-003 database/migrations; FL-004 configuration; FL-005 CI; FL-006 logging; FL-007 monitoring; FL-008 implements the approved design system and responsive shell.
