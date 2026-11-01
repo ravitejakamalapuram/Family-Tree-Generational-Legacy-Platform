@@ -22,20 +22,41 @@ This document defines layout hierarchy, content, interaction and responsive beha
 
 ## Screen specifications and prototype mapping
 
-| Screen | Key experience | Prototype coverage |
+| R1 P0 screen | Key experience | Prototype coverage |
 |---|---|---|
-| Landing/auth | Trust-led entry, sign-in and registration | Not implemented; remains specification-only |
-| Create/join onboarding | Family name, language, first person, privacy, invite | Simplified family setup step |
-| Family dashboard | Next action, tree preview, quick actions, recent people | Dashboard screen |
-| People directory | Family-scoped search, list, add person | People screen with client-side search |
-| Add/edit person | Name, date precision, relationship, biography, visibility | Add-person form |
+| Landing/auth | Trust-led entry, sign-in, registration, verification and recovery | Not implemented; specification-only |
+| Create/join onboarding | Family name/language, optional first person, privacy and invitation entry | Simplified family setup step; invite acceptance not implemented |
+| Family dashboard | Next action, tree preview, quick actions and recent people | Dashboard screen |
+| People directory | Family-scoped search, list and add person | People screen with client-side search |
+| Add/edit person | Name, date precision, relationship context, biography, visibility and provenance | Add-person form |
 | Person profile | Identity, facts, family, provenance and privacy | Profile screen |
-| Interactive family tree | Select nodes, inspect person, navigate profile/add relative | Tree screen with illustrative SVG graph |
-| Members/invitations | Roles, status, invite and permission context | Read-only members sample |
-| Responsive navigation/global Add | Desktop sidebar and mobile bottom navigation | Responsive nav; Add opens add-person screen |
+| Interactive family tree | Select nodes, inspect person, navigate profile and add relative | Tree screen with illustrative SVG graph |
+| Relationship editor | Create/correct parent, partner, guardian/adoptive and other edges with evidence and conflict preview | Not implemented as a separate screen; add-person form only sketches relationship context |
+| Members/invitations | Member roles/status, invite, accept and revoke context | Read-only members sample; invitation flows not implemented |
+
+Memories and stories are R2 experiences. The prototype contains a static Memories concept screen for product direction only; it is not an R1 acceptance screen and must not be exposed as a working R1 feature.
 
 ### Onboarding interaction
 Production flow is Account → Family → optional first person (creator, another known person, or defer) → optional first relationship → Privacy → Invite. The creator is not assumed to be the genealogical root. Prototype v0.2 exposes a reduced Family/language step only. Unknown values are valid; do not create placeholder facts to force completion.
+
+### Landing/auth interaction
+- Explain private-by-default family spaces and distinguish account creation from creating/joining a family.
+- Registration, login, verification and recovery are separate states with non-enumerating error copy.
+- Show password requirements and accessible validation; never expose session tokens.
+- Invitation links resolve into an authenticated acceptance flow without revealing private family data before authorization.
+
+### Relationship editor interaction
+- Start from a selected FamilyPerson or an explicit Add relationship action.
+- Select relationship category and direction; support multiple parents/partners, adoptive/step/guardian relationships and temporal validity.
+- Show both people, the proposed edge, known dates/source and any detected conflict before save.
+- Never silently convert relationship types or infer biological parentage.
+- Concurrent graph conflicts return a recoverable conflict state and preserve the existing relationship.
+
+### Members/invitations interaction
+- Show role, status and branch scope only to authorized members.
+- Invitation creation captures recipient, role and optional branch scope; explain the exact permission being granted.
+- Acceptance confirms intended account/email, family name only after token validation, expiry and role.
+- Revocation/removal explains impact and prevents removing/demoting the last Owner without a recovery path.
 
 ### Add/edit person interaction
 - Display name is the only required field.
@@ -62,9 +83,9 @@ Production flow is Account → Family → optional first person (creator, anothe
 - [x] A clickable prototype artifact exists for representative P0 journeys.
 - [x] Fictional data only; private-by-default cues and provenance labels are represented.
 - [x] Dashboard, tree selection, people search, profile, add-person and onboarding interactions are represented.
-- [ ] All nine screens use the approved token/component system.
+- [ ] All nine R1 screens use the approved token/component system.
 - [ ] Desktop, tablet and mobile visual QA completed.
-- [ ] Each primary action maps to a reviewed P0 journey and API contract.
+- [ ] Each primary action maps to a reviewed R1 journey and API contract.
 - [ ] Privacy, role and provenance states are validated with product/design.
 - [ ] Tree edge cases and accessible list alternative are fully demonstrated.
 - [ ] Keyboard-only and screen-reader reviews completed.
