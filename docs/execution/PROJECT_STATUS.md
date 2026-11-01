@@ -1,8 +1,8 @@
 # Project Status
 
 **Last updated:** 2026-11-02  
-**Stage:** Phase 0 — build-readiness validation  
-**Implementation:** Product implementation branches remain parked; isolated architecture proof is allowed  
+**Stage:** R1 foundation build ready  
+**Implementation:** Authorized to start FL-001/FL-002/FL-003/FL-008 foundations on synthetic data  
 **Milestone:** R1 — Working family tree  
 **Default branch:** main
 
@@ -33,7 +33,7 @@ The product owner approved the UX visual direction and UX-DEC-002–UX-DEC-006 d
 - UX-003: nine R1 screen specifications: account entry, create/join onboarding, dashboard, people directory, add/edit person, profile, tree, relationship editor, members/invitations.
 - UX-004: design-to-engineering handoff and component/state contracts.
 - Prototype v0.3 adds account entry, relationship editor and invitation acceptance; Memories is explicitly a future R2 preview, not an R1 active feature. Static fictional data only; no real auth, persistence, authorization, upload or production tree algorithm.
-- Earlier representative browser/axe suite passed on #41180439258. The expanded all-R1-screen × four-viewport screenshot/overflow and per-screen desktop/mobile axe suite found tree-node accessible-name issues; these were corrected by deriving SVG button names from visible text. Revalidation is running on UX head `fc63e6f9c06e2012f4b58c557f4dfcc0c1aff474` in [run #41338832090](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41338832090). Do not call the expanded suite passing until this run succeeds.
+- Expanded all-R1-screen × four-viewport screenshot/overflow and per-screen desktop/mobile axe suite passes: [run #41339259200](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41339259200). All 40 responsive screenshots are available in [the artifact](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41339259200/artifacts/13096876295). Visual inspection found and corrected public entry/invitation shell leakage; the current screenshots show no family workspace or family name before invitation validation.
 - Manual keyboard-only, screen-reader, regional-script, complex-family and all-screen visual review remain.
 
 ## Backend architecture progress
@@ -57,17 +57,18 @@ The isolated POC under `poc/phase-0-proof` in PR #66 passed against PostgreSQL 1
 
 POC limitations: direct PostgreSQL only (production pooler not proven); representative RLS tables only (full schema policies still need tests); pg-boss library retry/lease/singleton semantics and load/lock tests not yet proven; full migration upgrade/rollback/schema-drift tests and API handler authorization are not covered.
 
-## Next readiness loop
+## Start-building decision
+The project is **READY TO START R1 FOUNDATION BUILD**. The evidence, safe defaults, implementation sequence and release-only deferrals are recorded in [BUILD_READINESS.md](BUILD_READINESS.md). Begin FL-001/FL-002/FL-003/FL-008 on synthetic data. Do not use real personal/child data, enable public pages or external AI until their explicit gates are passed.
 
-1. Get the expanded all-screen UX browser/axe suite green; fix every actionable issue and re-run.
-2. Inspect all generated screen screenshots at desktop/tablet/mobile; record visual findings and fixes.
-3. Complete manual keyboard-only/screen-reader and Telugu/Tamil/Kannada/Hindi/mixed-script checks where automation cannot prove behavior.
-4. Complete production pooler proof for transaction-local RLS; if provider is not selected, keep direct connections as the development baseline and make pooler compatibility a deployment gate.
-5. Validate pg-boss adapter semantics or explicitly defer concrete queue selection while keeping outbox contract stable.
-6. Add full migration-from-empty, upgrade, rollback/compensating-migration and schema-drift checks.
-7. Reconcile all ERD composite FKs and RLS policies against every family-owned table; expand POC coverage.
-8. Complete product/privacy operating-model decisions with counsel before real personal/child data, public publishing or external AI use.
-9. Publish `BUILD_READINESS.md` with pass/fail/deferred gates and exact first implementation sequence. Only then mark the repository ready to start FL-001/FL-002/FL-003/FL-008.
+## Remaining production/release gates
+
+1. Complete manual keyboard-only/screen-reader and Telugu/Tamil/Kannada/Hindi/mixed-script checks before release.
+2. Complete production pooler proof for transaction-local RLS before production DB traffic.
+3. Validate pg-boss adapter semantics and queue load/lock behavior before worker-heavy features.
+4. Add full migration-from-empty, upgrade, rollback/compensating-migration and schema-drift checks.
+5. Apply and test RLS/composite-FK coverage for every family-owned table; add cross-family IDOR, role/branch/record-visibility API tests as handlers are implemented.
+6. Complete product/privacy operating-model decisions with counsel before real personal/child data, public publishing or external AI use.
+7. Provider selection, backup/restore drill, incident runbooks and production RPO/RTO evidence before production.
 
 ## Risks
 
