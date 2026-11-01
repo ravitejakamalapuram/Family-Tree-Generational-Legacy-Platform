@@ -14,7 +14,7 @@ Open `index.html` directly in a modern browser. No dependencies or build step ar
 - Member directory
 - Invitation acceptance, with private family details withheld until the simulated post-validation state
 
-Memories is a non-functional R2 concept preview only and is not an active R1 navigation item.
+Memories is a non-functional R2 concept preview only and is not an active R1 navigation item. First-person creation is optional; the creator may add themselves, add another known person or defer, and tree focus is configured separately.
 
 ## Limitations
 This is a design-validation artifact with fictional data. It is not a production application: no API, real authentication, persistence, server-side authorization, media upload or production genealogy layout engine is included. Save/Continue actions are deliberately non-persistent.
