@@ -13,9 +13,9 @@ P0 = foundation/MVP; P1 = next release; P2 = later differentiation.
 | UC-007 | Search/focus person | Member | Locate profile | P0 |
 | UC-008 | Calculate relationship | Member | Explain paths | P0 |
 | UC-009 | Invite relative | Admin | Authorized member joins | P0 |
-| UC-010 | Upload/tag photo | Contributor | Memory linked to people | P0 |
+| UC-010 | Upload/tag photo | Contributor | Memory linked to people | P1 (R2) |
 | UC-011 | Preserve provenance | Contributor/reviewer | Fact source/uncertainty | P0 |
-| UC-012 | Shared identity across families | Admin | Independent safe representations | P0 |
+| UC-012 | Request cross-family identity linking | Admin | Explicit, revocable identity link | P2 (deferred beyond v1) |
 | UC-013 | Maternal/paternal branches | Historian | Explore branches equally | P0 |
 | UC-014 | Preserve elder oral history | Elder | Original audio/transcript | P1 |
 | UC-015 | Family timeline | Member | Chronological history | P1 |
@@ -23,8 +23,8 @@ P0 = foundation/MVP; P1 = next release; P2 = later differentiation.
 | UC-017 | Manage milestones | Admin | Birthdays/anniversaries/remembrance | P1 |
 | UC-018 | Organize reunion | Admin | Invitation/RSVP | P1 |
 | UC-019 | Map ancestral places | Historian | Family geography | P1 |
-| UC-020 | Review proposal | Reviewer | Approved/rejected change | P1 |
-| UC-021 | Detect duplicate | Admin | Suggestion; no auto-merge | P1 |
+| UC-020 | Review proposal | Reviewer | Approved/rejected change | P1 (R2) |
+| UC-021 | Detect duplicate | Admin | Family-scoped suggestion; no auto-merge or cross-family matching | P1 (R2) |
 | UC-022 | GEDCOM import/export | Historian | Interoperability | P1 |
 | UC-023 | Publish family pages | Owner/admin | Explicit safe public data | P1 |
 | UC-024 | Ask AI question | Member | Source-grounded response | P2 |
