@@ -36,7 +36,7 @@ Core relationships:
 
 **users**
 - id uuid PK
-- email_normalized citext UNIQUE NOT NULL
+- email_normalized text UNIQUE NOT NULL (application normalizes with Unicode NFKC where appropriate, trims and lowercases domain/local comparison policy)
 - display_name text NOT NULL
 - preferred_language varchar(35)
 - status text constrained to active, suspended, deletion_pending, deleted
@@ -45,7 +45,7 @@ Core relationships:
 **family_spaces**
 - id uuid PK
 - name text NOT NULL
-- slug citext UNIQUE NOT NULL (public slug is not an authorization token)
+- slug text UNIQUE NOT NULL (lowercase ASCII slug; display name remains Unicode) (public slug is not an authorization token)
 - description text NULL
 - default_language varchar(35) NOT NULL
 - created_by_user_id uuid FK users
@@ -66,7 +66,7 @@ Core relationships:
 
 **family_invitations**
 - id uuid PK; family_id uuid NOT NULL; created_by_membership_id uuid NOT NULL
-- email_normalized citext NOT NULL; role; timestamps
+- email_normalized text NOT NULL (same canonicalization as users); role; timestamps
 - Invitation branch scope is normalized in family_invitation_branch_scopes.
 - token_hash bytea UNIQUE NOT NULL (never store raw invitation token)
 - expires_at timestamptz NOT NULL; accepted_at; revoked_at
@@ -145,7 +145,7 @@ Relationship type codes initially include biological_parent, adoptive_parent, st
 - family_id uuid NOT NULL
 - from_family_person_id uuid NOT NULL
 - to_family_person_id uuid NOT NULL
-- relationship_type text NOT NULL
+- relationship_type text NOT NULL REFERENCES relationship_type_catalog(code)
 - valid_from date NULL; valid_to date NULL
 - status constrained to proposed, active, disputed, ended, rejected
 - source_fact_id uuid NULL
@@ -283,10 +283,10 @@ Relationship type codes initially include biological_parent, adoptive_parent, st
 ## 5. Tenant isolation and PostgreSQL RLS
 
 Recommended defense-in-depth:
-- All repository methods require an authorized FamilyContext.
+- All repository methods require an authorized FamilyContext established only after membership/role/branch/record authorization; never trust a raw familyId from the request as authorization.
 - Every query explicitly scopes by family_id.
-- Consider RLS policies as an additional barrier after validating the connection-pool model.
-- Set tenant context transaction-locally inside a transaction; never rely on session-level state that can leak through pooled connections.
+- RLS is mandatory defense in depth under ADR-0007; every family-owned table must have a reviewed policy and FORCE ROW LEVEL SECURITY where appropriate.
+- Set tenant context transaction-locally inside the same Prisma interactive transaction as protected queries; never rely on session-level state that can leak through pooled connections.
 - App DB role must not own tables or have BYPASSRLS.
 - Background jobs establish a verified family context before accessing tenant rows.
 - Public projection tables have separate access policies/roles.
@@ -297,7 +297,7 @@ RLS must not replace application authorization or tests.
 
 Initial indexes:
 - family_memberships(user_id,status) and unique (family_id,user_id).
-- family_people(family_id,display_name) and (family_id,person_id).
+- family_people(family_id,display_name); person_id has a global UNIQUE constraint in v1 and does not need a duplicate family-prefixed index.
 - person_facts(family_id,family_person_id,fact_type).
 - relationships(family_id,from_family_person_id,relationship_type,status).
 - relationships(family_id,to_family_person_id,relationship_type,status).
