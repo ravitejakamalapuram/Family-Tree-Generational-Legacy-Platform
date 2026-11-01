@@ -21,12 +21,10 @@ try {
   const screens = ["auth", "onboarding", "dashboard", "people", "add", "profile", "tree", "relationship", "members", "invite"];
   const openScreen = async id => {
     await page.goto(file);
-    if (id === "dashboard") return;
-    if (id === "add" || id === "onboarding") {
-      await page.locator(`[data-go="${id}"]`).first().click();
-    } else {
-      await page.locator(`[data-screen="${id}"]`).first().click();
-    }
+    await page.evaluate(screenId => {
+      document.querySelectorAll(".screen").forEach(node => node.classList.toggle("active", node.id === screenId));
+      document.getElementById("crumb").textContent = screenId;
+    }, id);
   };
 
   // Capture every R1 screen at every target viewport and check for horizontal overflow.
