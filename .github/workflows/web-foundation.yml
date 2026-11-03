@@ -22,6 +22,7 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      - run: npm run format:web
       - run: npm run lint:web
       - run: npm run typecheck:web
       - run: npm run test:web
