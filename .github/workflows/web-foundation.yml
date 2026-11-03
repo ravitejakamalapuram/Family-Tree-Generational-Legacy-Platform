@@ -1,0 +1,28 @@
+name: Web foundation
+
+on:
+  push:
+    branches:
+      - implementation/fl-001-frontend-foundation
+  pull_request:
+    paths:
+      - 'apps/web/**'
+      - 'package.json'
+      - '.github/workflows/web-foundation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run lint:web
+      - run: npm run typecheck:web
+      - run: npm run test:web
+      - run: npm run build:web
