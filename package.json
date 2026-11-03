@@ -10,9 +10,12 @@
     "typecheck:web": "npm --workspace @family-legacy/web run typecheck",
     "test:web": "npm --workspace @family-legacy/web run test",
     "lint:web": "npm --workspace @family-legacy/web run lint",
+    "dev:api": "npm --workspace @family-legacy/api run dev",
+    "build:api": "npm --workspace @family-legacy/api run build",
+    "typecheck:api": "npm --workspace @family-legacy/api run typecheck",
+    "test:api": "npm --workspace @family-legacy/api run test",
+    "lint:api": "npm --workspace @family-legacy/api run lint",
     "format:check": "prettier --check ."
   },
-  "devDependencies": {
-    "prettier": "^3.6.2"
-  }
+  "devDependencies": { "prettier": "^3.6.2" }
 }
