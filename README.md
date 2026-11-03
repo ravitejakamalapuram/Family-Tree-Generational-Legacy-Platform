@@ -8,8 +8,8 @@ Family Legacy is a private-by-default, collaborative family knowledge platform f
 > Every family has a history. Family Legacy helps preserve it, connect it, and pass it on.
 
 ## Project status
-- Stage: Pre-implementation design and architecture
-- Implementation: Paused pending UX and backend architecture approval
+- Stage: R1 foundation implementation
+- Implementation: FL-001 frontend and FL-002 backend foundations in progress on stacked feature branches
 - Current release target: R1 — Working family tree
 - Source of truth: This repository
 
@@ -19,7 +19,7 @@ Family Legacy is a private-by-default, collaborative family knowledge platform f
 |---|---|
 | Platform | Responsive web first |
 | Visibility | Mixed; private by default; explicitly published public family pages |
-| Identity | A real-world person may appear in multiple family spaces |
+| Identity | Each family representation has a distinct opaque Person anchor in v1; cross-family linking is disabled |
 | Business | Free initially; core access/export not paywalled |
 | Languages | English, Telugu, Tamil, Kannada, Hindi launch target |
 | Architecture | Modular monolith |
@@ -43,8 +43,8 @@ Family Legacy is a private-by-default, collaborative family knowledge platform f
 9. [Master backlog](docs/execution/BACKLOG.md)
 10. [Agent instructions](AGENTS.md)
 
-## Immediate next step
-Complete the UX design and backend architecture workstreams before implementing FL-001/FL-002. Start with [Product Design Plan](docs/ux/PRODUCT_DESIGN_PLAN.md) and [Backend Architecture Plan](docs/architecture/BACKEND_ARCHITECTURE_PLAN.md). Track UX-001–UX-004 and ARCH-001–ARCH-005 in GitHub. The existing foundation branches are parked; no application code should be started until the design and architecture gates are approved.
+## Current implementation
+The R1 foundation start gate is recorded as satisfied in [Build Readiness](docs/execution/BUILD_READINESS.md). FL-001 and FL-002 are being implemented on feature branches stacked from their approved UX and backend architecture workstreams. The Phase 0 design PRs remain unmerged; implementation PRs target their respective workstream branches until those design PRs are integrated. No production deployment or real personal/family data is authorized.
 
 ## Non-negotiable principles
 - Correct relationships over visual polish.
