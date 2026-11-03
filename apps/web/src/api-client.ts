@@ -37,9 +37,7 @@ export function createApiClient(options: ApiClientOptions = {}) {
       if (token) headers.set('X-CSRF-Token', token);
     }
 
-    const response = await fetcher(
-      `${baseUrl}${path.startsWith('/') ? path : `/${path}`}`,
-      {
+    const response = await fetcher(`${baseUrl}${path.startsWith('/') ? path : `/${path}`}`, {
         ...init,
         method,
         headers,
