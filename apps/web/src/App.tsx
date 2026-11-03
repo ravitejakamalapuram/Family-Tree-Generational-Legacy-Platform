@@ -44,12 +44,12 @@ export function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-          <Route path="/families" element={<WorkspacePage title="Your families" />} />
-          <Route path="/families/:familyId" element={<Navigate to="people" replace />} />
-          <Route path="/families/:familyId/people" element={<WorkspacePage title="People" />} />
-          <Route path="/families/:familyId/tree" element={<WorkspacePage title="Family tree" />} />
-          <Route path="/families/:familyId/members" element={<WorkspacePage title="Members" />} />
-          <Route path="*" element={<NotFoundPage />} />
+        <Route path="/families" element={<WorkspacePage title="Your families" />} />
+        <Route path="/families/:familyId" element={<Navigate to="people" replace />} />
+        <Route path="/families/:familyId/people" element={<WorkspacePage title="People" />} />
+        <Route path="/families/:familyId/tree" element={<WorkspacePage title="Family tree" />} />
+        <Route path="/families/:familyId/members" element={<WorkspacePage title="Members" />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
