@@ -1,5 +1,4 @@
 import { BrowserRouter, Link, Navigate, Route, Routes, useParams } from 'react-router-dom';
-import { FamilySpaceProvider } from './context/family-space';
 
 function LandingPage() {
   return (
@@ -42,8 +41,7 @@ function NotFoundPage() {
 
 export function App() {
   return (
-    <FamilySpaceProvider>
-      <BrowserRouter>
+    <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/families" element={<WorkspacePage title="Your families" />} />
@@ -53,7 +51,6 @@ export function App() {
           <Route path="/families/:familyId/members" element={<WorkspacePage title="Members" />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </BrowserRouter>
-    </FamilySpaceProvider>
+    </BrowserRouter>
   );
 }
