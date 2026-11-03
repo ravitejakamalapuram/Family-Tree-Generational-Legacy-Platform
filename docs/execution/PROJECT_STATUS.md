@@ -1,21 +1,23 @@
 # Project Status
 
 **Last updated:** 2026-11-02  
-**Stage:** R1 foundation build ready  
+**Stage:** R1 foundation implementation in progress  
 **Implementation:** Authorized to start FL-001/FL-002/FL-003/FL-008 foundations on synthetic data  
 **Milestone:** R1 — Working family tree  
 **Default branch:** main
 
 ## State
 
-The product owner approved the UX visual direction and UX-DEC-002–UX-DEC-006 defaults, plus ADR-0005–0008 direction, on 2026-10-31. The user has authorized autonomous continuation through the point where the project is genuinely ready to start building. Do not pause for routine decisions; use conservative defaults, revalidate each change and record evidence. Phase 0 PRs remain draft/unmerged; foundation implementation is authorized on synthetic data. No production deployment or personal-data processing is authorized.
+The product owner approved the UX visual direction and UX-DEC-002–UX-DEC-006 defaults, plus ADR-0005–0008 direction, on 2026-10-31. The user has authorized autonomous continuation through the point where the project is genuinely ready to start building. Do not pause for routine decisions; use conservative defaults, revalidate each change and record evidence. Phase 0 PRs #63/#64/#66 and implementation PRs #67/#68 remain draft/unmerged; foundation implementation is authorized on synthetic data. No production deployment or personal-data processing is authorized.
 
 ## Workstream branches and pull requests
 
 - `workstream/ux-design` — UX specifications, design handoff and interactive prototype.
 - `workstream/backend-architecture` — architecture, ERD, OpenAPI, threat model, runtime plan and ADRs.
 - `spike/phase-0-proof-only` — isolated PostgreSQL/Prisma proof and India privacy baseline; [Draft PR #66](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/66).
-- `feature/fl-001-frontend-foundation` and `feature/fl-002-backend-foundation` — parked but authorized to resume from their respective UX/backend workstream branches when implementation begins.
+- `implementation/fl-001-frontend-foundation` — React/Vite/TypeScript foundation; [Draft PR #67](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/67), stacked on UX workstream.
+- `implementation/fl-002-backend-foundation` — NestJS/TypeScript API foundation; [Draft PR #68](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/68), stacked on backend architecture workstream.
+- Legacy `feature/fl-001-frontend-foundation` and `feature/fl-002-backend-foundation` branches remain parked and unchanged.
 - [Draft PR #63 — UX](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/63), [Draft PR #64 — backend architecture](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/64), [Draft PR #66 — isolated proof/privacy](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/66) remain open and unmerged.
 - PR #65 was closed because its head included the unmerged backend architecture branch; its proof artifacts were replayed cleanly on a main-based branch as PR #66.
 
@@ -77,3 +79,13 @@ Cross-family identity correlation; parentage graph concurrency; incomplete RLS c
 ## Source of truth
 
 Meaningful changes to plan, scope, decisions, issues, branches and progress must be recorded in this repository in the same work cycle. Read this file and linked plans before resuming. Repository state overrides stale conversation memory.
+
+
+## R1 foundation implementation progress
+
+- FL-001 frontend foundation: React 19, TypeScript strict mode and Vite under `apps/web`; route skeleton for landing/families/people/tree/members; credentialed versioned API client with in-memory CSRF injection and stable error metadata; typed family membership contract; no fabricated family data or browser persistence. Draft [PR #67](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/67), stacked on `workstream/ux-design`.
+- FL-001 validation: lint, strict typecheck, Vitest and production build passed on current implementation branch head `d09ffd7cd7eb7bf67dd0e44dfce5770798dd3440` in [run #41577352315](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41577352315).
+- FL-002 backend foundation: NestJS 11/TypeScript under `apps/api`; `/api/v1` prefix; liveness route; readiness returns 503 until FL-003 adds an actual PostgreSQL probe; Zod runtime config validation; Helmet; generated request IDs; generic error envelope; no auth or family data handlers yet. Draft [PR #68](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/pull/68), stacked on `workstream/backend-architecture`.
+- FL-002 initial validation passed in [run #41577088668](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41577088668); latest shared-root-file CI on branch head `dfa6449ad8328c6de94ef9ca52c5c0a592c99668` is still running at the time of this update.
+- Both implementation PRs remain draft and unmerged. The root package workspace scripts are aligned across branches to avoid future merge conflicts. No package lock has been committed yet; current CI uses `npm install`, and deterministic lockfile generation is a follow-up before wider collaboration.
+- Next: complete current API branch-head CI, reconcile shared root files, add the PostgreSQL/Prisma FL-003 migration baseline and integration tests, then FL-004/005 config/CI and FL-008 design system.
