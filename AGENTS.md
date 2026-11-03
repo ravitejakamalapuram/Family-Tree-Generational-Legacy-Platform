@@ -6,7 +6,7 @@ Mandatory context for Codex, ChatGPT, and all coding agents.
 At the start of every task read README.md, .github/WORKING_AGREEMENTS.md, docs/execution/PROJECT_STATUS.md, and relevant product/UX/architecture/ADR docs. Inspect repository state, code, tests, branches, and open work. Do not rely on prior chat history: this repository is durable project memory.
 
 ## Approved product decisions
-Web-first responsive application; mixed visibility, private by default; one Person may have separate FamilyPerson representations in multiple FamilySpaces; free initially; English, Telugu, Tamil, Kannada, Hindi launch target; React + TS + Vite; Node.js + TS backend (NestJS preferred); PostgreSQL modular monolith; XYFlow custom genealogy layout; recursive CTEs initially; S3-compatible storage; GEDCOM and complete archive export.
+Web-first responsive application; mixed visibility, private by default; in v1 each FamilyPerson has its own opaque Person anchor (`UNIQUE(person_id)`), and cross-family matching/reuse/linking is disabled; free initially; English, Telugu, Tamil, Kannada, Hindi launch target; React + TS + Vite; Node.js + TS/NestJS backend; PostgreSQL modular monolith; XYFlow custom genealogy layout; recursive CTEs initially; S3-compatible storage; GEDCOM and complete archive export. See ADR-0005–0008 and `docs/execution/BUILD_READINESS.md`.
 
 ## Critical domain rules
 1. Never conflate global identity with family membership.
@@ -35,8 +35,8 @@ Web-first responsive application; mixed visibility, private by default; one Pers
 ## Engineering standards
 Modular monolith with explicit boundaries. Keep genealogy logic independent of React/HTTP/ORM/AI providers. Use versioned migrations, input validation, transactions for graph/publication/approval/membership changes, optimistic concurrency, bounded/paginated graph traversal, and tests for domain/security rules. No secrets in source. Avoid premature microservices, Kafka, Kubernetes, Neo4j.
 
-## Mandatory pre-implementation design gate
-Before implementing FL-001, FL-002, FL-003 or FL-008, read `docs/ux/PRODUCT_DESIGN_PLAN.md` and `docs/architecture/BACKEND_ARCHITECTURE_PLAN.md`. UX-001–UX-004 and ARCH-001–ARCH-005 are prerequisite design workstreams. Do not begin application implementation until the P0 UX handoff and backend architecture gates are approved and recorded in `PROJECT_STATUS.md`. Existing FL-001/FL-002 branches are parked until that gate passes. Keep UI design and backend architecture aligned on shared domain vocabulary and user journeys.
+## Build readiness gate
+The R1 foundation start gate is satisfied; see `docs/execution/BUILD_READINESS.md` and `docs/execution/PROJECT_STATUS.md`. FL-001/FL-002/FL-003/FL-008 implementation is authorized on feature branches using synthetic data only. Read the approved UX handoff and backend architecture plans before changing their respective areas. Phase 0 design PRs remain unmerged and implementation branches are stacked from those workstreams. Do not merge any PR without explicit repository-owner approval. This authorization does not permit production deployment, real personal/child data processing, public publishing or external AI processing.
 
 ## Workflow
 Identify backlog IDs; inspect code; state assumptions; implement smallest coherent change; add tests/docs; run relevant format/lint/typecheck/tests/build; review privacy, tenant isolation, migration safety, accessibility and regressions; update PROJECT_STATUS/backlog/decision log/changelog; report exact files/checks/outcomes/blockers/next task. Never mark Done without evidence.
