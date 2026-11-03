@@ -1,11 +1,11 @@
 # Product Design Workstream — UX-001 to UX-004
 
-**Status:** Planned; design approval is a gate before FL-001 implementation.  
-**Owner:** Product/design workstream.  
+**Status:** Visual direction and UX-DEC-002–UX-DEC-006 product defaults approved by product owner on 2026-10-31; UX-001–UX-004 remain in progress pending detailed design validation and handoff. Clickable P0 prototype v0.2 and desktop/mobile review snapshots prepared.
+**Owner:** Product/design workstream.
 **Source inputs:** PROJECT_CHARTER, PRODUCT_REQUIREMENTS, USE_CASES, UX_SPECIFICATION.
 
 ## Objective
-Turn the current UX specification into an implementation-ready product experience. The current UX specification is a useful screen inventory and direction, not a finished visual design system or approved set of interaction prototypes.
+Turn the current UX specification into an implementation-ready product experience. The design workstream defines experience and interaction contracts; it does not implement production React components.
 
 ## Design principles
 - Family history should feel like a warm, trusted archive—not an enterprise admin dashboard.
@@ -16,79 +16,50 @@ Turn the current UX specification into an implementation-ready product experienc
 - Design mobile-first for capture and contribution; provide a richer desktop canvas for tree exploration and family administration.
 - Support long names, native scripts, mixed-language content, low bandwidth and accessible interaction.
 
-## UX-001 — Product information architecture and journeys
-Deliver:
-- Sitemap and navigation hierarchy for desktop and mobile.
-- End-to-end flows: sign-up, create/join family, onboarding, add first person, add parent/partner/child, tree exploration, invite, upload memory, record story, review contribution, privacy/publication.
-- Role-specific journeys for owner, contributor, reviewer and viewer.
-- Empty, loading, error, offline/slow-network, permission-denied and destructive-confirmation states.
-- Critical task priority and success criteria.
+## Approved visual direction — 2026-10-30
+Product owner reviewed the desktop/mobile dashboard direction and asked the team to proceed. The approved direction is:
+- Warm, neutral surfaces that make the product feel like a trusted family archive.
+- Evergreen as the primary accent, with restrained supporting colors.
+- A calm, editorial dashboard rather than a dense enterprise admin interface.
+- Clear family-space context and navigation, with the family tree visibly central to the experience.
+- Responsive behavior that adapts the same information hierarchy to mobile rather than shrinking the desktop layout.
 
-Acceptance:
-- Every P0 journey in PRODUCT_REQUIREMENTS has a documented flow.
-- Navigation labels and active-family context are consistent.
-- Unknown/approximate/disputed facts and privacy choices have explicit interaction behavior.
-- Desktop and mobile behavior is specified.
+This is approval of the visual direction, not final sign-off of every token, screen, interaction, accessibility requirement, or engineering handoff. Keep tokens provisional until contrast and regional-script checks pass.
+
+## UX-001 — Information architecture and journeys
+Deliver desktop/mobile sitemap, role-specific journeys, P0 flows, critical states and success criteria. Acceptance requires every P0 journey to be mapped and privacy/uncertainty behavior to be explicit.
 
 ## UX-002 — Visual direction and design system
-Deliver:
-- Moodboard/reference direction and visual principles.
-- Color, typography, spacing, sizing, radius, elevation, border, motion and breakpoint tokens.
-- Light theme initially; dark theme decision documented rather than assumed.
-- Components: buttons, inputs, selects, date/uncertain-date control, dialogs, drawers, menus, tabs, cards, person cards, relationship badges, privacy indicators, timeline items, upload states, toasts, skeletons and empty states.
-- Component states: default, hover, focus, active, disabled, loading, error, selected.
-- Accessibility guidance: keyboard, visible focus, contrast, semantic labels, reduced motion and screen-reader behavior.
-- Responsive rules and content density.
+Deliver reviewed color, typography, spacing, shape, elevation, motion and breakpoint tokens; reusable component states; responsive and accessibility rules. Visual direction is approved; token-level validation and regional font fallback checks remain open.
 
-Acceptance:
-- Tokens and components are implementation-ready and internally consistent.
-- Components cover all high-frequency P0 journeys.
-- Accessibility and responsive rules are explicit.
-- Frontend implementation can consume the design tokens without inventing visual values.
-
-## UX-003 — High-fidelity screen specifications
-Prioritize the first release:
-1. Landing / authentication.
-2. Create or join family onboarding.
-3. Family dashboard.
-4. People directory and search.
-5. Add/edit person and relationship editor.
-6. Person profile.
-7. Family tree: full, ancestor, descendant and focused branch modes.
-8. Invite/member management.
-9. Responsive navigation and global add action.
-
-For each screen provide:
-- Desktop and mobile layouts.
-- Component inventory and hierarchy.
-- Content examples using fictional people only.
-- Interactions, validation, loading/empty/error states.
-- Permission and privacy states.
-- Keyboard and responsive behavior.
-
-Acceptance:
-- All screens map to documented journeys and product requirements.
-- No screen implies access to data the active role cannot view.
-- Tree layouts demonstrate multiple partners, multiple parent types, unknown parents and blended-family cases.
+## UX-003 — High-fidelity P0 screens
+Prioritize landing/auth, family onboarding, dashboard, people directory, add/edit person, person profile, family tree, member management and responsive navigation/global Add. Each screen needs desktop/mobile behavior, fictional examples, interactions, validation, permission and error states. The clickable prototype covers representative flows across these screens; it is not yet a complete nine-screen design QA pass. Version 0.2 adds a semantic list alternative for the family tree, explicit selection state, and keyboard activation (Enter/Space) on SVG person nodes.
 
 ## UX-004 — Design-to-engineering handoff
-Deliver:
-- Component/token inventory and naming conventions.
-- Screen-to-component mapping.
-- Interaction/state specifications.
-- Asset/icon guidance and image treatment.
-- Design QA checklist and acceptance sign-off.
-- Open questions and decisions logged.
+Deliver component/token inventory, screen mapping, interaction/state specifications, asset guidance, QA checklist, open decisions and explicit product/frontend sign-off.
 
-Acceptance:
-- FE can implement the approved P0 experience without guessing major layout, behavior or visual rules.
-- Product and engineering explicitly approve the first implementation slice.
+## Product decisions for review
+See `docs/ux/PRODUCT_DECISIONS.md` for accepted defaults UX-DEC-002–UX-DEC-006 covering first-person onboarding/root focus, tree entry, publication approval, Viewer/public visitor separation and design-system implementation choices. Product approval does not waive legal/privacy review or executable security validation.
 
 ## Design review gates
 1. Product information architecture and P0 journeys approved.
-2. Visual direction and design tokens approved.
+2. Visual direction approved; token contrast, typography and regional-script checks completed.
 3. High-fidelity P0 screens and responsive states approved.
 4. Design handoff accepted by frontend and product owners.
 
+## Clickable prototype v0.2
+- Artifact: [prototype/index.html](prototype/index.html).
+- Covers dashboard, tree selection/inspector, people search, person profile, add-person form, onboarding, memories and members.
+- Includes responsive navigation, fictional sample identities, privacy/provenance labels and basic client-side interactions.
+- Static HTML/CSS/JS only. No API, persistence, authentication, authorization, upload or production genealogy layout.
+- Save-person and onboarding actions explicitly report that no data was saved/created.
+- Browser-based visual review snapshots were prepared for desktop and mobile. They are review aids for the approved dashboard visual direction, not hosted screenshots or a complete capture of every interactive state.
+- Product owner reviewed the visual direction and asked the team to proceed on 2026-10-30.
+- Keyboard-only, screen-reader, regional-script, contrast and cross-browser QA remain outstanding. The semantic list alternative and keyboard tree selection are implemented but not yet accessibility-tested.
+
 ## Scope boundary
-This workstream does not implement React components. FL-008 remains the engineering implementation of the approved design system and responsive application shell. UX-001–UX-004 define what FL-008 and the P0 screens should build.
+This workstream does not implement production React components. FL-008 remains the engineering implementation of the approved design system and responsive application shell. The prototype is a disposable design-validation artifact, not an application foundation or production code. The overall Phase 0 engineering gate remains open until UX handoff and backend architecture are reviewed and explicitly approved.
+
+
+## Automated validation
+A GitHub Actions workflow at `.github/workflows/prototype-validation.yml` extracts inline JavaScript from the prototype and runs `node --check`. The workflow has been committed; its first run is pending. This does not replace browser, responsive, keyboard or screen-reader QA.
