@@ -42,7 +42,7 @@ function NotFoundPage() {
 export function App() {
   return (
     <BrowserRouter>
-        <Routes>
+      <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/families" element={<WorkspacePage title="Your families" />} />
           <Route path="/families/:familyId" element={<Navigate to="people" replace />} />
@@ -50,7 +50,7 @@ export function App() {
           <Route path="/families/:familyId/tree" element={<WorkspacePage title="Family tree" />} />
           <Route path="/families/:familyId/members" element={<WorkspacePage title="Members" />} />
           <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+      </Routes>
     </BrowserRouter>
   );
 }
