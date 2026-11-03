@@ -38,12 +38,11 @@ export function createApiClient(options: ApiClientOptions = {}) {
     }
 
     const response = await fetcher(`${baseUrl}${path.startsWith('/') ? path : `/${path}`}`, {
-        ...init,
-        method,
-        headers,
-        credentials: 'include',
-      },
-    );
+      ...init,
+      method,
+      headers,
+      credentials: 'include',
+    });
 
     if (response.status === 204) return undefined as T;
     const body = (await response.json().catch(() => ({}))) as ApiErrorBody & { data?: T };
