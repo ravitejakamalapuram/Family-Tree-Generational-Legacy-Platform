@@ -142,3 +142,12 @@
 - Prototype README and optional first-person/tree-focus note are now on the UX PR head.
 - Re-ran JavaScript syntax and full Playwright/axe browser suite on that exact head: [run #41340292066](https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41340292066) passed.
 - Current-head 40-screen screenshot artifact: https://github.com/ravitejakamalapuram/Family-Tree-Generational-Legacy-Platform/actions/runs/41340292066/artifacts/13096888231.
+
+
+## 2026-11-03 — R1 foundation implementation started
+- Created `implementation/fl-001-frontend-foundation` from the UX workstream and draft stacked PR #67. Added React/Vite/TypeScript app skeleton, R1 route placeholders, credentialed API client boundary, family membership type contract, Vitest harness, lint/typecheck/build scripts and CI.
+- FL-001 lint, typecheck, test and production build passed on current branch head in CI run #41577352315.
+- Created `implementation/fl-002-backend-foundation` from the backend architecture workstream and draft stacked PR #68. Added NestJS/TypeScript API bootstrap, version prefix, liveness and fail-closed readiness routes, Zod runtime configuration validation, Helmet, request IDs, redacted error envelope, tests and CI.
+- FL-002 initial lint, typecheck, test and build passed in run #41577088668; latest shared-root configuration run is being checked.
+- Updated README, AGENTS and implementation issue #1/#2 to reflect the satisfied build gate and actual in-progress work.
+- Both implementation PRs are draft and unmerged. No authentication, family persistence, production database access or real personal data is implemented.
