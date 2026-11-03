@@ -43,7 +43,7 @@ export function App() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
           <Route path="/families" element={<WorkspacePage title="Your families" />} />
           <Route path="/families/:familyId" element={<Navigate to="people" replace />} />
           <Route path="/families/:familyId/people" element={<WorkspacePage title="People" />} />
