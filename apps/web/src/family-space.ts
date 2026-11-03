@@ -1,10 +1,5 @@
 export type FamilyRole =
-  | 'owner'
-  | 'admin'
-  | 'branch_manager'
-  | 'contributor'
-  | 'reviewer'
-  | 'viewer';
+  'owner' | 'admin' | 'branch_manager' | 'contributor' | 'reviewer' | 'viewer';
 
 export interface FamilySummary {
   id: string;
