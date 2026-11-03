@@ -15,6 +15,7 @@
     "typecheck:api": "npm --workspace @family-legacy/api run typecheck",
     "test:api": "npm --workspace @family-legacy/api run test",
     "lint:api": "npm --workspace @family-legacy/api run lint",
+    "format:web": "prettier --check apps/web",
     "format:check": "prettier --check ."
   },
   "devDependencies": { "prettier": "^3.6.2" }
