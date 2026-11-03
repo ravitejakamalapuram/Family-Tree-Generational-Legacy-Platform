@@ -22,6 +22,15 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      - run: |
+          npm audit --json > /tmp/audit.json || true
+          node -e "const a=require('/tmp/audit.json'); for (const [name,v] of Object.entries(a.vulnerabilities || {})) console.log(name, v.severity, v.range, JSON.stringify(v.via.map(x => typeof x === 'string' ? x : x.title)), JSON.stringify(v.fixAvailable))"
+      - run: npx prettier --write apps/web
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prettier-web-source
+          path: apps/web
+          retention-days: 1
       - run: npm run format:web
       - run: npm run lint:web
       - run: npm run typecheck:web
