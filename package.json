@@ -1,0 +1,25 @@
+{
+  "name": "family-legacy",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.12.0" },
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "dev:web": "npm --workspace @family-legacy/web run dev",
+    "build:web": "npm --workspace @family-legacy/web run build",
+    "typecheck:web": "npm --workspace @family-legacy/web run typecheck",
+    "test:web": "npm --workspace @family-legacy/web run test",
+    "lint:web": "npm --workspace @family-legacy/web run lint",
+    "dev:api": "npm --workspace @family-legacy/api run dev",
+    "build:api": "npm --workspace @family-legacy/api run build",
+    "typecheck:api": "npm --workspace @family-legacy/api run typecheck",
+    "test:api": "npm --workspace @family-legacy/api run test",
+    "lint:api": "npm --workspace @family-legacy/api run lint",
+    "format:web": "prettier --check apps/web",
+    "format:api": "prettier --check apps/api",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
